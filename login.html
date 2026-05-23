@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход — INVESTROOM</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container site-header__inner">
+            <a href="index.html" class="logo">INVESTROOM</a>
+
+            <nav class="main-nav" aria-label="Главное меню">
+                <a href="#">Объекты инвестиций</a>
+                <a href="#">Инвесторам</a>
+                <a href="#">О нас</a>
+                <a href="#">Контакты</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="login.html" class="btn btn--ghost">Войти</a>
+                <a href="register.html" class="btn btn--accent">Начать инвестировать</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <section class="auth">
+            <div class="container">
+                <div class="card auth-card">
+                    <h1>Вход в личный кабинет</h1>
+
+                    <form method="post" class="form" action="dashboard.html">
+                        <label class="form__field">
+                            <span>Email</span>
+                            <input type="email" name="_username" autocomplete="email" required autofocus>
+                        </label>
+
+                        <label class="form__field">
+                            <span>Пароль</span>
+                            <input type="password" name="_password" autocomplete="current-password" required>
+                        </label>
+
+                        <button class="btn btn--accent btn--block" type="submit">Войти</button>
+                    </form>
+
+                    <p class="auth-card__alt">
+                        Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container site-footer__inner">
+            <div class="site-footer__col">
+                <div class="logo logo--light">INVESTROOM</div>
+                <p class="muted">Портал для инвестирования в недвижимость.</p>
+                <div class="social" aria-label="Соцсети">
+                    <span class="social__icon" title="Telegram">in</span>
+                    <span class="social__icon" title="VK">vk</span>
+                    <span class="social__icon" title="YouTube">yt</span>
+                </div>
+            </div>
+
+            <nav class="site-footer__col" aria-label="Меню в подвале">
+                <a href="#">Объекты инвестиций</a>
+                <a href="#">Инвесторам</a>
+                <a href="#">О нас</a>
+                <a href="#">Контакты</a>
+            </nav>
+
+            <div class="site-footer__col">
+                <a href="tel:+70000000000" class="footer-contact">+7 (000) 000-00-00</a>
+                <a href="mailto:info@investroom.example" class="footer-contact">info@investroom.example</a>
+                <a href="#" class="btn btn--accent">Связаться с нами</a>
+            </div>
+        </div>
+
+        <div class="site-footer__legal container">
+            <a href="#">Политика конфиденциальности</a>
+            <a href="#">Пользовательское соглашение</a>
+            <span class="muted">© 2026 MARK Invest Group</span>
+        </div>
+    </footer>
+</body>
+</html>
