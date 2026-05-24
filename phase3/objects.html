@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Объекты инвестиций — INVESTROOM</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="app.css">
+    <style>
+        .preview-note{background:#0f1633;color:#cdd6f0;text-align:center;font-size:.85rem;padding:7px 12px}
+        .preview-note b{color:#fff}
+        .main-nav__link--active{color:var(--color-accent)}
+    </style>
+</head>
+<body>
+    <div class="preview-note">Статичное превью Фазы&nbsp;3 (каталог объектов). Бэкенда нет — это макет дизайна; фильтры на витрине кликаются. <b>INVESTROOM</b></div>
+    <header class="site-header">
+    <div class="container site-header__inner">
+        <a href="index.html" class="logo">INVESTROOM</a>
+        <button class="site-header__burger" type="button" aria-label="Меню"
+                onclick="document.querySelector('.site-header').classList.toggle('site-header--open')">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="main-nav" aria-label="Главное меню">
+            <a href="objects.html" class="main-nav__link main-nav__link--active">Объекты инвестиций</a>
+            <a href="../phase2/about.html" class="main-nav__link">Инвесторам</a>
+            <a href="../phase2/about.html" class="main-nav__link">О нас</a>
+            <a href="../phase2/media.html" class="main-nav__link">Медиа</a>
+            <a href="../phase2/contacts.html" class="main-nav__link">Контакты</a>
+            <span class="main-nav__actions">
+                <a href="#" class="btn btn--ghost btn--sm">Войти</a>
+                <a href="#" class="btn btn--accent btn--sm">Начать инвестировать</a>
+            </span>
+        </nav>
+    </div>
+</header>
+    <main class="site-main">
+        <section class="catalog container">
+            <h1 class="page__title">Объекты инвестиций</h1>
+
+            <div class="catalog__filters" role="group" aria-label="Фильтр по типу">
+                <a href="#" class="chip chip--active" data-dim="type" data-val="">Все типы</a>
+                <a href="#" class="chip" data-dim="type" data-val="apartment">Апартаменты</a>
+                <a href="#" class="chip" data-dim="type" data-val="villa">Виллы</a>
+                <a href="#" class="chip" data-dim="type" data-val="townhouse">Таунхаусы</a>
+                <a href="#" class="chip" data-dim="type" data-val="commercial">Коммерция</a>
+                <a href="#" class="chip" data-dim="type" data-val="land">Земля</a>
+                <a href="#" class="chip" data-dim="type" data-val="hotel">Гостиничные номера</a>
+            </div>
+            <div class="catalog__filters" role="group" aria-label="Фильтр по стадии">
+                <a href="#" class="chip chip--sm chip--active" data-dim="stage" data-val="">Любая стадия</a>
+                <a href="#" class="chip chip--sm" data-dim="stage" data-val="planned">Проектируются</a>
+                <a href="#" class="chip chip--sm" data-dim="stage" data-val="under_construction">Строятся</a>
+                <a href="#" class="chip chip--sm" data-dim="stage" data-val="ready">Готовы к заселению</a>
+                <a href="#" class="chip chip--sm" data-dim="stage" data-val="commissioned">Сданы</a>
+            </div>
+            <div class="catalog__cities">
+                <a href="#" class="tag tag--active" data-dim="city" data-val="">Все города</a>
+                <a href="#" class="tag" data-dim="city" data-val="Абу-Даби">Абу-Даби</a>
+                <a href="#" class="tag" data-dim="city" data-val="Дубай">Дубай</a>
+                <a href="#" class="tag" data-dim="city" data-val="Маскат">Маскат</a>
+                <a href="#" class="tag" data-dim="city" data-val="Рас-эль-Хайма">Рас-эль-Хайма</a>
+            </div>
+
+            <p class="catalog__count muted">Найдено объектов: <span id="count">7</span></p>
+            <div class="media__grid" id="grid">
+            <article class="media-card object-card" data-type="apartment" data-stage="under_construction" data-city="Дубай">
+                <a class="media-card__link" href="object-dubai-marina-apartments.html">
+                    <span class="media-card__cover">
+                        <img src="images/placeholders/horizontal.svg" alt="Апартаменты у воды в Dubai Marina" loading="lazy" width="600" height="400">
+                        <span class="media-card__badge">Апартаменты</span>
+                        <span class="object-card__stage">Строится</span>
+                    </span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Дубай, ОАЭ</span>
+                        <span class="media-card__title">Апартаменты у воды в Dubai Marina</span>
+                        <span class="object-card__facts"><span>1 спальни</span><span>· 78 м²</span></span>
+                        <span class="object-card__price">от 1 450 000 AED</span>
+                    </span>
+                </a>
+            </article>
+            <article class="media-card object-card" data-type="villa" data-stage="ready" data-city="Дубай">
+                <a class="media-card__link" href="object-palm-jumeirah-villa.html">
+                    <span class="media-card__cover">
+                        <img src="images/placeholders/horizontal.svg" alt="Вилла на Palm Jumeirah" loading="lazy" width="600" height="400">
+                        <span class="media-card__badge">Вилла</span>
+                        <span class="object-card__stage">Готов к заселению</span>
+                    </span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Дубай, ОАЭ</span>
+                        <span class="media-card__title">Вилла на Palm Jumeirah</span>
+                        <span class="object-card__facts"><span>5 спальни</span><span>· 420 м²</span></span>
+                        <span class="object-card__price">от 18 500 000 AED</span>
+                    </span>
+                </a>
+            </article>
+            <article class="media-card object-card" data-type="apartment" data-stage="planned" data-city="Дубай">
+                <a class="media-card__link" href="object-downtown-dubai-apartments.html">
+                    <span class="media-card__cover">
+                        <img src="images/placeholders/horizontal.svg" alt="Апартаменты в Downtown Dubai" loading="lazy" width="600" height="400">
+                        <span class="media-card__badge">Апартаменты</span>
+                        <span class="object-card__stage">На стадии проекта</span>
+                    </span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Дубай, ОАЭ</span>
+                        <span class="media-card__title">Апартаменты в Downtown Dubai</span>
+                        <span class="object-card__facts"><span>2 спальни</span><span>· 95 м²</span></span>
+                        <span class="object-card__price">от 2 100 000 AED</span>
+                    </span>
+                </a>
+            </article>
+            <article class="media-card object-card" data-type="townhouse" data-stage="under_construction" data-city="Абу-Даби">
+                <a class="media-card__link" href="object-yas-island-townhouse.html">
+                    <span class="media-card__cover">
+                        <img src="images/placeholders/horizontal.svg" alt="Таунхаус на Yas Island" loading="lazy" width="600" height="400">
+                        <span class="media-card__badge">Таунхаус</span>
+                        <span class="object-card__stage">Строится</span>
+                    </span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Абу-Даби, ОАЭ</span>
+                        <span class="media-card__title">Таунхаус на Yas Island</span>
+                        <span class="object-card__facts"><span>3 спальни</span><span>· 210 м²</span></span>
+                        <span class="object-card__price">от 2 950 000 AED</span>
+                    </span>
+                </a>
+            </article>
+            <article class="media-card object-card" data-type="villa" data-stage="planned" data-city="Маскат">
+                <a class="media-card__link" href="object-aida-yiti-muscat-villa.html">
+                    <span class="media-card__cover">
+                        <img src="images/placeholders/horizontal.svg" alt="Вилла в проекте AIDA, Маскат" loading="lazy" width="600" height="400">
+                        <span class="media-card__badge">Вилла</span>
+                        <span class="object-card__stage">На стадии проекта</span>
+                    </span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Маскат, Оман</span>
+                        <span class="media-card__title">Вилла в проекте AIDA, Маскат</span>
+                        <span class="object-card__facts"><span>4 спальни</span><span>· 350 м²</span></span>
+                        <span class="object-card__price">от 395 000 OMR</span>
+                    </span>
+                </a>
+            </article>
+            <article class="media-card object-card" data-type="hotel" data-stage="commissioned" data-city="Рас-эль-Хайма">
+                <a class="media-card__link" href="object-al-marjan-hotel-residences.html">
+                    <span class="media-card__cover">
+                        <img src="images/placeholders/horizontal.svg" alt="Гостиничные апартаменты, Al Marjan Island" loading="lazy" width="600" height="400">
+                        <span class="media-card__badge">Гостиничный номер</span>
+                        <span class="object-card__stage">Сдан</span>
+                    </span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Рас-эль-Хайма, ОАЭ</span>
+                        <span class="media-card__title">Гостиничные апартаменты, Al Marjan Island</span>
+                        <span class="object-card__facts"><span>1 спальни</span><span>· 55 м²</span></span>
+                        <span class="object-card__price">от 1 200 000 AED</span>
+                    </span>
+                </a>
+            </article>
+            <article class="media-card object-card" data-type="commercial" data-stage="ready" data-city="Дубай">
+                <a class="media-card__link" href="object-business-bay-office.html">
+                    <span class="media-card__cover">
+                        <img src="images/placeholders/horizontal.svg" alt="Офисное помещение в Business Bay" loading="lazy" width="600" height="400">
+                        <span class="media-card__badge">Коммерция</span>
+                        <span class="object-card__stage">Готов к заселению</span>
+                    </span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Дубай, ОАЭ</span>
+                        <span class="media-card__title">Офисное помещение в Business Bay</span>
+                        <span class="object-card__facts"><span>· 120 м²</span></span>
+                        <span class="object-card__price">от 2 650 000 AED</span>
+                    </span>
+                </a>
+            </article>
+            </div>
+            <p class="muted" id="empty" style="display:none">По заданным фильтрам объектов не найдено.</p>
+        </section>
+    </main>
+    <footer class="site-footer">
+    <div class="container site-footer__grid">
+        <div class="site-footer__col">
+            <div class="logo logo--light">INVESTROOM</div>
+            <p class="site-footer__tagline">Инвестиции в недвижимость — просто и прозрачно</p>
+            <div class="socials" aria-label="Соцсети"><a href="#">TG</a><a href="#">VK</a><a href="#">YT</a></div>
+        </div>
+        <nav class="site-footer__col" aria-label="Меню в подвале">
+            <h4 class="site-footer__title">Разделы</h4>
+            <a href="objects.html">Объекты инвестиций</a>
+            <a href="../phase2/about.html">Инвесторам</a>
+            <a href="../phase2/media.html">Медиа</a>
+            <a href="../phase2/faq.html">Частые вопросы</a>
+            <a href="../phase2/contacts.html">Контакты</a>
+        </nav>
+        <div class="site-footer__col">
+            <h4 class="site-footer__title">Контакты</h4>
+            <a class="site-footer__contact" href="#">+7 (XXX) XXX-XX-XX</a>
+            <a class="site-footer__contact" href="#">info@investroom.example</a>
+            <a class="btn btn--accent btn--sm" href="../phase2/contacts.html">Связаться с нами</a>
+        </div>
+    </div>
+    <div class="site-footer__legal container">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Пользовательское соглашение</a>
+        <span class="site-footer__copyright">© 2026 ООО «MARK Invest Group». Все права защищены.</span>
+    </div>
+</footer>
+    <script>
+        var active = {type:'', stage:'', city:''};
+        function apply(){
+            var cards = document.querySelectorAll('#grid .object-card'), shown = 0;
+            cards.forEach(function(c){
+                var ok = (!active.type || c.dataset.type===active.type)
+                      && (!active.stage || c.dataset.stage===active.stage)
+                      && (!active.city || c.dataset.city===active.city);
+                c.style.display = ok ? '' : 'none';
+                if(ok) shown++;
+            });
+            document.getElementById('count').textContent = shown;
+            document.getElementById('empty').style.display = shown ? 'none' : '';
+        }
+        document.querySelectorAll('[data-dim]').forEach(function(el){
+            el.addEventListener('click', function(e){
+                e.preventDefault();
+                var dim = el.dataset.dim;
+                active[dim] = el.dataset.val;
+                document.querySelectorAll('[data-dim="'+dim+'"]').forEach(function(s){
+                    s.classList.remove('chip--active','tag--active');
+                });
+                el.classList.add(el.classList.contains('tag') ? 'tag--active' : 'chip--active');
+                apply();
+            });
+        });
+    </script>
+</body>
+</html>

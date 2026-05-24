@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INVESTROOM — инвестируйте в недвижимость</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="app.css">
+    <style>
+        .preview-note{background:#0f1633;color:#cdd6f0;text-align:center;font-size:.85rem;padding:7px 12px}
+        .preview-note b{color:#fff}
+        .main-nav__link--active{color:var(--color-accent)}
+    </style>
+</head>
+<body>
+    <div class="preview-note">Статичное превью Фазы&nbsp;3 (каталог объектов). Бэкенда нет — это макет дизайна; фильтры на витрине кликаются. <b>INVESTROOM</b></div>
+    <header class="site-header">
+    <div class="container site-header__inner">
+        <a href="index.html" class="logo">INVESTROOM</a>
+        <button class="site-header__burger" type="button" aria-label="Меню"
+                onclick="document.querySelector('.site-header').classList.toggle('site-header--open')">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="main-nav" aria-label="Главное меню">
+            <a href="objects.html" class="main-nav__link">Объекты инвестиций</a>
+            <a href="../phase2/about.html" class="main-nav__link">Инвесторам</a>
+            <a href="../phase2/about.html" class="main-nav__link">О нас</a>
+            <a href="../phase2/media.html" class="main-nav__link">Медиа</a>
+            <a href="../phase2/contacts.html" class="main-nav__link">Контакты</a>
+            <span class="main-nav__actions">
+                <a href="#" class="btn btn--ghost btn--sm">Войти</a>
+                <a href="#" class="btn btn--accent btn--sm">Начать инвестировать</a>
+            </span>
+        </nav>
+    </div>
+</header>
+    <main class="site-main">
+        <section class="hero">
+            <div class="container hero__inner">
+                <h1 class="hero__title">Инвестиции в недвижимость&nbsp;— просто и прозрачно</h1>
+                <p class="hero__subtitle">
+                    Выбирайте объекты, собирайте инвестиционную стратегию и следите за доходностью
+                    в личном кабинете.
+                </p>
+                <div class="hero__actions">
+                    <a href="objects.html" class="btn btn--accent btn--lg">Смотреть объекты</a>
+                    <a href="../phase2/about.html" class="btn btn--ghost btn--lg">Как это работает</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="steps container">
+            <h2 class="section-title">Как это работает</h2>
+            <div class="steps__grid">
+                <div class="step"><span class="step__num">1</span><h3>Регистрируетесь</h3><p class="muted">Создаёте личный кабинет за пару минут.</p></div>
+                <div class="step"><span class="step__num">2</span><h3>Выбираете объект</h3><p class="muted">Изучаете объекты и условия инвестирования.</p></div>
+                <div class="step"><span class="step__num">3</span><h3>Инвестируете</h3><p class="muted">Оформляете сделку и следите за доходностью.</p></div>
+                <div class="step"><span class="step__num">4</span><h3>Получаете доход</h3><p class="muted">Отслеживаете выплаты в личном кабинете.</p></div>
+            </div>
+        </section>
+
+        <section class="home-objects container">
+            <div class="section-head">
+                <h2 class="section-title">Избранные объекты</h2>
+                <a href="objects.html" class="link-more">Все объекты →</a>
+            </div>
+            <div class="media__grid">
+            <article class="media-card object-card" data-type="apartment" data-stage="under_construction" data-city="Дубай">
+                <a class="media-card__link" href="object-dubai-marina-apartments.html">
+                    <span class="media-card__cover">
+                        <img src="images/placeholders/horizontal.svg" alt="Апартаменты у воды в Dubai Marina" loading="lazy" width="600" height="400">
+                        <span class="media-card__badge">Апартаменты</span>
+                        <span class="object-card__stage">Строится</span>
+                    </span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Дубай, ОАЭ</span>
+                        <span class="media-card__title">Апартаменты у воды в Dubai Marina</span>
+                        <span class="object-card__facts"><span>1 спальни</span><span>· 78 м²</span></span>
+                        <span class="object-card__price">от 1 450 000 AED</span>
+                    </span>
+                </a>
+            </article>
+            <article class="media-card object-card" data-type="villa" data-stage="ready" data-city="Дубай">
+                <a class="media-card__link" href="object-palm-jumeirah-villa.html">
+                    <span class="media-card__cover">
+                        <img src="images/placeholders/horizontal.svg" alt="Вилла на Palm Jumeirah" loading="lazy" width="600" height="400">
+                        <span class="media-card__badge">Вилла</span>
+                        <span class="object-card__stage">Готов к заселению</span>
+                    </span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Дубай, ОАЭ</span>
+                        <span class="media-card__title">Вилла на Palm Jumeirah</span>
+                        <span class="object-card__facts"><span>5 спальни</span><span>· 420 м²</span></span>
+                        <span class="object-card__price">от 18 500 000 AED</span>
+                    </span>
+                </a>
+            </article>
+            <article class="media-card object-card" data-type="villa" data-stage="planned" data-city="Маскат">
+                <a class="media-card__link" href="object-aida-yiti-muscat-villa.html">
+                    <span class="media-card__cover">
+                        <img src="images/placeholders/horizontal.svg" alt="Вилла в проекте AIDA, Маскат" loading="lazy" width="600" height="400">
+                        <span class="media-card__badge">Вилла</span>
+                        <span class="object-card__stage">На стадии проекта</span>
+                    </span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Маскат, Оман</span>
+                        <span class="media-card__title">Вилла в проекте AIDA, Маскат</span>
+                        <span class="object-card__facts"><span>4 спальни</span><span>· 350 м²</span></span>
+                        <span class="object-card__price">от 395 000 OMR</span>
+                    </span>
+                </a>
+            </article>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container cta__inner">
+                <h2>Готовы начать инвестировать?</h2>
+                <p>Зарегистрируйтесь и получите доступ к объектам и личному кабинету.</p>
+                <a href="objects.html" class="btn btn--accent btn--lg">Смотреть объекты</a>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+    <div class="container site-footer__grid">
+        <div class="site-footer__col">
+            <div class="logo logo--light">INVESTROOM</div>
+            <p class="site-footer__tagline">Инвестиции в недвижимость — просто и прозрачно</p>
+            <div class="socials" aria-label="Соцсети"><a href="#">TG</a><a href="#">VK</a><a href="#">YT</a></div>
+        </div>
+        <nav class="site-footer__col" aria-label="Меню в подвале">
+            <h4 class="site-footer__title">Разделы</h4>
+            <a href="objects.html">Объекты инвестиций</a>
+            <a href="../phase2/about.html">Инвесторам</a>
+            <a href="../phase2/media.html">Медиа</a>
+            <a href="../phase2/faq.html">Частые вопросы</a>
+            <a href="../phase2/contacts.html">Контакты</a>
+        </nav>
+        <div class="site-footer__col">
+            <h4 class="site-footer__title">Контакты</h4>
+            <a class="site-footer__contact" href="#">+7 (XXX) XXX-XX-XX</a>
+            <a class="site-footer__contact" href="#">info@investroom.example</a>
+            <a class="btn btn--accent btn--sm" href="../phase2/contacts.html">Связаться с нами</a>
+        </div>
+    </div>
+    <div class="site-footer__legal container">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Пользовательское соглашение</a>
+        <span class="site-footer__copyright">© 2026 ООО «MARK Invest Group». Все права защищены.</span>
+    </div>
+</footer>
+</body>
+</html>
