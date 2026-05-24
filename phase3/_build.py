@@ -154,11 +154,20 @@ def page(title, body, active="", extra_head="", extra_js=""):
 </html>"""
 
 
+def bedrooms_word(b):
+    if b == 1:
+        return "спальня"
+    if 2 <= b <= 4:
+        return "спальни"
+    return "спален"
+
+
 def card(o):
     facts = []
     if o["bedrooms"]:
-        facts.append(f'<span>{o["bedrooms"]} спальни</span>')
-    facts.append(f'<span>· {area_int(o["area"])} м²</span>')
+        facts.append(f'<span>{o["bedrooms"]} {bedrooms_word(o["bedrooms"])}</span>')
+    sep = "· " if o["bedrooms"] else ""
+    facts.append(f'<span>{sep}{area_int(o["area"])} м²</span>')
     facts_html = "".join(facts)
     price_html = f'<span class="object-card__price">от {money(o["price"])} {o["currency"]}</span>'
     return f"""            <article class="media-card object-card" data-type="{o['type']}" data-stage="{o['stage']}" data-city="{o['city']}">
@@ -261,6 +270,14 @@ def build_detail(o):
                         <img src="images/placeholders/horizontal.svg" alt="{o['title']} — фото {i}" loading="lazy">
                         <figcaption>{o['title']} — фото {i}</figcaption>
                     </figure>""" for i in range(1, 4))
+    tags_html = ""
+    if o["tags"]:
+        chips = "".join(f'<span class="tag">#{t}</span>' for t in o["tags"])
+        tags_html = f"""
+            <div class="object-detail__tags" aria-label="Особенности">
+                {chips}
+            </div>
+"""
     body = f"""        <article class="object-detail container">
             <nav class="breadcrumbs" aria-label="Хлебные крошки">
                 <a href="index.html">Главная</a>
@@ -284,7 +301,7 @@ def build_detail(o):
 
             <dl class="object-facts">{facts_html}
             </dl>
-
+{tags_html}
             <div class="object-detail__description">{DESC}</div>
 
             <h2 class="object-detail__subtitle">Галерея</h2>

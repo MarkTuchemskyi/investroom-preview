@@ -1118,6 +1118,13 @@ form button[type="submit"] {
     color: var(--color-accent);
 }
 
+.object-detail__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 24px;
+}
+
 .object-detail__description {
     line-height: 1.7;
     margin-bottom: 28px;
