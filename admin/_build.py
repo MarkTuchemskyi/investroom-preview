@@ -421,6 +421,30 @@ def build_settings_delete():
                 crumb='<a href="settings.html">Настройки сайта</a> / Удалить')
 
 
+def build_page_delete():
+    body = """            <div class="confirm">
+                <p>Удалить страницу <strong>«Инвесторам»</strong> (<code>/p/investoram</code>)? Действие необратимо.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="pages.html">Отмена</a>
+                </form>
+            </div>"""
+    return page("Удалить — страница", "pages", body,
+                crumb='<a href="pages.html">Страницы</a> / Удалить')
+
+
+def build_media_delete():
+    body = """            <div class="confirm">
+                <p>Удалить материал <strong>«Фотоотчёт с выставки Cityscape»</strong> (Фотоальбом)? Действие необратимо.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="media.html">Отмена</a>
+                </form>
+            </div>"""
+    return page("Удалить — медиа-материал", "media", body,
+                crumb='<a href="media.html">Медиа</a> / Удалить')
+
+
 def build_page_form():
     body = """            <form class="form-grid" onsubmit="return false">
                 <div class="two">
@@ -600,13 +624,13 @@ write("pages.html", list_page(
     "Страницы", "pages", "Создать страницу",
     ["Заголовок", "Адрес", "Статус"],
     [(p[0], f"<code>{p[1]}</code>", status_badge(p[3], "Опубликована", "Черновик")) for p in PAGES],
-    new_href="page-form.html", edit_href="page-form.html"))
+    new_href="page-form.html", edit_href="page-form.html", del_href="page-delete.html"))
 
 write("media.html", list_page(
     "Медиа", "media", "Добавить материал",
     ["Заголовок", "Тип", "Статус", "Дата"],
     [(m[0], m[1], status_badge(True, m[2], ""), m[3]) for m in MEDIA],
-    new_href="media-form.html", edit_href="media-form.html"))
+    new_href="media-form.html", edit_href="media-form.html", del_href="media-delete.html"))
 
 write("faq.html", list_page(
     "Частые вопросы", "faq", "Добавить вопрос",
@@ -635,6 +659,8 @@ write("media-form.html", build_media_form())
 write("media-gallery.html", build_media_gallery())
 write("faq-form.html", build_faq_form())
 write("user-form.html", build_user_form())
+write("page-delete.html", build_page_delete())
+write("media-delete.html", build_media_delete())
 write("settings-form.html", build_settings_form())
 write("settings-delete.html", build_settings_delete())
 

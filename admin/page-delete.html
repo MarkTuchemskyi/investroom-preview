@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Страницы — INVESTROOM админка</title>
+    <title>Удалить — страница — INVESTROOM админка</title>
     <link rel="icon" href="data:,">
     <style>
     :root{--navy:#1f3a5f;--ice:#f4f7fb;--line:#c9d2dc;--muted:#6b7785;--accent:#2f6df0;}
@@ -105,23 +105,15 @@
             <a href="open-questions.html"><span>📋</span>Открытые вопросы</a>
         </nav></aside>
         <div class="admin-content"><main class="admin-main">
-            
-            <h1>Страницы</h1>
-            <div class="toolbar">
-                <span class="muted">Всего записей: 6</span>
-                <a class="btn btn--accent" href="page-form.html">+ Создать страницу</a>
+            <p class="crumb"><a href="pages.html">Страницы</a> / Удалить</p>
+            <h1>Удалить — страница</h1>
+            <div class="confirm">
+                <p>Удалить страницу <strong>«Инвесторам»</strong> (<code>/p/investoram</code>)? Действие необратимо.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="pages.html">Отмена</a>
+                </form>
             </div>
-<table>
-<thead><tr><th>Заголовок</th><th>Адрес</th><th>Статус</th><th class="row-actions">Действия</th></tr></thead>
-<tbody>
-<tr><td>Главная</td><td><code>/</code></td><td><span class="badge badge--ok">Опубликована</span></td><td class="row-actions"><a href="page-form.html">Изменить</a><a class="del" href="page-delete.html">Удалить</a></td></tr>
-<tr><td>Инвесторам</td><td><code>/p/investoram</code></td><td><span class="badge badge--ok">Опубликована</span></td><td class="row-actions"><a href="page-form.html">Изменить</a><a class="del" href="page-delete.html">Удалить</a></td></tr>
-<tr><td>О компании</td><td><code>/p/o-kompanii</code></td><td><span class="badge badge--ok">Опубликована</span></td><td class="row-actions"><a href="page-form.html">Изменить</a><a class="del" href="page-delete.html">Удалить</a></td></tr>
-<tr><td>Контакты</td><td><code>/p/contacts</code></td><td><span class="badge badge--ok">Опубликована</span></td><td class="row-actions"><a href="page-form.html">Изменить</a><a class="del" href="page-delete.html">Удалить</a></td></tr>
-<tr><td>Частые вопросы</td><td><code>/p/faq</code></td><td><span class="badge badge--ok">Опубликована</span></td><td class="row-actions"><a href="page-form.html">Изменить</a><a class="del" href="page-delete.html">Удалить</a></td></tr>
-<tr><td>Политика конфиденциальности</td><td><code>/p/privacy</code></td><td><span class="badge badge--draft">Черновик</span></td><td class="row-actions"><a href="page-form.html">Изменить</a><a class="del" href="page-delete.html">Удалить</a></td></tr>
-</tbody>
-</table>
         </main></div>
     </div>
 </body>
