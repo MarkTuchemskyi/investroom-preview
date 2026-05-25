@@ -445,6 +445,18 @@ def build_media_delete():
                 crumb='<a href="media.html">Медиа</a> / Удалить')
 
 
+def build_faq_delete():
+    body = """            <div class="confirm">
+                <p>Удалить вопрос <strong>«Какой минимальный порог входа?»</strong>? Действие необратимо.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="faq.html">Отмена</a>
+                </form>
+            </div>"""
+    return page("Удалить — вопрос FAQ", "faq", body,
+                crumb='<a href="faq.html">Частые вопросы</a> / Удалить')
+
+
 def build_page_form():
     body = """            <form class="form-grid" onsubmit="return false">
                 <div class="two">
@@ -636,7 +648,7 @@ write("faq.html", list_page(
     "Частые вопросы", "faq", "Добавить вопрос",
     ["Вопрос", "Порядок"],
     [(q[0], str(q[1])) for q in FAQ],
-    new_href="faq-form.html", edit_href="faq-form.html"))
+    new_href="faq-form.html", edit_href="faq-form.html", del_href="faq-delete.html"))
 
 write("users.html", list_page(
     "Пользователи", "users", "Создать пользователя",
@@ -661,6 +673,7 @@ write("faq-form.html", build_faq_form())
 write("user-form.html", build_user_form())
 write("page-delete.html", build_page_delete())
 write("media-delete.html", build_media_delete())
+write("faq-delete.html", build_faq_delete())
 write("settings-form.html", build_settings_form())
 write("settings-delete.html", build_settings_delete())
 
