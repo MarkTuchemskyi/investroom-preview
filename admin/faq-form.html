@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пользователи — INVESTROOM админка</title>
+    <title>Изменить — вопрос FAQ — INVESTROOM админка</title>
     <link rel="icon" href="data:,">
     <style>
     :root{--navy:#1f3a5f;--ice:#f4f7fb;--line:#c9d2dc;--muted:#6b7785;--accent:#2f6df0;}
@@ -97,31 +97,28 @@
             <span class="sec">Контент</span>
             <a href="objects.html"><span>🏢</span>Объекты каталога</a>
             <a href="pages.html"><span>📄</span>Страницы</a>
-            <a href="faq.html"><span>❓</span>Частые вопросы</a>
+            <a href="faq.html" class="active"><span>❓</span>Частые вопросы</a>
             <a href="media.html"><span>🖼️</span>Медиа</a>
             <span class="sec">Управление</span>
-            <a href="users.html" class="active"><span>👥</span>Пользователи</a>
+            <a href="users.html"><span>👥</span>Пользователи</a>
             <a href="settings.html"><span>⚙️</span>Настройки сайта</a>
             <a href="open-questions.html"><span>📋</span>Открытые вопросы</a>
         </nav></aside>
         <div class="admin-content"><main class="admin-main">
-            
-            <h1>Пользователи</h1>
-            <div class="toolbar">
-                <span class="muted">Всего записей: 6</span>
-                <a class="btn btn--accent" href="user-form.html">+ Создать пользователя</a>
-            </div>
-<table>
-<thead><tr><th>E-mail</th><th>Роль</th><th>Статус</th><th class="row-actions">Действия</th></tr></thead>
-<tbody>
-<tr><td>superadmin@investroom.local</td><td><span class="badge badge--role">SUPERADMIN</span></td><td><span class="badge badge--ok">Активен</span></td><td class="row-actions"><a href="user-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>admin@investroom.local</td><td><span class="badge badge--role">ADMIN</span></td><td><span class="badge badge--ok">Активен</span></td><td class="row-actions"><a href="user-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>content@investroom.local</td><td><span class="badge badge--role">CONTENT_MANAGER</span></td><td><span class="badge badge--ok">Активен</span></td><td class="row-actions"><a href="user-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>anna.investor@example.com</td><td><span class="badge badge--role">INVESTOR</span></td><td><span class="badge badge--ok">Активен</span></td><td class="row-actions"><a href="user-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>petr.investor@example.com</td><td><span class="badge badge--role">INVESTOR</span></td><td><span class="badge badge--ok">Активен</span></td><td class="row-actions"><a href="user-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>maria.investor@example.com</td><td><span class="badge badge--role">INVESTOR</span></td><td><span class="badge badge--ok">Активен</span></td><td class="row-actions"><a href="user-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-</tbody>
-</table>
+            <p class="crumb"><a href="faq.html">Частые вопросы</a> / Изменить</p>
+            <h1>Изменить — вопрос FAQ</h1>
+            <form class="form-grid" onsubmit="return false">
+                <div class="fld"><label>Категория</label><input type="text" value="Общие"><span class="hint">Группирует вопросы на странице FAQ.</span></div>
+                <div class="fld"><label>Вопрос</label><input type="text" value="Какой минимальный порог входа?"></div>
+                <div class="fld"><label>Ответ</label><textarea rows="4">Минимальная сумма зависит от выбранного объекта и условий застройщика. Точные значения уточняются менеджером.</textarea></div>
+                <div class="two">
+                    <div class="fld"><label>Порядок</label><input type="number" value="2"></div>
+                    <div class="fld"><label>Опубликован</label><select><option selected>Да</option><option>Нет</option></select></div>
+                </div>
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="faq.html">Отмена</a>
+            </form>
+            <a class="back" href="faq.html">← Назад к списку</a>
         </main></div>
     </div>
 </body>

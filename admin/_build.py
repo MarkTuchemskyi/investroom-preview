@@ -95,6 +95,9 @@ CSS = """
     .editor .area figcaption{font-size:.82rem;color:var(--muted);margin-top:.3rem;}
     .cover{display:flex;gap:1rem;align-items:center;}
     .cover .prev{flex:0 0 140px;aspect-ratio:3/2;background:linear-gradient(135deg,#e9eef5,#dfe6ef);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#9fb0c4;font-size:1.6rem;}
+    .notice{background:#fdf6e3;border:1px solid #f0e0b0;color:#7a5c12;border-radius:10px;padding:.8rem 1rem;margin-bottom:1.2rem;font-size:.9rem;max-width:680px;}
+    .roles{display:flex;flex-wrap:wrap;gap:.5rem .9rem;}
+    .roles label{display:inline-flex;align-items:center;gap:.4rem;font-weight:400;margin:0;}
     @media(max-width:760px){.admin-shell{flex-direction:column;}.admin-sidebar{flex-basis:auto;width:100%;min-height:0;border-right:0;border-bottom:1px solid var(--line);}.form-grid .two{grid-template-columns:1fr;}}
 """
 
@@ -498,6 +501,55 @@ def build_media_form():
                 crumb='<a href="media.html">Медиа</a> / Изменить')
 
 
+def build_faq_form():
+    body = """            <form class="form-grid" onsubmit="return false">
+                <div class="fld"><label>Категория</label><input type="text" value="Общие"><span class="hint">Группирует вопросы на странице FAQ.</span></div>
+                <div class="fld"><label>Вопрос</label><input type="text" value="Какой минимальный порог входа?"></div>
+                <div class="fld"><label>Ответ</label><textarea rows="4">Минимальная сумма зависит от выбранного объекта и условий застройщика. Точные значения уточняются менеджером.</textarea></div>
+                <div class="two">
+                    <div class="fld"><label>Порядок</label><input type="number" value="2"></div>
+                    <div class="fld"><label>Опубликован</label><select><option selected>Да</option><option>Нет</option></select></div>
+                </div>
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="faq.html">Отмена</a>
+            </form>
+            <a class="back" href="faq.html">← Назад к списку</a>"""
+    return page("Изменить — вопрос FAQ", "faq", body,
+                crumb='<a href="faq.html">Частые вопросы</a> / Изменить')
+
+
+def build_user_form():
+    body = """            <div class="notice">⚠️ В коде список пользователей пока <strong>read-only</strong>.
+                Создание/редактирование и выбор ролей включим после утверждения матрицы ролей заказчиком
+                (open_question&nbsp;#5). Это макет планируемого экрана.</div>
+            <form class="form-grid" onsubmit="return false">
+                <div class="fld"><label>E-mail</label><input type="email" value="anna.investor@example.com"></div>
+                <div class="two">
+                    <div class="fld"><label>Имя</label><input type="text" value="Анна"></div>
+                    <div class="fld"><label>Фамилия</label><input type="text" value="Иванова"></div>
+                </div>
+                <div class="fld"><label>Телефон</label><input type="text" value="+7 900 000-00-00"></div>
+                <div class="fld">
+                    <label>Роли</label>
+                    <div class="roles">
+                        <label><input type="checkbox" checked> Инвестор</label>
+                        <label><input type="checkbox"> Менеджер</label>
+                        <label><input type="checkbox"> Контент-менеджер</label>
+                        <label><input type="checkbox"> Администратор</label>
+                        <label><input type="checkbox"> Суперадмин</label>
+                    </div>
+                    <span class="hint">Состав ролей и прав — после утверждения матрицы (#5).</span>
+                </div>
+                <div class="fld"><label>Статус</label><select><option>Ожидает</option><option selected>Активен</option><option>Заблокирован</option></select></div>
+                <div class="fld"><label>Аватар</label><input type="file" accept="image/*"></div>
+                <button class="btn" type="submit" disabled title="Read-only: ждёт матрицы ролей (#5)">Сохранить</button>
+                <a class="btn btn--ghost" href="users.html">Назад</a>
+            </form>
+            <a class="back" href="users.html">← Назад к списку</a>"""
+    return page("Пользователь", "users", body,
+                crumb='<a href="users.html">Пользователи</a> / Просмотр')
+
+
 def build_open_questions():
     body = """            <p class="muted">Источник — <code>docs/open_questions.md</code>. Счётчики на дашборде считаются по маркерам 🔴/🟡/🟢.</p>
             <table>
@@ -547,12 +599,14 @@ write("media.html", list_page(
 write("faq.html", list_page(
     "Частые вопросы", "faq", "Добавить вопрос",
     ["Вопрос", "Порядок"],
-    [(q[0], str(q[1])) for q in FAQ]))
+    [(q[0], str(q[1])) for q in FAQ],
+    new_href="faq-form.html", edit_href="faq-form.html"))
 
 write("users.html", list_page(
     "Пользователи", "users", "Создать пользователя",
     ["E-mail", "Роль", "Статус"],
-    [(u[0], f'<span class="badge badge--role">{u[1]}</span>', status_badge(True, u[2], "")) for u in USERS]))
+    [(u[0], f'<span class="badge badge--role">{u[1]}</span>', status_badge(True, u[2], "")) for u in USERS],
+    new_href="user-form.html", edit_href="user-form.html"))
 
 write("settings.html", list_page(
     "Настройки сайта", "settings", "Создать настройку",
@@ -567,6 +621,8 @@ write("object-gallery.html", build_object_gallery())
 write("page-form.html", build_page_form())
 write("media-form.html", build_media_form())
 write("media-gallery.html", build_media_gallery())
+write("faq-form.html", build_faq_form())
+write("user-form.html", build_user_form())
 write("settings-form.html", build_settings_form())
 
 # открытые вопросы

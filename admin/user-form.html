@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пользователи — INVESTROOM админка</title>
+    <title>Пользователь — INVESTROOM админка</title>
     <link rel="icon" href="data:,">
     <style>
     :root{--navy:#1f3a5f;--ice:#f4f7fb;--line:#c9d2dc;--muted:#6b7785;--accent:#2f6df0;}
@@ -105,23 +105,35 @@
             <a href="open-questions.html"><span>📋</span>Открытые вопросы</a>
         </nav></aside>
         <div class="admin-content"><main class="admin-main">
-            
-            <h1>Пользователи</h1>
-            <div class="toolbar">
-                <span class="muted">Всего записей: 6</span>
-                <a class="btn btn--accent" href="user-form.html">+ Создать пользователя</a>
-            </div>
-<table>
-<thead><tr><th>E-mail</th><th>Роль</th><th>Статус</th><th class="row-actions">Действия</th></tr></thead>
-<tbody>
-<tr><td>superadmin@investroom.local</td><td><span class="badge badge--role">SUPERADMIN</span></td><td><span class="badge badge--ok">Активен</span></td><td class="row-actions"><a href="user-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>admin@investroom.local</td><td><span class="badge badge--role">ADMIN</span></td><td><span class="badge badge--ok">Активен</span></td><td class="row-actions"><a href="user-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>content@investroom.local</td><td><span class="badge badge--role">CONTENT_MANAGER</span></td><td><span class="badge badge--ok">Активен</span></td><td class="row-actions"><a href="user-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>anna.investor@example.com</td><td><span class="badge badge--role">INVESTOR</span></td><td><span class="badge badge--ok">Активен</span></td><td class="row-actions"><a href="user-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>petr.investor@example.com</td><td><span class="badge badge--role">INVESTOR</span></td><td><span class="badge badge--ok">Активен</span></td><td class="row-actions"><a href="user-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>maria.investor@example.com</td><td><span class="badge badge--role">INVESTOR</span></td><td><span class="badge badge--ok">Активен</span></td><td class="row-actions"><a href="user-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-</tbody>
-</table>
+            <p class="crumb"><a href="users.html">Пользователи</a> / Просмотр</p>
+            <h1>Пользователь</h1>
+            <div class="notice">⚠️ В коде список пользователей пока <strong>read-only</strong>.
+                Создание/редактирование и выбор ролей включим после утверждения матрицы ролей заказчиком
+                (open_question&nbsp;#5). Это макет планируемого экрана.</div>
+            <form class="form-grid" onsubmit="return false">
+                <div class="fld"><label>E-mail</label><input type="email" value="anna.investor@example.com"></div>
+                <div class="two">
+                    <div class="fld"><label>Имя</label><input type="text" value="Анна"></div>
+                    <div class="fld"><label>Фамилия</label><input type="text" value="Иванова"></div>
+                </div>
+                <div class="fld"><label>Телефон</label><input type="text" value="+7 900 000-00-00"></div>
+                <div class="fld">
+                    <label>Роли</label>
+                    <div class="roles">
+                        <label><input type="checkbox" checked> Инвестор</label>
+                        <label><input type="checkbox"> Менеджер</label>
+                        <label><input type="checkbox"> Контент-менеджер</label>
+                        <label><input type="checkbox"> Администратор</label>
+                        <label><input type="checkbox"> Суперадмин</label>
+                    </div>
+                    <span class="hint">Состав ролей и прав — после утверждения матрицы (#5).</span>
+                </div>
+                <div class="fld"><label>Статус</label><select><option>Ожидает</option><option selected>Активен</option><option>Заблокирован</option></select></div>
+                <div class="fld"><label>Аватар</label><input type="file" accept="image/*"></div>
+                <button class="btn" type="submit" disabled title="Read-only: ждёт матрицы ролей (#5)">Сохранить</button>
+                <a class="btn btn--ghost" href="users.html">Назад</a>
+            </form>
+            <a class="back" href="users.html">← Назад к списку</a>
         </main></div>
     </div>
 </body>
