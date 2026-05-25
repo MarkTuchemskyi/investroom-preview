@@ -73,6 +73,18 @@ CSS = """
     .form-grid .two{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
     .back{display:inline-block;margin-top:1.1rem;}
     .confirm{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.4rem 1.5rem;max-width:560px;}
+    .uploader{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:1.3rem 1.5rem;margin-bottom:1.4rem;}
+    .uploader .drop{border:2px dashed #cfd8e3;border-radius:10px;padding:1.6rem;text-align:center;color:var(--muted);background:#fafbfe;}
+    .uploader .drop b{color:var(--navy);}
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;}
+    .gphoto{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
+    .gphoto .thumb{aspect-ratio:3/2;background:linear-gradient(135deg,#e9eef5,#dfe6ef);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#9fb0c4;position:relative;}
+    .gphoto .handle{position:absolute;top:.5rem;left:.5rem;background:rgba(255,255,255,.85);border-radius:6px;padding:.1rem .4rem;font-size:.9rem;color:var(--muted);cursor:grab;}
+    .gphoto .body{padding:.8rem .85rem;display:flex;flex-direction:column;gap:.55rem;}
+    .gphoto label{font-size:.78rem;color:var(--muted);font-weight:600;}
+    .gphoto input{width:100%;padding:.4rem .55rem;border:1px solid var(--line);border-radius:6px;font:inherit;}
+    .gphoto .row{display:flex;gap:.5rem;align-items:flex-end;}
+    .gphoto .row .ord{flex:0 0 64px;} .gphoto .row .del{margin-left:auto;}
     @media(max-width:760px){.admin-shell{flex-direction:column;}.admin-sidebar{flex-basis:auto;width:100%;min-height:0;border-right:0;border-bottom:1px solid var(--line);}.form-grid .two{grid-template-columns:1fr;}}
 """
 
@@ -287,10 +299,57 @@ def build_object_form():
                 </div>
                 <button class="btn" type="submit">Сохранить</button>
                 <a class="btn btn--ghost" href="objects.html">Отмена</a>
+                <a class="btn btn--ghost" href="object-gallery.html">🖼️ Управление галереей</a>
             </form>
             <a class="back" href="objects.html">← Назад к списку</a>"""
     return page("Изменить — объект каталога", "objects", body,
                 crumb='<a href="objects.html">Объекты каталога</a> / Изменить')
+
+
+def build_object_gallery():
+    obj = "Апартаменты у воды в Dubai Marina"
+    captions = ["Вид на залив с террасы", "Гостиная, панорамные окна", "Кухня-столовая",
+                "Спальня", "Бассейн на крыше комплекса", "Фасад здания"]
+    photos = []
+    for i, cap in enumerate(captions, start=1):
+        photos.append(f"""                <div class="gphoto">
+                    <div class="thumb">📷<span class="handle" title="Перетащите для сортировки">⠿</span></div>
+                    <div class="body">
+                        <div><label>Подпись</label><input type="text" value="{cap}"></div>
+                        <div class="row">
+                            <div class="ord"><label>Порядок</label><input type="number" value="{i}"></div>
+                            <button class="btn btn--danger btn--sm del" type="button">Удалить</button>
+                        </div>
+                    </div>
+                </div>""")
+    grid = "\n".join(photos)
+    body = f"""            <p class="muted">Объект: <strong>{obj}</strong>. Добавляйте фото, задавайте подписи и порядок;
+            перетаскивание мышью меняет очерёдность. Изменения сохраняются по кнопке внизу.</p>
+
+            <div class="uploader">
+                <div class="drop">
+                    <p><b>Перетащите фото сюда</b> или нажмите, чтобы выбрать файлы</p>
+                    <p style="margin:.4rem 0 0;font-size:.85rem">JPG/PNG/WebP, до 5 МБ. Можно несколько сразу.</p>
+                    <p style="margin-top:.9rem"><input type="file" multiple accept="image/*"></p>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <span class="muted">Фотографий в галерее: {len(captions)}</span>
+                <span></span>
+            </div>
+
+            <div class="gallery-grid">
+{grid}
+            </div>
+
+            <p style="margin-top:1.4rem">
+                <button class="btn" type="button">Сохранить галерею</button>
+                <a class="btn btn--ghost" href="object-form.html">← Назад к объекту</a>
+            </p>"""
+    return page("Галерея объекта", "objects", body,
+                crumb='<a href="objects.html">Объекты каталога</a> / '
+                      '<a href="object-form.html">Изменить</a> / Галерея')
 
 
 def build_object_delete():
@@ -383,6 +442,7 @@ write("settings.html", list_page(
 # нативные формы (ADR-009) — с боковым меню
 write("object-form.html", build_object_form())
 write("object-delete.html", build_object_delete())
+write("object-gallery.html", build_object_gallery())
 write("settings-form.html", build_settings_form())
 
 # открытые вопросы

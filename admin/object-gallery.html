@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Изменить — объект каталога — INVESTROOM админка</title>
+    <title>Галерея объекта — INVESTROOM админка</title>
     <link rel="icon" href="data:,">
     <style>
     :root{--navy:#1f3a5f;--ice:#f4f7fb;--line:#c9d2dc;--muted:#6b7785;--accent:#2f6df0;}
@@ -92,57 +92,91 @@
             <a href="open-questions.html"><span>📋</span>Открытые вопросы</a>
         </nav></aside>
         <div class="admin-content"><main class="admin-main">
-            <p class="crumb"><a href="objects.html">Объекты каталога</a> / Изменить</p>
-            <h1>Изменить — объект каталога</h1>
-            <form class="form-grid" onsubmit="return false">
-                <div class="fld">
-                    <label>Название</label>
-                    <input type="text" value="Апартаменты у воды в Dubai Marina">
+            <p class="crumb"><a href="objects.html">Объекты каталога</a> / <a href="object-form.html">Изменить</a> / Галерея</p>
+            <h1>Галерея объекта</h1>
+            <p class="muted">Объект: <strong>Апартаменты у воды в Dubai Marina</strong>. Добавляйте фото, задавайте подписи и порядок;
+            перетаскивание мышью меняет очерёдность. Изменения сохраняются по кнопке внизу.</p>
+
+            <div class="uploader">
+                <div class="drop">
+                    <p><b>Перетащите фото сюда</b> или нажмите, чтобы выбрать файлы</p>
+                    <p style="margin:.4rem 0 0;font-size:.85rem">JPG/PNG/WebP, до 5 МБ. Можно несколько сразу.</p>
+                    <p style="margin-top:.9rem"><input type="file" multiple accept="image/*"></p>
                 </div>
-                <div class="fld">
-                    <label>Slug (адрес)</label>
-                    <input type="text" value="dubai-marina-apartments">
-                    <span class="hint">Генерируется из названия, кириллица транслитерируется в латиницу.</span>
-                </div>
-                <div class="two">
-                    <div class="fld">
-                        <label>Тип недвижимости</label>
-                        <select><option>Апартаменты</option><option>Вилла</option><option>Таунхаус</option><option>Коммерция</option><option>Земля</option><option>Гостиничный номер</option></select>
+            </div>
+
+            <div class="toolbar">
+                <span class="muted">Фотографий в галерее: 6</span>
+                <span></span>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gphoto">
+                    <div class="thumb">📷<span class="handle" title="Перетащите для сортировки">⠿</span></div>
+                    <div class="body">
+                        <div><label>Подпись</label><input type="text" value="Вид на залив с террасы"></div>
+                        <div class="row">
+                            <div class="ord"><label>Порядок</label><input type="number" value="1"></div>
+                            <button class="btn btn--danger btn--sm del" type="button">Удалить</button>
+                        </div>
                     </div>
-                    <div class="fld">
-                        <label>Стадия строительства</label>
-                        <select><option>На стадии проекта</option><option selected>Строится</option><option>Готов к заселению</option><option>Сдан</option></select>
+                </div>
+                <div class="gphoto">
+                    <div class="thumb">📷<span class="handle" title="Перетащите для сортировки">⠿</span></div>
+                    <div class="body">
+                        <div><label>Подпись</label><input type="text" value="Гостиная, панорамные окна"></div>
+                        <div class="row">
+                            <div class="ord"><label>Порядок</label><input type="number" value="2"></div>
+                            <button class="btn btn--danger btn--sm del" type="button">Удалить</button>
+                        </div>
                     </div>
                 </div>
-                <div class="two">
-                    <div class="fld"><label>Город</label><input type="text" value="Дубай"></div>
-                    <div class="fld"><label>Страна</label><input type="text" value="ОАЭ"></div>
+                <div class="gphoto">
+                    <div class="thumb">📷<span class="handle" title="Перетащите для сортировки">⠿</span></div>
+                    <div class="body">
+                        <div><label>Подпись</label><input type="text" value="Кухня-столовая"></div>
+                        <div class="row">
+                            <div class="ord"><label>Порядок</label><input type="number" value="3"></div>
+                            <button class="btn btn--danger btn--sm del" type="button">Удалить</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="two">
-                    <div class="fld"><label>Застройщик</label><input type="text" value="Emaar Properties"></div>
-                    <div class="fld"><label>Срок сдачи</label><input type="text" value="IV кв. 2028"></div>
+                <div class="gphoto">
+                    <div class="thumb">📷<span class="handle" title="Перетащите для сортировки">⠿</span></div>
+                    <div class="body">
+                        <div><label>Подпись</label><input type="text" value="Спальня"></div>
+                        <div class="row">
+                            <div class="ord"><label>Порядок</label><input type="number" value="4"></div>
+                            <button class="btn btn--danger btn--sm del" type="button">Удалить</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="two">
-                    <div class="fld"><label>Площадь, м²</label><input type="text" value="78.50"></div>
-                    <div class="fld"><label>Спальни</label><input type="number" value="1"></div>
+                <div class="gphoto">
+                    <div class="thumb">📷<span class="handle" title="Перетащите для сортировки">⠿</span></div>
+                    <div class="body">
+                        <div><label>Подпись</label><input type="text" value="Бассейн на крыше комплекса"></div>
+                        <div class="row">
+                            <div class="ord"><label>Порядок</label><input type="number" value="5"></div>
+                            <button class="btn btn--danger btn--sm del" type="button">Удалить</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="two">
-                    <div class="fld"><label>Цена от</label><input type="text" value="1450000"><span class="hint">Статичный атрибут «от»; расчёта доходности нет (ждёт формул заказчика).</span></div>
-                    <div class="fld"><label>Валюта</label><select><option>AED</option><option>OMR</option><option>USD</option><option>RUB</option></select></div>
+                <div class="gphoto">
+                    <div class="thumb">📷<span class="handle" title="Перетащите для сортировки">⠿</span></div>
+                    <div class="body">
+                        <div><label>Подпись</label><input type="text" value="Фасад здания"></div>
+                        <div class="row">
+                            <div class="ord"><label>Порядок</label><input type="number" value="6"></div>
+                            <button class="btn btn--danger btn--sm del" type="button">Удалить</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="fld"><label>Теги</label><input type="text" value="у моря, рассрочка, high-floor"><span class="hint">Через запятую.</span></div>
-                <div class="fld"><label>Краткое описание</label><textarea rows="2">Видовые апартаменты в престижном районе Dubai Marina с рассрочкой от застройщика.</textarea></div>
-                <div class="fld"><label>Полное описание</label><textarea rows="4">Локация, транспортная доступность, близость к морю и условия от застройщика…</textarea></div>
-                <div class="fld"><label>Обложка</label><input type="file"></div>
-                <div class="two">
-                    <div class="fld"><label>Статус</label><select><option selected>Опубликован</option><option>Черновик</option></select></div>
-                    <div class="fld"><label>Избранный (на главной)</label><select><option selected>Да</option><option>Нет</option></select></div>
-                </div>
-                <button class="btn" type="submit">Сохранить</button>
-                <a class="btn btn--ghost" href="objects.html">Отмена</a>
-                <a class="btn btn--ghost" href="object-gallery.html">🖼️ Управление галереей</a>
-            </form>
-            <a class="back" href="objects.html">← Назад к списку</a>
+            </div>
+
+            <p style="margin-top:1.4rem">
+                <button class="btn" type="button">Сохранить галерею</button>
+                <a class="btn btn--ghost" href="object-form.html">← Назад к объекту</a>
+            </p>
         </main></div>
     </div>
 </body>
