@@ -409,6 +409,18 @@ def build_settings_form():
                 crumb='<a href="settings.html">Настройки сайта</a> / Изменить')
 
 
+def build_settings_delete():
+    body = """            <div class="confirm">
+                <p>Удалить настройку <strong>«Телефон поддержки»</strong> (<code>support.phone</code>)? Действие необратимо.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="settings.html">Отмена</a>
+                </form>
+            </div>"""
+    return page("Удалить — настройка сайта", "settings", body,
+                crumb='<a href="settings.html">Настройки сайта</a> / Удалить')
+
+
 def build_page_form():
     body = """            <form class="form-grid" onsubmit="return false">
                 <div class="two">
@@ -612,7 +624,7 @@ write("settings.html", list_page(
     "Настройки сайта", "settings", "Создать настройку",
     ["Название", "Ключ", "Тип", "Значение", "Группа"],
     [(s[0], f"<code>{s[1]}</code>", s[2], s[3], s[4]) for s in SETTINGS],
-    new_href="settings-form.html", edit_href="settings-form.html"))
+    new_href="settings-form.html", edit_href="settings-form.html", del_href="settings-delete.html"))
 
 # нативные формы (ADR-009) — с боковым меню
 write("object-form.html", build_object_form())
@@ -624,6 +636,7 @@ write("media-gallery.html", build_media_gallery())
 write("faq-form.html", build_faq_form())
 write("user-form.html", build_user_form())
 write("settings-form.html", build_settings_form())
+write("settings-delete.html", build_settings_delete())
 
 # открытые вопросы
 write("open-questions.html", build_open_questions())

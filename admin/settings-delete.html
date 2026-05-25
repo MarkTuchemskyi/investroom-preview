@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Настройки сайта — INVESTROOM админка</title>
+    <title>Удалить — настройка сайта — INVESTROOM админка</title>
     <link rel="icon" href="data:,">
     <style>
     :root{--navy:#1f3a5f;--ice:#f4f7fb;--line:#c9d2dc;--muted:#6b7785;--accent:#2f6df0;}
@@ -105,22 +105,15 @@
             <a href="open-questions.html"><span>📋</span>Открытые вопросы</a>
         </nav></aside>
         <div class="admin-content"><main class="admin-main">
-            
-            <h1>Настройки сайта</h1>
-            <div class="toolbar">
-                <span class="muted">Всего записей: 5</span>
-                <a class="btn btn--accent" href="settings-form.html">+ Создать настройку</a>
+            <p class="crumb"><a href="settings.html">Настройки сайта</a> / Удалить</p>
+            <h1>Удалить — настройка сайта</h1>
+            <div class="confirm">
+                <p>Удалить настройку <strong>«Телефон поддержки»</strong> (<code>support.phone</code>)? Действие необратимо.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="settings.html">Отмена</a>
+                </form>
             </div>
-<table>
-<thead><tr><th>Название</th><th>Ключ</th><th>Тип</th><th>Значение</th><th>Группа</th><th class="row-actions">Действия</th></tr></thead>
-<tbody>
-<tr><td>Название сайта</td><td><code>site.title</code></td><td>Текст</td><td>INVESTROOM</td><td>Общие</td><td class="row-actions"><a href="settings-form.html">Изменить</a><a class="del" href="settings-delete.html">Удалить</a></td></tr>
-<tr><td>E-mail для заявок</td><td><code>site.email</code></td><td>E-mail</td><td>info@investroom.example</td><td>Контакты</td><td class="row-actions"><a href="settings-form.html">Изменить</a><a class="del" href="settings-delete.html">Удалить</a></td></tr>
-<tr><td>Телефон поддержки</td><td><code>support.phone</code></td><td>Телефон</td><td>+971 50 000 00 00</td><td>Контакты</td><td class="row-actions"><a href="settings-form.html">Изменить</a><a class="del" href="settings-delete.html">Удалить</a></td></tr>
-<tr><td>Адрес офиса</td><td><code>contacts.address</code></td><td>Текст</td><td>Дубай, Business Bay</td><td>Контакты</td><td class="row-actions"><a href="settings-form.html">Изменить</a><a class="del" href="settings-delete.html">Удалить</a></td></tr>
-<tr><td>Текст cookie-баннера</td><td><code>cookie.text</code></td><td>Текст</td><td>Мы используем файлы cookie…</td><td>Прочее</td><td class="row-actions"><a href="settings-form.html">Изменить</a><a class="del" href="settings-delete.html">Удалить</a></td></tr>
-</tbody>
-</table>
         </main></div>
     </div>
 </body>
