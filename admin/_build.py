@@ -85,6 +85,16 @@ CSS = """
     .gphoto input{width:100%;padding:.4rem .55rem;border:1px solid var(--line);border-radius:6px;font:inherit;}
     .gphoto .row{display:flex;gap:.5rem;align-items:flex-end;}
     .gphoto .row .ord{flex:0 0 64px;} .gphoto .row .del{margin-left:auto;}
+    .editor{border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+    .editor .tb{display:flex;gap:.2rem;flex-wrap:wrap;padding:.4rem .5rem;background:#f7f9fc;border-bottom:1px solid var(--line);}
+    .editor .tb button{border:1px solid var(--line);background:#fff;border-radius:5px;padding:.25rem .55rem;font:inherit;font-size:.9rem;cursor:pointer;}
+    .editor .tb button:hover{background:var(--ice);}
+    .editor .area{padding:.7rem .75rem;min-height:150px;background:#fff;}
+    .editor .area p{margin:0 0 .7rem;} .editor .area figure{margin:.7rem 0;text-align:center;}
+    .editor .area .embed{display:inline-flex;align-items:center;justify-content:center;width:100%;max-width:360px;aspect-ratio:3/2;background:linear-gradient(135deg,#e9eef5,#dfe6ef);border-radius:8px;color:#9fb0c4;font-size:1.6rem;}
+    .editor .area figcaption{font-size:.82rem;color:var(--muted);margin-top:.3rem;}
+    .cover{display:flex;gap:1rem;align-items:center;}
+    .cover .prev{flex:0 0 140px;aspect-ratio:3/2;background:linear-gradient(135deg,#e9eef5,#dfe6ef);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#9fb0c4;font-size:1.6rem;}
     @media(max-width:760px){.admin-shell{flex-direction:column;}.admin-sidebar{flex-basis:auto;width:100%;min-height:0;border-right:0;border-bottom:1px solid var(--line);}.form-grid .two{grid-template-columns:1fr;}}
 """
 
@@ -396,6 +406,68 @@ def build_settings_form():
                 crumb='<a href="settings.html">Настройки сайта</a> / Изменить')
 
 
+def build_page_form():
+    body = """            <form class="form-grid" onsubmit="return false">
+                <div class="two">
+                    <div class="fld"><label>Статус</label><select><option selected>Опубликована</option><option>Черновик</option></select></div>
+                    <div class="fld"><label>Дата публикации</label><input type="text" value="20.05.2026"></div>
+                </div>
+                <div class="fld"><label>Заголовок</label><input type="text" value="Инвесторам"></div>
+                <div class="fld"><label>Slug (адрес)</label><input type="text" value="investoram"><span class="hint">Генерируется из заголовка; страница будет доступна по /p/investoram.</span></div>
+
+                <div class="fld">
+                    <label>Обложка (hero-изображение)</label>
+                    <div class="cover">
+                        <span class="prev">🖼️</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <span class="hint">Одно изображение в шапке страницы.</span>
+                </div>
+                <div class="fld"><label>Заголовок в шапке (hero)</label><input type="text" value="Инвестируйте вместе с INVESTROOM"></div>
+                <div class="fld"><label>Подзаголовок в шапке</label><textarea rows="2">Прозрачные условия, проверенные объекты, поддержка на каждом шаге.</textarea></div>
+
+                <div class="fld">
+                    <label>Текст страницы</label>
+                    <div class="editor">
+                        <div class="tb">
+                            <button type="button"><b>Ж</b></button>
+                            <button type="button"><i>К</i></button>
+                            <button type="button">• Список</button>
+                            <button type="button">🔗 Ссылка</button>
+                            <button type="button">🖼️ Изображение</button>
+                        </div>
+                        <div class="area">
+                            <p>Мы помогаем инвестировать в недвижимость ОАЭ и Омана. Ниже — как это работает.</p>
+                            <figure>
+                                <span class="embed">🖼️</span>
+                                <figcaption>Изображения добавляются прямо в текст кнопкой «🖼️ Изображение».</figcaption>
+                            </figure>
+                            <p>Выберите объект, изучите условия и оформите сделку — всё в личном кабинете.</p>
+                        </div>
+                    </div>
+                    <span class="hint">Картинки на странице вставляются внутрь текста (отдельной галереи у страниц нет).</span>
+                </div>
+
+                <div class="two">
+                    <div class="fld"><label>Показывать в шапке сайта</label><select><option selected>Да</option><option>Нет</option></select></div>
+                    <div class="fld"><label>Показывать в подвале</label><select><option selected>Да</option><option>Нет</option></select></div>
+                </div>
+                <div class="two">
+                    <div class="fld"><label>Порядок в меню</label><input type="number" value="2"></div>
+                    <div class="fld"><label>Шаблон (override)</label><input type="text" value=""><span class="hint">Спец-шаблон, напр. contacts/faq. Пусто — обычная страница.</span></div>
+                </div>
+
+                <div class="fld"><label>SEO: meta title</label><input type="text" value="Инвесторам — INVESTROOM"></div>
+                <div class="fld"><label>SEO: meta description</label><textarea rows="2">Условия инвестирования в недвижимость ОАЭ и Омана через INVESTROOM.</textarea></div>
+
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="pages.html">Отмена</a>
+            </form>
+            <a class="back" href="pages.html">← Назад к списку</a>"""
+    return page("Изменить — страница", "pages", body,
+                crumb='<a href="pages.html">Страницы</a> / Изменить')
+
+
 def build_media_form():
     body = """            <form class="form-grid" onsubmit="return false">
                 <div class="two">
@@ -463,7 +535,8 @@ write("objects.html", list_page(
 write("pages.html", list_page(
     "Страницы", "pages", "Создать страницу",
     ["Заголовок", "Адрес", "Статус"],
-    [(p[0], f"<code>{p[1]}</code>", status_badge(p[3], "Опубликована", "Черновик")) for p in PAGES]))
+    [(p[0], f"<code>{p[1]}</code>", status_badge(p[3], "Опубликована", "Черновик")) for p in PAGES],
+    new_href="page-form.html", edit_href="page-form.html"))
 
 write("media.html", list_page(
     "Медиа", "media", "Добавить материал",
@@ -491,6 +564,7 @@ write("settings.html", list_page(
 write("object-form.html", build_object_form())
 write("object-delete.html", build_object_delete())
 write("object-gallery.html", build_object_gallery())
+write("page-form.html", build_page_form())
 write("media-form.html", build_media_form())
 write("media-gallery.html", build_media_gallery())
 write("settings-form.html", build_settings_form())
