@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Удалить — объект каталога — INVESTROOM админка</title>
+    <link rel="icon" href="data:,">
+    <style>
+    :root{--navy:#1f3a5f;--ice:#f4f7fb;--line:#c9d2dc;--muted:#6b7785;--accent:#2f6df0;}
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#1c2733;background:var(--ice);}
+    a{color:var(--navy);}
+    .note{background:#0f1633;color:#cdd6f0;text-align:center;font-size:.82rem;padding:7px 12px;}
+    .note b{color:#fff;} .note a{color:#9ec1ff;}
+    .admin-bar{background:var(--navy);color:#fff;padding:.85rem 1.4rem;display:flex;align-items:center;justify-content:space-between;}
+    .admin-bar a.brand{color:#fff;text-decoration:none;font-weight:700;letter-spacing:.03em;}
+    .admin-bar .user{font-size:.85rem;color:#cdd6f0;} .admin-bar .user a{color:#fff;}
+    .admin-shell{display:flex;align-items:flex-start;}
+    .admin-sidebar{flex:0 0 240px;background:#fff;border-right:1px solid var(--line);min-height:calc(100vh - 90px);padding:1rem 0;}
+    .admin-sidebar nav{display:flex;flex-direction:column;}
+    .admin-sidebar .sec{padding:.9rem 1.4rem .35rem;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);}
+    .admin-sidebar a{display:flex;gap:.6rem;align-items:center;padding:.55rem 1.4rem;color:#1c2733;text-decoration:none;border-left:3px solid transparent;}
+    .admin-sidebar a:hover{background:var(--ice);}
+    .admin-sidebar a.active{border-left-color:var(--navy);background:var(--ice);font-weight:600;color:var(--navy);}
+    .admin-content{flex:1 1 auto;min-width:0;}
+    .admin-main{max-width:980px;margin:0 auto;padding:1.6rem 1.5rem 3rem;}
+    .admin-main h1{font-size:1.5rem;margin:0 0 1.3rem;}
+    .crumb{color:var(--muted);font-size:.85rem;margin:0 0 1rem;}
+    .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;gap:1rem;flex-wrap:wrap;}
+    .btn{display:inline-block;padding:.55rem 1.1rem;border:0;border-radius:6px;color:#fff;background:var(--navy);font:inherit;font-weight:600;text-decoration:none;cursor:pointer;}
+    .btn:hover{background:#16293f;} .btn--accent{background:var(--accent);} .btn--sm{padding:.35rem .7rem;font-size:.85rem;}
+    .btn--danger{background:#c0392b;} .btn--danger:hover{background:#a93226;}
+    .btn--ghost{background:transparent;color:var(--navy);border:1px solid var(--line);}
+    table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+    th,td{text-align:left;padding:.7rem .85rem;border-bottom:1px solid #eef1f5;font-size:.92rem;vertical-align:middle;}
+    th{background:#f7f9fc;color:var(--muted);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.03em;}
+    tr:last-child td{border-bottom:0;} tr:hover td{background:#fafbfe;}
+    .badge{display:inline-block;padding:.15rem .55rem;border-radius:99px;font-size:.78rem;font-weight:600;}
+    .badge--ok{background:#e6f5ea;color:#1e6b3a;} .badge--draft{background:#fdf0e3;color:#9a5b13;}
+    .badge--role{background:#eef2fb;color:#2f4d8a;margin-right:.25rem;}
+    .row-actions{white-space:nowrap;text-align:right;}
+    .row-actions a{font-size:.85rem;margin-left:.6rem;text-decoration:none;}
+    .row-actions a.del{color:#c0392b;}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
+    .card{padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:#fff;}
+    .card h3{margin:0 0 .6rem;font-size:1.02rem;} .card p{margin:.3rem 0;}
+    .card .big{font-size:1.9rem;font-weight:700;color:var(--navy);}
+    .card ul{margin:.3rem 0 0;padding-left:1.05rem;color:#33414f;font-size:.92rem;} .card li{margin:.2rem 0;}
+    .muted{color:var(--muted);}
+    .form-grid{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.4rem 1.5rem;max-width:680px;}
+    .form-grid .fld{margin-bottom:1.05rem;}
+    .form-grid label{display:block;font-weight:600;margin-bottom:.35rem;}
+    .form-grid input[type=text],.form-grid input[type=email],.form-grid input[type=number],
+    .form-grid select,.form-grid textarea,.form-grid input[type=file]{width:100%;padding:.55rem .65rem;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;}
+    .form-grid textarea{resize:vertical;} .form-grid .hint{display:block;color:var(--muted);font-size:.84rem;margin-top:.25rem;}
+    .form-grid .two{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .back{display:inline-block;margin-top:1.1rem;}
+    .confirm{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.4rem 1.5rem;max-width:560px;}
+    @media(max-width:760px){.admin-shell{flex-direction:column;}.admin-sidebar{flex-basis:auto;width:100%;min-height:0;border-right:0;border-bottom:1px solid var(--line);}.form-grid .two{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+    <div class="note">Превью <b>админ-панели</b> INVESTROOM — макет дизайна, бэкенда нет. ·
+        <a href="../phase3/index.html">← к витрине сайта</a></div>
+    <header class="admin-bar">
+        <a class="brand" href="index.html">INVESTROOM · админка</a>
+        <span class="user">superadmin@investroom.local · <a href="#">Выйти</a></span>
+    </header>
+    <div class="admin-shell">
+        <aside class="admin-sidebar"><nav>
+            <a href="index.html"><span>📊</span>Дашборд</a>
+            <span class="sec">Контент</span>
+            <a href="objects.html" class="active"><span>🏢</span>Объекты каталога</a>
+            <a href="pages.html"><span>📄</span>Страницы</a>
+            <a href="faq.html"><span>❓</span>Частые вопросы</a>
+            <a href="media.html"><span>🖼️</span>Медиа</a>
+            <span class="sec">Управление</span>
+            <a href="users.html"><span>👥</span>Пользователи</a>
+            <a href="settings.html"><span>⚙️</span>Настройки сайта</a>
+            <a href="open-questions.html"><span>📋</span>Открытые вопросы</a>
+        </nav></aside>
+        <div class="admin-content"><main class="admin-main">
+            <p class="crumb"><a href="objects.html">Объекты каталога</a> / Удалить</p>
+            <h1>Удалить — объект каталога</h1>
+            <div class="confirm">
+                <p>Удалить запись <strong>«Апартаменты у воды в Dubai Marina»</strong>? Действие необратимо.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="objects.html">Отмена</a>
+                </form>
+            </div>
+        </main></div>
+    </div>
+</body>
+</html>
