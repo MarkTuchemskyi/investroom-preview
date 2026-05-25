@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Медиа — INVESTROOM админка</title>
+    <title>Галерея фотоальбома — INVESTROOM админка</title>
     <link rel="icon" href="data:,">
     <style>
     :root{--navy:#1f3a5f;--ice:#f4f7fb;--line:#c9d2dc;--muted:#6b7785;--accent:#2f6df0;}
@@ -92,21 +92,81 @@
             <a href="open-questions.html"><span>📋</span>Открытые вопросы</a>
         </nav></aside>
         <div class="admin-content"><main class="admin-main">
-            
-            <h1>Медиа</h1>
-            <div class="toolbar">
-                <span class="muted">Всего записей: 4</span>
-                <a class="btn btn--accent" href="media-form.html">+ Добавить материал</a>
+            <p class="crumb"><a href="media.html">Медиа</a> / <a href="media-form.html">Изменить</a> / Галерея</p>
+            <h1>Галерея фотоальбома</h1>
+            <p class="muted">Фотоальбом: <strong>Фотоотчёт с выставки Cityscape</strong>. Добавляйте фото, задавайте подписи и порядок;
+            перетаскивание мышью меняет очерёдность. Изменения сохраняются по кнопке внизу.</p>
+
+            <div class="uploader">
+                <div class="drop">
+                    <p><b>Перетащите фото сюда</b> или нажмите, чтобы выбрать файлы</p>
+                    <p style="margin:.4rem 0 0;font-size:.85rem">JPG/PNG/WebP, до 5 МБ. Можно несколько сразу.</p>
+                    <p style="margin-top:.9rem"><input type="file" multiple accept="image/*"></p>
+                </div>
             </div>
-<table>
-<thead><tr><th>Заголовок</th><th>Тип</th><th>Статус</th><th>Дата</th><th class="row-actions">Действия</th></tr></thead>
-<tbody>
-<tr><td>Старт продаж в новом проекте Emaar</td><td>Новость</td><td><span class="badge badge--ok">Опубликовано</span></td><td>12.05.2026</td><td class="row-actions"><a href="media-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>Как выбрать объект для инвестиций</td><td>Статья</td><td><span class="badge badge--ok">Опубликовано</span></td><td>28.04.2026</td><td class="row-actions"><a href="media-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>Обзор рынка недвижимости ОАЭ 2026</td><td>Видео</td><td><span class="badge badge--ok">Опубликовано</span></td><td>15.04.2026</td><td class="row-actions"><a href="media-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>Фотоотчёт с выставки Cityscape</td><td>Фотоальбом</td><td><span class="badge badge--ok">Опубликовано</span></td><td>02.04.2026</td><td class="row-actions"><a href="media-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-</tbody>
-</table>
+
+            <div class="toolbar">
+                <span class="muted">Фотографий в галерее: 5</span>
+                <span></span>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gphoto">
+                    <div class="thumb">📷<span class="handle" title="Перетащите для сортировки">⠿</span></div>
+                    <div class="body">
+                        <div><label>Подпись</label><input type="text" value="Стенд INVESTROOM"></div>
+                        <div class="row">
+                            <div class="ord"><label>Порядок</label><input type="number" value="1"></div>
+                            <button class="btn btn--danger btn--sm del" type="button">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="gphoto">
+                    <div class="thumb">📷<span class="handle" title="Перетащите для сортировки">⠿</span></div>
+                    <div class="body">
+                        <div><label>Подпись</label><input type="text" value="Презентация проектов"></div>
+                        <div class="row">
+                            <div class="ord"><label>Порядок</label><input type="number" value="2"></div>
+                            <button class="btn btn--danger btn--sm del" type="button">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="gphoto">
+                    <div class="thumb">📷<span class="handle" title="Перетащите для сортировки">⠿</span></div>
+                    <div class="body">
+                        <div><label>Подпись</label><input type="text" value="Переговоры с инвесторами"></div>
+                        <div class="row">
+                            <div class="ord"><label>Порядок</label><input type="number" value="3"></div>
+                            <button class="btn btn--danger btn--sm del" type="button">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="gphoto">
+                    <div class="thumb">📷<span class="handle" title="Перетащите для сортировки">⠿</span></div>
+                    <div class="body">
+                        <div><label>Подпись</label><input type="text" value="Панорама выставки"></div>
+                        <div class="row">
+                            <div class="ord"><label>Порядок</label><input type="number" value="4"></div>
+                            <button class="btn btn--danger btn--sm del" type="button">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="gphoto">
+                    <div class="thumb">📷<span class="handle" title="Перетащите для сортировки">⠿</span></div>
+                    <div class="body">
+                        <div><label>Подпись</label><input type="text" value="Награждение участников"></div>
+                        <div class="row">
+                            <div class="ord"><label>Порядок</label><input type="number" value="5"></div>
+                            <button class="btn btn--danger btn--sm del" type="button">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top:1.4rem">
+                <button class="btn" type="button">Сохранить галерею</button>
+                <a class="btn btn--ghost" href="media-form.html">← Назад к материалу</a>
+            </p>
         </main></div>
     </div>
 </body>

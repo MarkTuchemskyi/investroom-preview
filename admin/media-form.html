@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Медиа — INVESTROOM админка</title>
+    <title>Изменить — медиа-материал — INVESTROOM админка</title>
     <link rel="icon" href="data:,">
     <style>
     :root{--navy:#1f3a5f;--ice:#f4f7fb;--line:#c9d2dc;--muted:#6b7785;--accent:#2f6df0;}
@@ -92,21 +92,33 @@
             <a href="open-questions.html"><span>📋</span>Открытые вопросы</a>
         </nav></aside>
         <div class="admin-content"><main class="admin-main">
-            
-            <h1>Медиа</h1>
-            <div class="toolbar">
-                <span class="muted">Всего записей: 4</span>
-                <a class="btn btn--accent" href="media-form.html">+ Добавить материал</a>
-            </div>
-<table>
-<thead><tr><th>Заголовок</th><th>Тип</th><th>Статус</th><th>Дата</th><th class="row-actions">Действия</th></tr></thead>
-<tbody>
-<tr><td>Старт продаж в новом проекте Emaar</td><td>Новость</td><td><span class="badge badge--ok">Опубликовано</span></td><td>12.05.2026</td><td class="row-actions"><a href="media-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>Как выбрать объект для инвестиций</td><td>Статья</td><td><span class="badge badge--ok">Опубликовано</span></td><td>28.04.2026</td><td class="row-actions"><a href="media-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>Обзор рынка недвижимости ОАЭ 2026</td><td>Видео</td><td><span class="badge badge--ok">Опубликовано</span></td><td>15.04.2026</td><td class="row-actions"><a href="media-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-<tr><td>Фотоотчёт с выставки Cityscape</td><td>Фотоальбом</td><td><span class="badge badge--ok">Опубликовано</span></td><td>02.04.2026</td><td class="row-actions"><a href="media-form.html">Изменить</a><a class="del" href="#">Удалить</a></td></tr>
-</tbody>
-</table>
+            <p class="crumb"><a href="media.html">Медиа</a> / Изменить</p>
+            <h1>Изменить — медиа-материал</h1>
+            <form class="form-grid" onsubmit="return false">
+                <div class="two">
+                    <div class="fld">
+                        <label>Тип материала</label>
+                        <select><option>Новость</option><option>Статья</option><option>Видео</option><option selected>Фотоальбом</option></select>
+                    </div>
+                    <div class="fld">
+                        <label>Статус</label>
+                        <select><option selected>Опубликовано</option><option>Черновик</option></select>
+                    </div>
+                </div>
+                <div class="fld"><label>Заголовок</label><input type="text" value="Фотоотчёт с выставки Cityscape"></div>
+                <div class="fld"><label>Slug (адрес)</label><input type="text" value="cityscape-photo-report"><span class="hint">Генерируется из заголовка.</span></div>
+                <div class="fld"><label>Дата публикации</label><input type="text" value="02.04.2026"></div>
+                <div class="fld"><label>Анонс</label><textarea rows="2">Как прошла крупнейшая выставка недвижимости региона — наши впечатления и проекты.</textarea></div>
+                <div class="fld"><label>Текст</label><textarea rows="4">Подробный рассказ о выставке, встречах и проектах…</textarea></div>
+                <div class="fld"><label>Ссылка на видео</label><input type="text" value=""><span class="hint">Только для типа «Видео».</span></div>
+                <div class="fld"><label>Теги</label><input type="text" value="выставка, события, Cityscape"><span class="hint">Через запятую.</span></div>
+                <div class="fld"><label>Обложка</label><input type="file"></div>
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="media.html">Отмена</a>
+                <a class="btn btn--ghost" href="media-gallery.html">🖼️ Управление галереей</a>
+            </form>
+            <p class="hint" style="margin-top:.6rem">Галерея доступна для типа «Фотоальбом».</p>
+            <a class="back" href="media.html">← Назад к списку</a>
         </main></div>
     </div>
 </body>

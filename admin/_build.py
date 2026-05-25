@@ -306,10 +306,8 @@ def build_object_form():
                 crumb='<a href="objects.html">Объекты каталога</a> / Изменить')
 
 
-def build_object_gallery():
-    obj = "Апартаменты у воды в Dubai Marina"
-    captions = ["Вид на залив с террасы", "Гостиная, панорамные окна", "Кухня-столовая",
-                "Спальня", "Бассейн на крыше комплекса", "Фасад здания"]
+def gallery_body(subject_intro, captions, back_href, back_label):
+    """Общее тело экрана управления галереей (объект / фотоальбом медиа)."""
     photos = []
     for i, cap in enumerate(captions, start=1):
         photos.append(f"""                <div class="gphoto">
@@ -323,7 +321,7 @@ def build_object_gallery():
                     </div>
                 </div>""")
     grid = "\n".join(photos)
-    body = f"""            <p class="muted">Объект: <strong>{obj}</strong>. Добавляйте фото, задавайте подписи и порядок;
+    return f"""            <p class="muted">{subject_intro} Добавляйте фото, задавайте подписи и порядок;
             перетаскивание мышью меняет очерёдность. Изменения сохраняются по кнопке внизу.</p>
 
             <div class="uploader">
@@ -345,11 +343,30 @@ def build_object_gallery():
 
             <p style="margin-top:1.4rem">
                 <button class="btn" type="button">Сохранить галерею</button>
-                <a class="btn btn--ghost" href="object-form.html">← Назад к объекту</a>
+                <a class="btn btn--ghost" href="{back_href}">← {back_label}</a>
             </p>"""
+
+
+def build_object_gallery():
+    body = gallery_body(
+        "Объект: <strong>Апартаменты у воды в Dubai Marina</strong>.",
+        ["Вид на залив с террасы", "Гостиная, панорамные окна", "Кухня-столовая",
+         "Спальня", "Бассейн на крыше комплекса", "Фасад здания"],
+        "object-form.html", "Назад к объекту")
     return page("Галерея объекта", "objects", body,
                 crumb='<a href="objects.html">Объекты каталога</a> / '
                       '<a href="object-form.html">Изменить</a> / Галерея')
+
+
+def build_media_gallery():
+    body = gallery_body(
+        "Фотоальбом: <strong>Фотоотчёт с выставки Cityscape</strong>.",
+        ["Стенд INVESTROOM", "Презентация проектов", "Переговоры с инвесторами",
+         "Панорама выставки", "Награждение участников"],
+        "media-form.html", "Назад к материалу")
+    return page("Галерея фотоальбома", "media", body,
+                crumb='<a href="media.html">Медиа</a> / '
+                      '<a href="media-form.html">Изменить</a> / Галерея')
 
 
 def build_object_delete():
@@ -377,6 +394,36 @@ def build_settings_form():
             <a class="back" href="settings.html">← Назад к списку</a>"""
     return page("Изменить — настройка сайта", "settings", body,
                 crumb='<a href="settings.html">Настройки сайта</a> / Изменить')
+
+
+def build_media_form():
+    body = """            <form class="form-grid" onsubmit="return false">
+                <div class="two">
+                    <div class="fld">
+                        <label>Тип материала</label>
+                        <select><option>Новость</option><option>Статья</option><option>Видео</option><option selected>Фотоальбом</option></select>
+                    </div>
+                    <div class="fld">
+                        <label>Статус</label>
+                        <select><option selected>Опубликовано</option><option>Черновик</option></select>
+                    </div>
+                </div>
+                <div class="fld"><label>Заголовок</label><input type="text" value="Фотоотчёт с выставки Cityscape"></div>
+                <div class="fld"><label>Slug (адрес)</label><input type="text" value="cityscape-photo-report"><span class="hint">Генерируется из заголовка.</span></div>
+                <div class="fld"><label>Дата публикации</label><input type="text" value="02.04.2026"></div>
+                <div class="fld"><label>Анонс</label><textarea rows="2">Как прошла крупнейшая выставка недвижимости региона — наши впечатления и проекты.</textarea></div>
+                <div class="fld"><label>Текст</label><textarea rows="4">Подробный рассказ о выставке, встречах и проектах…</textarea></div>
+                <div class="fld"><label>Ссылка на видео</label><input type="text" value=""><span class="hint">Только для типа «Видео».</span></div>
+                <div class="fld"><label>Теги</label><input type="text" value="выставка, события, Cityscape"><span class="hint">Через запятую.</span></div>
+                <div class="fld"><label>Обложка</label><input type="file"></div>
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="media.html">Отмена</a>
+                <a class="btn btn--ghost" href="media-gallery.html">🖼️ Управление галереей</a>
+            </form>
+            <p class="hint" style="margin-top:.6rem">Галерея доступна для типа «Фотоальбом».</p>
+            <a class="back" href="media.html">← Назад к списку</a>"""
+    return page("Изменить — медиа-материал", "media", body,
+                crumb='<a href="media.html">Медиа</a> / Изменить')
 
 
 def build_open_questions():
@@ -421,7 +468,8 @@ write("pages.html", list_page(
 write("media.html", list_page(
     "Медиа", "media", "Добавить материал",
     ["Заголовок", "Тип", "Статус", "Дата"],
-    [(m[0], m[1], status_badge(True, m[2], ""), m[3]) for m in MEDIA]))
+    [(m[0], m[1], status_badge(True, m[2], ""), m[3]) for m in MEDIA],
+    new_href="media-form.html", edit_href="media-form.html"))
 
 write("faq.html", list_page(
     "Частые вопросы", "faq", "Добавить вопрос",
@@ -443,6 +491,8 @@ write("settings.html", list_page(
 write("object-form.html", build_object_form())
 write("object-delete.html", build_object_delete())
 write("object-gallery.html", build_object_gallery())
+write("media-form.html", build_media_form())
+write("media-gallery.html", build_media_gallery())
 write("settings-form.html", build_settings_form())
 
 # открытые вопросы
