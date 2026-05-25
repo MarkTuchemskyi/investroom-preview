@@ -86,7 +86,8 @@ def header(active=""):
         </button>
         <nav class="main-nav" aria-label="Главное меню">
             <a href="objects.html" class="{cls('objects')}">Объекты инвестиций</a>
-            <a href="../phase2/about.html" class="main-nav__link">Инвесторам</a>
+            <a href="projects.html" class="{cls('projects')}">Проекты</a>
+            <a href="team.html" class="{cls('team')}">Команда</a>
             <a href="../phase2/about.html" class="main-nav__link">О нас</a>
             <a href="../phase2/media.html" class="main-nav__link">Медиа</a>
             <a href="../phase2/contacts.html" class="main-nav__link">Контакты</a>
@@ -364,6 +365,140 @@ def build_index():
     return page("INVESTROOM — инвестируйте в недвижимость", body, active="")
 
 
+# ----- Блок A: команда -----
+MANAGERS = [
+    dict(name="Анна Иванова", position="Менеджер по жилой недвижимости", langs=["RU", "EN"]),
+    dict(name="Дмитрий Соколов", position="Менеджер по коммерческой недвижимости", langs=["RU"]),
+    dict(name="Мария Петрова", position="Менеджер по зарубежной недвижимости", langs=["RU", "EN"]),
+    dict(name="Игорь Кузнецов", position="Менеджер по земельным участкам", langs=["RU"]),
+]
+
+# ----- Блок B: проекты (ЖК) -----
+PROJECTS = [
+    dict(slug="morskaya-rezidenciya-sochi", name="ЖК «Морская Резиденция»", developer="ЮгСтрой",
+         country="Россия", city="Сочи", address="Сочи, Курортный проспект", delivery="IV кв. 2026",
+         amount=4500000000, currency="RUB",
+         short="Премиальный жилой комплекс у моря в Сочи с собственной набережной."),
+    dict(slug="city-park-moscow", name="ЖК «Сити Парк»", developer="СтолицаДевелопмент",
+         country="Россия", city="Москва", address="Москва, Пресненская набережная", delivery="II кв. 2027",
+         amount=12000000000, currency="RUB",
+         short="Бизнес-класс рядом с деловым центром Москвы."),
+    dict(slug="marina-heights-dubai", name="Marina Heights", developer="Emaar Properties",
+         country="ОАЭ", city="Дубай", address="Dubai Marina", delivery="I кв. 2028",
+         amount=900000000, currency="AED",
+         short="Башня премиум-класса в Dubai Marina с рассрочкой от застройщика."),
+]
+
+MONEY_SYMBOLS = {"RUB": "₽", "USD": "$", "EUR": "€"}
+
+
+def money_minor(amount, currency):
+    major = "{:,}".format(amount // 100).replace(",", " ")
+    return f"{major} {MONEY_SYMBOLS.get(currency, currency)}"
+
+
+def manager_card(m):
+    langs = "".join(f'<span class="tag tag--sm">{l}</span>' for l in m["langs"])
+    return f"""            <article class="manager-card">
+                <span class="manager-card__photo"><img src="images/placeholders/square.svg" alt="{m['name']}" width="160" height="160"></span>
+                <span class="manager-card__body">
+                    <span class="manager-card__name">{m['name']}</span>
+                    <span class="manager-card__position muted">{m['position']}</span>
+                    <span class="manager-card__langs">{langs}</span>
+                    <a class="btn btn--ghost btn--sm" href="../phase2/contacts.html">Связаться</a>
+                </span>
+            </article>"""
+
+
+TEAM_CSS = """
+        .team__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin-top:1.4rem}
+        .manager-card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--color-line,#e6e8ef);border-radius:14px;overflow:hidden;text-align:center}
+        .manager-card__photo img{width:100%;height:200px;object-fit:cover;background:#eef2f8}
+        .manager-card__body{display:flex;flex-direction:column;gap:.45rem;padding:1rem 1.1rem 1.3rem;align-items:center}
+        .manager-card__name{font-weight:700;font-size:1.05rem}
+        .manager-card__langs{display:flex;gap:.35rem;justify-content:center}
+        .tag--sm{font-size:.72rem;padding:.1rem .5rem}"""
+
+
+def build_team():
+    cards = "\n".join(manager_card(m) for m in MANAGERS)
+    body = f"""        <section class="catalog container">
+            <nav class="breadcrumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a> / <span>Команда</span></nav>
+            <h1 class="page__title">Наша команда</h1>
+            <p class="muted">Менеджеры INVESTROOM помогут подобрать объект и сопроводят сделку.</p>
+            <div class="team__grid">
+{cards}
+            </div>
+        </section>"""
+    return page("Наша команда — INVESTROOM", body, active="team", extra_head=f"<style>{TEAM_CSS}</style>")
+
+
+def project_card(p):
+    return f"""            <article class="media-card object-card">
+                <a class="media-card__link" href="project-{p['slug']}.html">
+                    <span class="media-card__cover"><img src="images/placeholders/horizontal.svg" alt="{p['name']}" loading="lazy" width="600" height="400"></span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">{p['city']}, {p['country']}</span>
+                        <span class="media-card__title">{p['name']}</span>
+                        <span class="muted">{p['developer']}</span>
+                        <span class="object-card__facts">{p['short']}</span>
+                        <span class="object-card__price">от {money_minor(p['amount'], p['currency'])}</span>
+                    </span>
+                </a>
+            </article>"""
+
+
+def build_projects():
+    countries = sorted({p["country"] for p in PROJECTS})
+    country_chips = '<a href="#" class="chip chip--active">Все страны</a>' + "".join(
+        f'\n                <a href="#" class="chip">{c}</a>' for c in countries)
+    cards = "\n".join(project_card(p) for p in PROJECTS)
+    body = f"""        <section class="catalog container">
+            <nav class="breadcrumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a> / <span>Проекты</span></nav>
+            <h1 class="page__title">Проекты (ЖК)</h1>
+            <div class="catalog__filters" role="group" aria-label="Фильтр по стране">
+                {country_chips}
+            </div>
+            <p class="catalog__count muted">Найдено проектов: {len(PROJECTS)}</p>
+            <div class="media__grid">
+{cards}
+            </div>
+        </section>"""
+    return page("Проекты (ЖК) — INVESTROOM", body, active="projects")
+
+
+def build_project_detail(p):
+    gallery = "".join(f"""
+                    <figure class="gallery__item">
+                        <img src="images/placeholders/horizontal.svg" alt="{p['name']} — фото {i}" loading="lazy">
+                        <figcaption>{p['name']} — фото {i}</figcaption>
+                    </figure>""" for i in range(1, 4))
+    body = f"""        <article class="object-detail container">
+            <nav class="breadcrumbs" aria-label="Хлебные крошки">
+                <a href="index.html">Главная</a> / <a href="projects.html">Проекты</a> / <span>{p['name']}</span>
+            </nav>
+            <h1 class="object-detail__title">{p['name']}</h1>
+            <p class="object-detail__location muted">{p['city']}, {p['country']} · {p['developer']}</p>
+            <img class="object-detail__cover" src="images/placeholders/horizontal.svg" alt="{p['name']}">
+            <p class="object-detail__lead">{p['short']}</p>
+            <dl class="object-facts">
+                <div class="object-facts__item"><dt>Срок сдачи</dt><dd>{p['delivery']}</dd></div>
+                <div class="object-facts__item object-facts__item--price"><dt>Сумма проекта</dt><dd>от {money_minor(p['amount'], p['currency'])}</dd></div>
+                <div class="object-facts__item"><dt>Адрес</dt><dd>{p['address']}</dd></div>
+            </dl>
+            <h2 class="object-detail__subtitle">Галерея</h2>
+            <div class="gallery">{gallery}
+            </div>
+            <h2 class="object-detail__subtitle">На карте</h2>
+            <div class="map map--placeholder" style="background:#eef2f8;border:1px dashed #c9d2dc;border-radius:12px;padding:2rem;text-align:center">
+                <p class="muted">Карта появится после настройки ключа Яндекс.Карт.<br>Адрес: {p['address']}</p>
+            </div>
+            <h2 class="object-detail__subtitle">Объекты проекта</h2>
+            <p class="muted">Список объектов этого проекта появится после наполнения каталога.</p>
+        </article>"""
+    return page(f"{p['name']} — INVESTROOM", body)
+
+
 def write(name, html):
     with open(os.path.join(OUT, name), "w", encoding="utf-8") as f:
         f.write(html)
@@ -374,4 +509,8 @@ write("index.html", build_index())
 write("objects.html", build_objects())
 for o in OBJECTS:
     write(f"object-{o['slug']}.html", build_detail(o))
+write("team.html", build_team())
+write("projects.html", build_projects())
+for p in PROJECTS:
+    write(f"project-{p['slug']}.html", build_project_detail(p))
 print("done")

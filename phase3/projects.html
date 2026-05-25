@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проекты (ЖК) — INVESTROOM</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="app.css">
+    <style>
+        .preview-note{background:#0f1633;color:#cdd6f0;text-align:center;font-size:.85rem;padding:7px 12px}
+        .preview-note b{color:#fff}
+        .main-nav__link--active{color:var(--color-accent)}
+    </style>
+</head>
+<body>
+    <div class="preview-note">Статичное превью Фазы&nbsp;3 (каталог объектов). Бэкенда нет — это макет дизайна; фильтры на витрине кликаются. <b>INVESTROOM</b> · <a href="../admin/index.html" style="color:#9ec1ff">Превью админки →</a></div>
+    <header class="site-header">
+    <div class="container site-header__inner">
+        <a href="index.html" class="logo">INVESTROOM</a>
+        <button class="site-header__burger" type="button" aria-label="Меню"
+                onclick="document.querySelector('.site-header').classList.toggle('site-header--open')">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="main-nav" aria-label="Главное меню">
+            <a href="objects.html" class="main-nav__link">Объекты инвестиций</a>
+            <a href="projects.html" class="main-nav__link main-nav__link--active">Проекты</a>
+            <a href="team.html" class="main-nav__link">Команда</a>
+            <a href="../phase2/about.html" class="main-nav__link">О нас</a>
+            <a href="../phase2/media.html" class="main-nav__link">Медиа</a>
+            <a href="../phase2/contacts.html" class="main-nav__link">Контакты</a>
+            <span class="main-nav__actions">
+                <a href="#" class="btn btn--ghost btn--sm">Войти</a>
+                <a href="#" class="btn btn--accent btn--sm">Начать инвестировать</a>
+            </span>
+        </nav>
+    </div>
+</header>
+    <main class="site-main">
+        <section class="catalog container">
+            <nav class="breadcrumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a> / <span>Проекты</span></nav>
+            <h1 class="page__title">Проекты (ЖК)</h1>
+            <div class="catalog__filters" role="group" aria-label="Фильтр по стране">
+                <a href="#" class="chip chip--active">Все страны</a>
+                <a href="#" class="chip">ОАЭ</a>
+                <a href="#" class="chip">Россия</a>
+            </div>
+            <p class="catalog__count muted">Найдено проектов: 3</p>
+            <div class="media__grid">
+            <article class="media-card object-card">
+                <a class="media-card__link" href="project-morskaya-rezidenciya-sochi.html">
+                    <span class="media-card__cover"><img src="images/placeholders/horizontal.svg" alt="ЖК «Морская Резиденция»" loading="lazy" width="600" height="400"></span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Сочи, Россия</span>
+                        <span class="media-card__title">ЖК «Морская Резиденция»</span>
+                        <span class="muted">ЮгСтрой</span>
+                        <span class="object-card__facts">Премиальный жилой комплекс у моря в Сочи с собственной набережной.</span>
+                        <span class="object-card__price">от 45 000 000 ₽</span>
+                    </span>
+                </a>
+            </article>
+            <article class="media-card object-card">
+                <a class="media-card__link" href="project-city-park-moscow.html">
+                    <span class="media-card__cover"><img src="images/placeholders/horizontal.svg" alt="ЖК «Сити Парк»" loading="lazy" width="600" height="400"></span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Москва, Россия</span>
+                        <span class="media-card__title">ЖК «Сити Парк»</span>
+                        <span class="muted">СтолицаДевелопмент</span>
+                        <span class="object-card__facts">Бизнес-класс рядом с деловым центром Москвы.</span>
+                        <span class="object-card__price">от 120 000 000 ₽</span>
+                    </span>
+                </a>
+            </article>
+            <article class="media-card object-card">
+                <a class="media-card__link" href="project-marina-heights-dubai.html">
+                    <span class="media-card__cover"><img src="images/placeholders/horizontal.svg" alt="Marina Heights" loading="lazy" width="600" height="400"></span>
+                    <span class="media-card__body">
+                        <span class="object-card__location">Дубай, ОАЭ</span>
+                        <span class="media-card__title">Marina Heights</span>
+                        <span class="muted">Emaar Properties</span>
+                        <span class="object-card__facts">Башня премиум-класса в Dubai Marina с рассрочкой от застройщика.</span>
+                        <span class="object-card__price">от 9 000 000 AED</span>
+                    </span>
+                </a>
+            </article>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+    <div class="container site-footer__grid">
+        <div class="site-footer__col">
+            <div class="logo logo--light">INVESTROOM</div>
+            <p class="site-footer__tagline">Инвестиции в недвижимость — просто и прозрачно</p>
+            <div class="socials" aria-label="Соцсети"><a href="#">TG</a><a href="#">VK</a><a href="#">YT</a></div>
+        </div>
+        <nav class="site-footer__col" aria-label="Меню в подвале">
+            <h4 class="site-footer__title">Разделы</h4>
+            <a href="objects.html">Объекты инвестиций</a>
+            <a href="../phase2/about.html">Инвесторам</a>
+            <a href="../phase2/media.html">Медиа</a>
+            <a href="../phase2/faq.html">Частые вопросы</a>
+            <a href="../phase2/contacts.html">Контакты</a>
+        </nav>
+        <div class="site-footer__col">
+            <h4 class="site-footer__title">Контакты</h4>
+            <a class="site-footer__contact" href="#">+7 (XXX) XXX-XX-XX</a>
+            <a class="site-footer__contact" href="#">info@investroom.example</a>
+            <a class="btn btn--accent btn--sm" href="../phase2/contacts.html">Связаться с нами</a>
+        </div>
+    </div>
+    <div class="site-footer__legal container">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Пользовательское соглашение</a>
+        <span class="site-footer__copyright">© 2026 ООО «MARK Invest Group». Все права защищены.</span>
+    </div>
+</footer>
+</body>
+</html>
