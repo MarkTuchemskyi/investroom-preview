@@ -160,13 +160,13 @@
             <nav class="breadcrumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a> / <span>Проекты</span></nav>
             <h1 class="page__title">Проекты (ЖК)</h1>
             <div class="catalog__filters" role="group" aria-label="Фильтр по стране">
-                <a href="#" class="chip chip--active">Все страны</a>
-                <a href="#" class="chip">ОАЭ</a>
-                <a href="#" class="chip">Россия</a>
+                <a href="#" class="chip chip--active" data-dim="country" data-val="">Все страны</a>
+                <a href="#" class="chip" data-dim="country" data-val="ОАЭ">ОАЭ</a>
+                <a href="#" class="chip" data-dim="country" data-val="Россия">Россия</a>
             </div>
-            <p class="catalog__count muted">Найдено проектов: 3</p>
-            <div class="media__grid">
-            <article class="media-card object-card">
+            <p class="catalog__count muted">Найдено проектов: <span id="count">3</span></p>
+            <div class="media__grid" id="grid">
+            <article class="media-card object-card" data-country="Россия">
                 <a class="media-card__link" href="project-morskaya-rezidenciya-sochi.html">
                     <span class="media-card__cover"><img src="images/placeholders/horizontal.svg" alt="ЖК «Морская Резиденция»" loading="lazy" width="600" height="400"></span>
                     <span class="media-card__body">
@@ -178,7 +178,7 @@
                     </span>
                 </a>
             </article>
-            <article class="media-card object-card">
+            <article class="media-card object-card" data-country="Россия">
                 <a class="media-card__link" href="project-city-park-moscow.html">
                     <span class="media-card__cover"><img src="images/placeholders/horizontal.svg" alt="ЖК «Сити Парк»" loading="lazy" width="600" height="400"></span>
                     <span class="media-card__body">
@@ -190,7 +190,7 @@
                     </span>
                 </a>
             </article>
-            <article class="media-card object-card">
+            <article class="media-card object-card" data-country="ОАЭ">
                 <a class="media-card__link" href="project-marina-heights-dubai.html">
                     <span class="media-card__cover"><img src="images/placeholders/horizontal.svg" alt="Marina Heights" loading="lazy" width="600" height="400"></span>
                     <span class="media-card__body">
@@ -203,6 +203,7 @@
                 </a>
             </article>
             </div>
+            <p class="muted" id="empty" style="display:none">По заданному фильтру проектов не найдено.</p>
         </section>
     </main>
     <footer class="site-footer">
@@ -233,5 +234,30 @@
         <span class="site-footer__copyright">© 2026 ООО «MARK Invest Group». Все права защищены.</span>
     </div>
 </footer>
+    <script>
+        var active = {country:''};
+        function apply(){
+            var cards = document.querySelectorAll('#grid .object-card'), shown = 0;
+            cards.forEach(function(c){
+                var ok = (!active.country || c.dataset.country===active.country);
+                c.style.display = ok ? '' : 'none';
+                if(ok) shown++;
+            });
+            document.getElementById('count').textContent = shown;
+            document.getElementById('empty').style.display = shown ? 'none' : '';
+        }
+        document.querySelectorAll('[data-dim]').forEach(function(el){
+            el.addEventListener('click', function(e){
+                e.preventDefault();
+                var dim = el.dataset.dim;
+                active[dim] = el.dataset.val;
+                document.querySelectorAll('[data-dim="'+dim+'"]').forEach(function(s){
+                    s.classList.remove('chip--active');
+                });
+                el.classList.add('chip--active');
+                apply();
+            });
+        });
+    </script>
 </body>
 </html>

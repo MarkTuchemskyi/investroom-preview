@@ -341,8 +341,11 @@ def table(headers, rows, edit_href="#", del_href="#"):
     body_rows = []
     for cells in rows:
         tds = "".join(f"<td>{c}</td>" for c in cells)
-        actions = (f'<td class="row-actions"><a href="{edit_href}">Изменить</a>'
-                   f'<a class="del" href="{del_href}">Удалить</a></td>')
+        if del_href:
+            actions = (f'<td class="row-actions"><a href="{edit_href}">Изменить</a>'
+                       f'<a class="del" href="{del_href}">Удалить</a></td>')
+        else:
+            actions = f'<td class="row-actions"><a href="{edit_href}">Изменить</a></td>'
         body_rows.append(f"<tr>{tds}{actions}</tr>")
     return ("<table>\n<thead><tr>" + head + "</tr></thead>\n<tbody>\n"
             + "\n".join(body_rows) + "\n</tbody>\n</table>")
@@ -444,7 +447,7 @@ def build_dashboard():
 
 
 def build_object_form():
-    body = """            <form class="form-grid" onsubmit="return false">
+    body = """            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="fld">
                     <label>Название</label>
                     <input type="text" value="Апартаменты у воды в Dubai Marina">
@@ -563,7 +566,7 @@ def build_media_gallery():
 def build_object_delete():
     body = """            <div class="confirm">
                 <p>Удалить запись <strong>«Апартаменты у воды в Dubai Marina»</strong>? Действие необратимо.</p>
-                <form onsubmit="return false">
+                <form method="post" action="#" onsubmit="return false">
                     <button class="btn btn--danger" type="submit">Удалить</button>
                     <a class="btn btn--ghost" href="objects.html">Отмена</a>
                 </form>
@@ -573,7 +576,7 @@ def build_object_delete():
 
 
 def build_settings_form():
-    body = """            <form class="form-grid" onsubmit="return false">
+    body = """            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="fld"><label>Название</label><input type="text" value="Телефон поддержки"></div>
                 <div class="fld"><label>Ключ</label><input type="text" value="support.phone"><span class="hint">Машинное имя настройки, уникально.</span></div>
                 <div class="fld"><label>Тип значения</label><select><option>Текст</option><option selected>Телефон</option><option>E-mail</option><option>Число</option><option>Флаг</option></select></div>
@@ -590,7 +593,7 @@ def build_settings_form():
 def build_settings_delete():
     body = """            <div class="confirm">
                 <p>Удалить настройку <strong>«Телефон поддержки»</strong> (<code>support.phone</code>)? Действие необратимо.</p>
-                <form onsubmit="return false">
+                <form method="post" action="#" onsubmit="return false">
                     <button class="btn btn--danger" type="submit">Удалить</button>
                     <a class="btn btn--ghost" href="settings.html">Отмена</a>
                 </form>
@@ -602,7 +605,7 @@ def build_settings_delete():
 def build_page_delete():
     body = """            <div class="confirm">
                 <p>Удалить страницу <strong>«Инвесторам»</strong> (<code>/p/investoram</code>)? Действие необратимо.</p>
-                <form onsubmit="return false">
+                <form method="post" action="#" onsubmit="return false">
                     <button class="btn btn--danger" type="submit">Удалить</button>
                     <a class="btn btn--ghost" href="pages.html">Отмена</a>
                 </form>
@@ -614,7 +617,7 @@ def build_page_delete():
 def build_media_delete():
     body = """            <div class="confirm">
                 <p>Удалить материал <strong>«Фотоотчёт с выставки Cityscape»</strong> (Фотоальбом)? Действие необратимо.</p>
-                <form onsubmit="return false">
+                <form method="post" action="#" onsubmit="return false">
                     <button class="btn btn--danger" type="submit">Удалить</button>
                     <a class="btn btn--ghost" href="media.html">Отмена</a>
                 </form>
@@ -626,7 +629,7 @@ def build_media_delete():
 def build_faq_delete():
     body = """            <div class="confirm">
                 <p>Удалить вопрос <strong>«Какой минимальный порог входа?»</strong>? Действие необратимо.</p>
-                <form onsubmit="return false">
+                <form method="post" action="#" onsubmit="return false">
                     <button class="btn btn--danger" type="submit">Удалить</button>
                     <a class="btn btn--ghost" href="faq.html">Отмена</a>
                 </form>
@@ -636,7 +639,7 @@ def build_faq_delete():
 
 
 def build_page_form():
-    body = """            <form class="form-grid" onsubmit="return false">
+    body = """            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="two">
                     <div class="fld"><label>Статус</label><select><option selected>Опубликована</option><option>Черновик</option></select></div>
                     <div class="fld"><label>Дата публикации</label><input type="text" value="20.05.2026"></div>
@@ -698,7 +701,7 @@ def build_page_form():
 
 
 def build_media_form():
-    body = """            <form class="form-grid" onsubmit="return false">
+    body = """            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="two">
                     <div class="fld">
                         <label>Тип материала</label>
@@ -728,7 +731,7 @@ def build_media_form():
 
 
 def build_faq_form():
-    body = """            <form class="form-grid" onsubmit="return false">
+    body = """            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="fld"><label>Категория</label><input type="text" value="Общие"><span class="hint">Группирует вопросы на странице FAQ.</span></div>
                 <div class="fld"><label>Вопрос</label><input type="text" value="Какой минимальный порог входа?"></div>
                 <div class="fld"><label>Ответ</label><textarea rows="4">Минимальная сумма зависит от выбранного объекта и условий застройщика. Точные значения уточняются менеджером.</textarea></div>
@@ -748,7 +751,7 @@ def build_user_form():
     body = """            <div class="notice">⚠️ В коде список пользователей пока <strong>read-only</strong>.
                 Создание/редактирование и выбор ролей включим после утверждения матрицы ролей заказчиком
                 (open_question&nbsp;#5). Это макет планируемого экрана.</div>
-            <form class="form-grid" onsubmit="return false">
+            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="fld"><label>E-mail</label><input type="email" value="anna.investor@example.com"></div>
                 <div class="two">
                     <div class="fld"><label>Имя</label><input type="text" value="Анна"></div>
@@ -801,7 +804,7 @@ def request_badge(code):
 
 # ---- Менеджеры (ManagerProfile) ----
 def build_manager_form():
-    body = """            <form class="form-grid" onsubmit="return false">
+    body = """            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="fld">
                     <label>Пользователь</label>
                     <select>
@@ -868,7 +871,7 @@ def build_manager_delete():
     body = """            <div class="confirm">
                 <p>Удалить профиль менеджера <strong>«Анна Самоделкина»</strong>? Действие необратимо.</p>
                 <p class="muted">Связанный пользователь не удаляется — только его публичный профиль.</p>
-                <form onsubmit="return false">
+                <form method="post" action="#" onsubmit="return false">
                     <button class="btn btn--danger" type="submit">Удалить</button>
                     <a class="btn btn--ghost" href="managers.html">Отмена</a>
                 </form>
@@ -879,7 +882,7 @@ def build_manager_delete():
 
 # ---- Проекты (Project) ----
 def build_project_form():
-    body = """            <form class="form-grid" onsubmit="return false">
+    body = """            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="fld"><label>Название</label><input type="text" value="Marina Heights"></div>
                 <div class="fld"><label>Адрес (URL)</label><input type="text" value="marina-heights-dubai"><span class="hint">Часть ссылки после <code>/projects/</code>. Пусто — сгенерируется из названия.</span></div>
                 <div class="two">
@@ -940,7 +943,7 @@ def build_project_delete():
     body = """            <div class="confirm">
                 <p>Удалить проект <strong>«Marina Heights»</strong>? Действие необратимо.</p>
                 <p class="muted">Связанные с проектом объекты каталога останутся, но потеряют связь с проектом.</p>
-                <form onsubmit="return false">
+                <form method="post" action="#" onsubmit="return false">
                     <button class="btn btn--danger" type="submit">Удалить</button>
                     <a class="btn btn--ghost" href="projects.html">Отмена</a>
                 </form>
@@ -962,7 +965,7 @@ def build_project_gallery():
 
 # ---- Коммерция (CommercialProperty) ----
 def build_commercial_form():
-    body = """            <form class="form-grid" onsubmit="return false">
+    body = """            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="fld"><label>Название</label><input type="text" value="Офис в Business Bay"></div>
                 <div class="fld"><label>Адрес (URL)</label><input type="text" value="office-business-bay-dubai"><span class="hint">Часть ссылки после <code>/commercial/</code>.</span></div>
                 <div class="two">
@@ -1033,7 +1036,7 @@ def build_commercial_form():
 def build_commercial_delete():
     body = """            <div class="confirm">
                 <p>Удалить коммерческий объект <strong>«Офис в Business Bay»</strong>? Действие необратимо.</p>
-                <form onsubmit="return false">
+                <form method="post" action="#" onsubmit="return false">
                     <button class="btn btn--danger" type="submit">Удалить</button>
                     <a class="btn btn--ghost" href="commercial.html">Отмена</a>
                 </form>
@@ -1160,7 +1163,7 @@ def build_testimonials_list():
 
 
 def build_testimonial_form():
-    body = """            <form class="form-grid" onsubmit="return false">
+    body = """            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="fld"><label>Автор</label><input type="text" value="Анна К., инвестор"></div>
                 <div class="two">
                     <div class="fld"><label>Оценка (1–5)</label><input type="number" min="1" max="5" value="5"></div>
@@ -1202,7 +1205,7 @@ def build_testimonial_form():
 def build_testimonial_delete():
     body = """            <div class="confirm">
                 <p>Удалить отзыв <strong>«Анна К., инвестор»</strong>? Действие необратимо.</p>
-                <form onsubmit="return false">
+                <form method="post" action="#" onsubmit="return false">
                     <button class="btn btn--danger" type="submit">Удалить</button>
                     <a class="btn btn--ghost" href="testimonials.html">Отмена</a>
                 </form>
@@ -1240,7 +1243,7 @@ def build_achievements_list():
 
 
 def build_achievement_form():
-    body = """            <form class="form-grid" onsubmit="return false">
+    body = """            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="fld"><label>Название</label><input type="text" value="Лучший брокер недвижимости ОАЭ"></div>
                 <div class="fld">
                     <label>Изображение</label>
@@ -1267,7 +1270,7 @@ def build_achievement_form():
 def build_achievement_delete():
     body = """            <div class="confirm">
                 <p>Удалить награду <strong>«Лучший брокер недвижимости ОАЭ»</strong>? Действие необратимо.</p>
-                <form onsubmit="return false">
+                <form method="post" action="#" onsubmit="return false">
                     <button class="btn btn--danger" type="submit">Удалить</button>
                     <a class="btn btn--ghost" href="achievements.html">Отмена</a>
                 </form>
@@ -1305,7 +1308,7 @@ def build_legal_list():
 
 
 def build_legal_form():
-    body = """            <form class="form-grid" onsubmit="return false">
+    body = """            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="fld"><label>Название</label><input type="text" value="Брокерская лицензия RERA №12345"></div>
                 <div class="fld">
                     <label>Категория</label>
@@ -1343,7 +1346,7 @@ def build_legal_form():
 def build_legal_delete():
     body = """            <div class="confirm">
                 <p>Удалить документ <strong>«Брокерская лицензия RERA №12345»</strong>? Действие необратимо.</p>
-                <form onsubmit="return false">
+                <form method="post" action="#" onsubmit="return false">
                     <button class="btn btn--danger" type="submit">Удалить</button>
                     <a class="btn btn--ghost" href="legal-documents.html">Отмена</a>
                 </form>
@@ -1382,7 +1385,7 @@ def build_partners_list():
 
 
 def build_partner_form():
-    body = """            <form class="form-grid" onsubmit="return false">
+    body = """            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="fld"><label>Название</label><input type="text" value="Emaar Properties"></div>
                 <div class="fld">
                     <label>Логотип</label>
@@ -1408,7 +1411,7 @@ def build_partner_form():
 def build_partner_delete():
     body = """            <div class="confirm">
                 <p>Удалить партнёра <strong>«Emaar Properties»</strong>? Действие необратимо.</p>
-                <form onsubmit="return false">
+                <form method="post" action="#" onsubmit="return false">
                     <button class="btn btn--danger" type="submit">Удалить</button>
                     <a class="btn btn--ghost" href="partners.html">Отмена</a>
                 </form>
@@ -1456,7 +1459,7 @@ def build_broadcast():
                 ✓ <strong>Уведомление отправлено: 12 получателям.</strong> (пример — после успешной отправки в админке)
             </div>
 
-            <form class="form-grid" onsubmit="return false">
+            <form class="form-grid" method="post" action="#" onsubmit="return false">
                 <div class="fld">
                     <label>Получатели (роль)</label>
                     <select>
@@ -1588,7 +1591,7 @@ write("users.html", list_page(
     "Пользователи", "users", "Создать пользователя",
     ["E-mail", "Роль", "Статус"],
     [(u[0], f'<span class="badge badge--role">{u[1]}</span>', status_badge(True, u[2], "")) for u in USERS],
-    new_href="user-form.html", edit_href="user-form.html"))
+    new_href="user-form.html", edit_href="user-form.html", del_href=None))
 
 write("settings.html", list_page(
     "Настройки сайта", "settings", "Создать настройку",

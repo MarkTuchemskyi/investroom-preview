@@ -443,7 +443,7 @@ def build_detail(o):
             </div>
 {INVEST_RESERVE_FORMS if o['slug'] == 'dubai-marina-apartments' else ''}
         </article>"""
-    return page(f"{o['title']} — INVESTROOM", body)
+    return page(f"{o['title']} — INVESTROOM", body, active="objects")
 
 
 INVEST_RESERVE_FORMS = """
@@ -705,7 +705,7 @@ def build_team():
 
 
 def project_card(p):
-    return f"""            <article class="media-card object-card">
+    return f"""            <article class="media-card object-card" data-country="{p['country']}">
                 <a class="media-card__link" href="project-{p['slug']}.html">
                     <span class="media-card__cover"><img src="images/placeholders/horizontal.svg" alt="{p['name']}" loading="lazy" width="600" height="400"></span>
                     <span class="media-card__body">
@@ -721,8 +721,8 @@ def project_card(p):
 
 def build_projects():
     countries = sorted({p["country"] for p in PROJECTS})
-    country_chips = '<a href="#" class="chip chip--active">Все страны</a>' + "".join(
-        f'\n                <a href="#" class="chip">{c}</a>' for c in countries)
+    country_chips = '<a href="#" class="chip chip--active" data-dim="country" data-val="">Все страны</a>' + "".join(
+        f'\n                <a href="#" class="chip" data-dim="country" data-val="{c}">{c}</a>' for c in countries)
     cards = "\n".join(project_card(p) for p in PROJECTS)
     body = f"""        <section class="catalog container">
             <nav class="breadcrumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a> / <span>Проекты</span></nav>
@@ -730,12 +730,39 @@ def build_projects():
             <div class="catalog__filters" role="group" aria-label="Фильтр по стране">
                 {country_chips}
             </div>
-            <p class="catalog__count muted">Найдено проектов: {len(PROJECTS)}</p>
-            <div class="media__grid">
+            <p class="catalog__count muted">Найдено проектов: <span id="count">{len(PROJECTS)}</span></p>
+            <div class="media__grid" id="grid">
 {cards}
             </div>
+            <p class="muted" id="empty" style="display:none">По заданному фильтру проектов не найдено.</p>
         </section>"""
-    return page("Проекты (ЖК) — INVESTROOM", body, active="projects")
+    js = """
+    <script>
+        var active = {country:''};
+        function apply(){
+            var cards = document.querySelectorAll('#grid .object-card'), shown = 0;
+            cards.forEach(function(c){
+                var ok = (!active.country || c.dataset.country===active.country);
+                c.style.display = ok ? '' : 'none';
+                if(ok) shown++;
+            });
+            document.getElementById('count').textContent = shown;
+            document.getElementById('empty').style.display = shown ? 'none' : '';
+        }
+        document.querySelectorAll('[data-dim]').forEach(function(el){
+            el.addEventListener('click', function(e){
+                e.preventDefault();
+                var dim = el.dataset.dim;
+                active[dim] = el.dataset.val;
+                document.querySelectorAll('[data-dim="'+dim+'"]').forEach(function(s){
+                    s.classList.remove('chip--active');
+                });
+                el.classList.add('chip--active');
+                apply();
+            });
+        });
+    </script>"""
+    return page("Проекты (ЖК) — INVESTROOM", body, active="projects", extra_js=js)
 
 
 def build_project_detail(p):
@@ -767,7 +794,7 @@ def build_project_detail(p):
             <h2 class="object-detail__subtitle">Объекты проекта</h2>
             <p class="muted">Список объектов этого проекта появится после наполнения каталога.</p>
         </article>"""
-    return page(f"{p['name']} — INVESTROOM", body)
+    return page(f"{p['name']} — INVESTROOM", body, active="projects")
 
 
 # ============================================================
@@ -1000,7 +1027,7 @@ def build_search():
                 <ul class="search-results">
                     <li>
                         <a href="about.html">О нас</a>
-                        <p class="search-snippet">INVESTROOM — портал для прозрачных <mark>инвестиции</mark>й в недвижимость. Команда, лицензии, награды и партнёры компании.</p>
+                        <p class="search-snippet">INVESTROOM — портал для прозрачных <mark>инвестиций</mark> в недвижимость. Команда, лицензии, награды и партнёры компании.</p>
                         <p class="search-meta">Страница · /p/about</p>
                     </li>
                 </ul>
@@ -1079,7 +1106,6 @@ def build_about():
                 <article class="testimonial-card">
                     <div class="star-rating" aria-label="Оценка {t['rating']} из 5">{'★' * t['rating']}{'☆' * (5 - t['rating'])}</div>
                     <p class="testimonial-card__text">{t['short']}</p>
-                    <a class="testimonial-card__more" href="#testimonial-{i}">Читать целиком →</a>
                     <p class="testimonial-card__author"><strong>{t['name']}</strong> <span class="muted">· {t['date']} · {t['source']}</span></p>
                 </article>""" for i, t in enumerate(TESTIMONIALS, 1))
     achievements_html = "".join(f"""
