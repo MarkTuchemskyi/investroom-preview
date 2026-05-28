@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас — INVESTROOM</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="app.css">
+    <style>
+        .preview-note{background:#0f1633;color:#cdd6f0;text-align:center;font-size:.85rem;padding:7px 12px}
+        .preview-note b{color:#fff}
+        .main-nav__link--active{color:var(--color-accent)}
+        /* Шапка: поиск + иконки */
+        .header-search{position:relative;display:flex;align-items:center;margin-left:auto}
+        .header-search__icon{position:absolute;left:10px;font-size:.95rem;opacity:.7;pointer-events:none}
+        .header-search input{padding:7px 12px 7px 32px;border-radius:999px;border:1px solid #d4dbe8;font-size:.9rem;min-width:200px;width:200px}
+        .header-icon{position:relative;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#f1f5f9;color:#1E2761;font-size:1rem;text-decoration:none}
+        .header-icon:hover{background:#1E2761;color:#fff}
+        .header-icon__glyph{line-height:1}
+        .header-icon__count{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#F96167;color:#fff;font-size:.7rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;line-height:1}
+        @media (max-width: 1100px){.header-search input{min-width:140px;width:140px}}
+        @media (max-width: 768px){
+            .header-search{margin-left:0;width:100%}
+            .header-search input{width:100%}
+        }
+        /* Бейджи статусов заявки */
+        .status-badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:600}
+        .status-badge--new{background:#dbeafe;color:#1e40af}
+        .status-badge--in_progress{background:#fef3c7;color:#92400e}
+        .status-badge--contacted{background:#e0e7ff;color:#3730a3}
+        .status-badge--converted{background:#dcfce7;color:#166534}
+        .status-badge--rejected{background:#fee2e2;color:#991b1b}
+        /* Рейтинг звёздами */
+        .star-rating{color:#F59E0B;letter-spacing:1px;font-size:1rem;line-height:1}
+        /* Inline-модалка (демо открытое состояние) */
+        .modal-inline{margin-top:24px;border:1px solid #d4dbe8;border-radius:14px;background:#fff;box-shadow:0 6px 24px rgba(15,22,51,.08);padding:24px 28px;max-width:560px}
+        .modal-inline__title{margin:0 0 6px}
+        .modal-inline__hint{color:#64748B;font-size:.88rem;margin-bottom:12px}
+        .form-row{margin-bottom:12px}
+        .form-row label{display:block;margin:0 0 4px;font-weight:600;color:#1E2761;font-size:.92rem}
+        .form-row .form-check{display:flex;align-items:flex-start;gap:8px;font-weight:400;font-size:.88rem;color:#0F1633}
+        .form-row .form-check input{margin-top:3px}
+        /* Поиск: результаты, подсветка */
+        .search-form{display:flex;gap:10px;margin:8px 0 24px;max-width:520px}
+        .search-form input{flex:1}
+        .search-group{margin-bottom:28px}
+        .search-results{list-style:none;padding:0;margin:0}
+        .search-results li{padding:14px 0;border-bottom:1px solid #eef2f8}
+        .search-results li:last-child{border-bottom:0}
+        .search-results a{font-weight:700;font-size:1.05rem;color:#1E2761}
+        .search-results .search-snippet{color:#64748B;font-size:.92rem;margin-top:4px}
+        .search-results mark{background:#fff3a3;color:#0F1633;padding:0 2px;border-radius:2px}
+        .search-results .search-meta{font-size:.78rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.04em;margin-top:4px}
+        /* «О нас»: отзывы / награды / лицензии / партнёры */
+        .about-section{margin:48px 0}
+        .about-section__cta{margin-top:18px}
+        .testimonials__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:16px}
+        .testimonial-card{background:#fff;border:1px solid #eef2f8;border-radius:14px;padding:18px 20px;box-shadow:0 2px 8px rgba(15,22,51,.04);display:flex;flex-direction:column;gap:8px}
+        .testimonial-card__author{margin:0;font-size:.9rem;color:#64748B}
+        .testimonial-card__author strong{color:#0F1633}
+        .testimonial-card__text{margin:0;color:#0F1633;font-size:.95rem}
+        .testimonial-card__more{font-size:.85rem;color:#1E2761;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+        .achievements__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:16px}
+        .achievement-card{background:#fff;border:1px solid #eef2f8;border-radius:14px;overflow:hidden;text-align:center}
+        .achievement-card__cover{aspect-ratio:1/1;background:#CADCFC;display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:#1E2761}
+        .achievement-card__body{padding:14px 12px}
+        .achievement-card__title{font-size:.95rem;margin:0 0 4px;color:#1E2761}
+        .achievement-card__year{margin:0;color:#64748B;font-size:.82rem}
+        .licenses__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:16px}
+        .license-card{display:flex;flex-direction:column;gap:10px;background:#fff;border:1px solid #eef2f8;border-radius:14px;padding:16px 18px}
+        .license-card__doc{aspect-ratio:4/3;background:#f1f5f9;border:1px dashed #c9d2dc;display:flex;align-items:center;justify-content:center;color:#64748B;border-radius:8px;font-size:.85rem}
+        .license-card__title{font-weight:700;color:#1E2761;font-size:.95rem;margin:0}
+        .partners__row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
+        .partner-logo{display:flex;align-items:center;justify-content:center;background:#f1f5f9;border:1px solid #eef2f8;border-radius:10px;padding:18px 12px;color:#1E2761;font-weight:800;letter-spacing:.04em;text-align:center;min-height:80px;text-decoration:none}
+        .partner-logo:hover{background:#CADCFC;color:#1E2761}
+        /* Профиль: таблицы, чекбоксы, избранное */
+        .profile-header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+        .profile-counter{background:#CADCFC;color:#1E2761;padding:3px 12px;border-radius:999px;font-weight:600;font-size:.85rem}
+        .data-table{width:100%;border-collapse:collapse;margin-top:18px;background:#fff;border:1px solid #eef2f8;border-radius:10px;overflow:hidden}
+        .data-table th,.data-table td{padding:12px 14px;text-align:left;border-bottom:1px solid #eef2f8;font-size:.92rem}
+        .data-table th{background:#f1f5f9;color:#1E2761;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.03em}
+        .data-table tr:last-child td{border-bottom:0}
+        .data-table input[type=checkbox]{width:18px;height:18px;cursor:pointer}
+        .favorite-row{display:grid;grid-template-columns:120px 1fr auto;gap:18px;align-items:center;padding:14px;background:#fff;border:1px solid #eef2f8;border-radius:12px;margin-bottom:12px}
+        .favorite-row__cover{aspect-ratio:3/2;background:#f1f5f9;border-radius:8px;overflow:hidden}
+        .favorite-row__cover img{width:100%;height:100%;object-fit:cover}
+        .favorite-row__title{font-weight:700;color:#1E2761;margin:0 0 4px}
+        .favorite-row__meta{color:#64748B;font-size:.88rem;margin:0}
+        /* Уведомления-список */
+        .notif-list{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-direction:column;gap:10px}
+        .notif-list__item{position:relative;background:#fff;border:1px solid #eef2f8;border-radius:12px;padding:14px 18px 14px 34px;display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}
+        .notif-list__item.is-unread{background:#f8fbff;border-color:#CADCFC}
+        .notif-list__item.is-unread::before{content:"";position:absolute;left:14px;top:18px;width:10px;height:10px;border-radius:50%;background:#F96167}
+        .notif-list__body strong{display:block;color:#1E2761;margin-bottom:2px}
+        .notif-list__body p{margin:0 0 4px;color:#0F1633;font-size:.92rem}
+        .notif-list__body time{font-size:.8rem;color:#94a3b8}
+        .notif-readall{margin:8px 0}
+        /* CTA-блок «коммерция» детали */
+        .commercial-cta{margin-top:24px;padding:20px;background:#f1f5f9;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+        /* Map placeholder */
+        .map--placeholder{position:relative;background:#eef2f8;border:1px dashed #c9d2dc;border-radius:12px;padding:48px 20px;text-align:center;min-height:240px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px}
+        .map--placeholder::before{content:"📍";font-size:2rem;opacity:.6}
+        /* Дополнительные кнопки CTA на карточке объекта */
+        .object-cta-buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;justify-content:center}
+        @media (max-width:1024px){
+            .testimonials__grid{grid-template-columns:repeat(2,1fr)}
+            .achievements__grid{grid-template-columns:repeat(2,1fr)}
+            .licenses__grid{grid-template-columns:repeat(2,1fr)}
+            .partners__row{grid-template-columns:repeat(3,1fr)}
+        }
+        @media (max-width:600px){
+            .testimonials__grid,.achievements__grid,.licenses__grid{grid-template-columns:1fr}
+            .partners__row{grid-template-columns:repeat(2,1fr)}
+            .favorite-row{grid-template-columns:90px 1fr;grid-template-areas:'cover body' 'action action'}
+            .favorite-row__cover{grid-area:cover}
+            .favorite-row__body{grid-area:body}
+            .favorite-row__action{grid-area:action}
+        }
+</style><style>
+        .team__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;margin-top:1.4rem}
+        .manager-card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--color-line,#e6e8ef);border-radius:14px;overflow:hidden;text-align:center}
+        .manager-card__photo img{width:100%;height:200px;object-fit:cover;background:#eef2f8}
+        .manager-card__body{display:flex;flex-direction:column;gap:.45rem;padding:1rem 1.1rem 1.3rem;align-items:center}
+        .manager-card__name{font-weight:700;font-size:1.05rem}
+        .manager-card__langs{display:flex;gap:.35rem;justify-content:center}
+        .tag--sm{font-size:.72rem;padding:.1rem .5rem}</style>
+</head>
+<body>
+    <div class="preview-note">Статичное превью Фазы&nbsp;3 (каталог объектов). Бэкенда нет — это макет дизайна; фильтры на витрине кликаются. <b>INVESTROOM</b> · <a href="../admin/index.html" style="color:#9ec1ff">Превью админки →</a></div>
+    <header class="site-header">
+    <div class="container site-header__inner">
+        <a href="index.html" class="logo">INVESTROOM</a>
+        <button class="site-header__burger" type="button" aria-label="Меню"
+                onclick="document.querySelector('.site-header').classList.toggle('site-header--open')">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="main-nav" aria-label="Главное меню">
+            <a href="objects.html" class="main-nav__link">Каталог</a>
+            <a href="commercial.html" class="main-nav__link">Коммерция</a>
+            <a href="projects.html" class="main-nav__link">Проекты</a>
+            <a href="team.html" class="main-nav__link">Команда</a>
+            <a href="about.html" class="main-nav__link main-nav__link--active">О нас</a>
+            <a href="../phase2/media.html" class="main-nav__link">Медиа</a>
+            <a href="../phase2/contacts.html" class="main-nav__link">Контакты</a>
+            <form class="header-search" role="search" onsubmit="event.preventDefault();location.href='search.html'">
+                <span class="header-search__icon" aria-hidden="true">🔍</span>
+                <input type="search" name="q" placeholder="Поиск…" aria-label="Поиск по сайту"
+                       onkeydown="if(event.key==='Enter'){event.preventDefault();location.href='search.html';}">
+            </form>
+            <span class="main-nav__actions">
+                <a href="profile-favorites.html" class="header-icon" aria-label="Избранное" title="Избранное">
+                    <span class="header-icon__glyph">♥</span>
+                    <span class="header-icon__count">3</span>
+                </a>
+                <a href="notifications.html" class="header-icon" aria-label="Уведомления" title="Уведомления">
+                    <span class="header-icon__glyph">🔔</span>
+                    <span class="header-icon__count">5</span>
+                </a>
+                <a href="#" class="btn btn--ghost btn--sm">Войти</a>
+                <a href="#" class="btn btn--accent btn--sm">Начать инвестировать</a>
+            </span>
+        </nav>
+    </div>
+</header>
+    <main class="site-main">
+        <article class="page page--about container">
+            <nav class="breadcrumbs" aria-label="Хлебные крошки"><a href="index.html">Главная</a> / <span>О нас</span></nav>
+
+            <header class="page__hero">
+                <h1>О компании INVESTROOM</h1>
+                <p class="page__hero-subtitle">Подбираем и сопровождаем инвестиции в недвижимость ОАЭ, Омана и СНГ с 2018 года. В сделке — прозрачные документы, лицензированные брокеры, поддержка на каждом этапе.</p>
+            </header>
+
+            <div class="page__content">
+                <p>INVESTROOM — портал инвестиций в недвижимость от ООО «MARK Invest Group». Мы помогаем частным инвесторам выбирать объекты, проверяем юридическую чистоту сделок и сопровождаем клиента до получения дохода.</p>
+                <p>Наша команда работает в Дубае, Маскате, Москве и Сочи. Мы лицензированы как в ОАЭ (RERA), так и в России, поэтому каждая сделка проходит по всем требованиям регулятора.</p>
+            </div>
+
+            <section class="about-section about-section--team">
+                <h2 class="section-title">Наша команда</h2>
+                <div class="team__grid">
+                <article class="manager-card">
+                    <span class="manager-card__photo"><img src="images/placeholders/square.svg" alt="Анна Иванова" width="160" height="160"></span>
+                    <span class="manager-card__body">
+                        <span class="manager-card__name">Анна Иванова</span>
+                        <span class="manager-card__position muted">Менеджер по жилой недвижимости</span>
+                        <span class="manager-card__langs"><span class="tag tag--sm">RU</span><span class="tag tag--sm">EN</span></span>
+                        <a class="btn btn--ghost btn--sm" href="../phase2/contacts.html">Связаться</a>
+                    </span>
+                </article>
+                <article class="manager-card">
+                    <span class="manager-card__photo"><img src="images/placeholders/square.svg" alt="Дмитрий Соколов" width="160" height="160"></span>
+                    <span class="manager-card__body">
+                        <span class="manager-card__name">Дмитрий Соколов</span>
+                        <span class="manager-card__position muted">Менеджер по коммерческой недвижимости</span>
+                        <span class="manager-card__langs"><span class="tag tag--sm">RU</span></span>
+                        <a class="btn btn--ghost btn--sm" href="../phase2/contacts.html">Связаться</a>
+                    </span>
+                </article>
+                <article class="manager-card">
+                    <span class="manager-card__photo"><img src="images/placeholders/square.svg" alt="Мария Петрова" width="160" height="160"></span>
+                    <span class="manager-card__body">
+                        <span class="manager-card__name">Мария Петрова</span>
+                        <span class="manager-card__position muted">Менеджер по зарубежной недвижимости</span>
+                        <span class="manager-card__langs"><span class="tag tag--sm">RU</span><span class="tag tag--sm">EN</span></span>
+                        <a class="btn btn--ghost btn--sm" href="../phase2/contacts.html">Связаться</a>
+                    </span>
+                </article>
+                <article class="manager-card">
+                    <span class="manager-card__photo"><img src="images/placeholders/square.svg" alt="Игорь Кузнецов" width="160" height="160"></span>
+                    <span class="manager-card__body">
+                        <span class="manager-card__name">Игорь Кузнецов</span>
+                        <span class="manager-card__position muted">Менеджер по земельным участкам</span>
+                        <span class="manager-card__langs"><span class="tag tag--sm">RU</span></span>
+                        <a class="btn btn--ghost btn--sm" href="../phase2/contacts.html">Связаться</a>
+                    </span>
+                </article>
+                <article class="manager-card">
+                    <span class="manager-card__photo"><img src="images/placeholders/square.svg" alt="Екатерина Смирнова" width="160" height="160"></span>
+                    <span class="manager-card__body">
+                        <span class="manager-card__name">Екатерина Смирнова</span>
+                        <span class="manager-card__position muted">Менеджер по курортной недвижимости ОАЭ</span>
+                        <span class="manager-card__langs"><span class="tag tag--sm">RU</span><span class="tag tag--sm">EN</span><span class="tag tag--sm">AR</span></span>
+                        <a class="btn btn--ghost btn--sm" href="../phase2/contacts.html">Связаться</a>
+                    </span>
+                </article>
+                <article class="manager-card">
+                    <span class="manager-card__photo"><img src="images/placeholders/square.svg" alt="Алексей Морозов" width="160" height="160"></span>
+                    <span class="manager-card__body">
+                        <span class="manager-card__name">Алексей Морозов</span>
+                        <span class="manager-card__position muted">Старший инвестиционный аналитик</span>
+                        <span class="manager-card__langs"><span class="tag tag--sm">RU</span><span class="tag tag--sm">EN</span></span>
+                        <a class="btn btn--ghost btn--sm" href="../phase2/contacts.html">Связаться</a>
+                    </span>
+                </article>
+                <article class="manager-card">
+                    <span class="manager-card__photo"><img src="images/placeholders/square.svg" alt="Ольга Новикова" width="160" height="160"></span>
+                    <span class="manager-card__body">
+                        <span class="manager-card__name">Ольга Новикова</span>
+                        <span class="manager-card__position muted">Менеджер по работе с инвесторами</span>
+                        <span class="manager-card__langs"><span class="tag tag--sm">RU</span></span>
+                        <a class="btn btn--ghost btn--sm" href="../phase2/contacts.html">Связаться</a>
+                    </span>
+                </article>
+                <article class="manager-card">
+                    <span class="manager-card__photo"><img src="images/placeholders/square.svg" alt="Сергей Васильев" width="160" height="160"></span>
+                    <span class="manager-card__body">
+                        <span class="manager-card__name">Сергей Васильев</span>
+                        <span class="manager-card__position muted">Руководитель направления «Оман»</span>
+                        <span class="manager-card__langs"><span class="tag tag--sm">RU</span><span class="tag tag--sm">EN</span></span>
+                        <a class="btn btn--ghost btn--sm" href="../phase2/contacts.html">Связаться</a>
+                    </span>
+                </article>
+                </div>
+                <p class="about-section__cta">
+                    <a class="btn btn--accent" href="team.html">Вся команда →</a>
+                </p>
+            </section>
+
+            <section class="about-section about-section--testimonials">
+                <h2 class="section-title">Отзывы клиентов</h2>
+                <div class="testimonials__grid">
+                <article class="testimonial-card">
+                    <div class="star-rating" aria-label="Оценка 5 из 5">★★★★★</div>
+                    <p class="testimonial-card__text">Открыл сделку через INVESTROOM, всё прозрачно — от подбора до выплаты дохода.</p>
+                    <a class="testimonial-card__more" href="#testimonial-1">Читать целиком →</a>
+                    <p class="testimonial-card__author"><strong>Сергей К.</strong> <span class="muted">· 14.04.2026 · Яндекс.Карты</span></p>
+                </article>
+                <article class="testimonial-card">
+                    <div class="star-rating" aria-label="Оценка 5 из 5">★★★★★</div>
+                    <p class="testimonial-card__text">Команда отвечала на все вопросы. Сделка по вилле в Маскате прошла без сюрпризов.</p>
+                    <a class="testimonial-card__more" href="#testimonial-2">Читать целиком →</a>
+                    <p class="testimonial-card__author"><strong>Наталья Г.</strong> <span class="muted">· 02.03.2026 · Google Maps</span></p>
+                </article>
+                <article class="testimonial-card">
+                    <div class="star-rating" aria-label="Оценка 4 из 5">★★★★☆</div>
+                    <p class="testimonial-card__text">Хорошая платформа, но хотелось бы калькулятор доходности по сделке.</p>
+                    <a class="testimonial-card__more" href="#testimonial-3">Читать целиком →</a>
+                    <p class="testimonial-card__author"><strong>Андрей М.</strong> <span class="muted">· 21.02.2026 · Сайт INVESTROOM</span></p>
+                </article>
+                <article class="testimonial-card">
+                    <div class="star-rating" aria-label="Оценка 5 из 5">★★★★★</div>
+                    <p class="testimonial-card__text">Менеджер Анна помогла подобрать апартаменты в рассрочку. Спасибо!</p>
+                    <a class="testimonial-card__more" href="#testimonial-4">Читать целиком →</a>
+                    <p class="testimonial-card__author"><strong>Виктория П.</strong> <span class="muted">· 18.01.2026 · Telegram</span></p>
+                </article>
+                <article class="testimonial-card">
+                    <div class="star-rating" aria-label="Оценка 5 из 5">★★★★★</div>
+                    <p class="testimonial-card__text">Прозрачные условия, реальные документы, без скрытых комиссий.</p>
+                    <a class="testimonial-card__more" href="#testimonial-5">Читать целиком →</a>
+                    <p class="testimonial-card__author"><strong>Михаил Б.</strong> <span class="muted">· 05.12.2025 · ВКонтакте</span></p>
+                </article>
+                <article class="testimonial-card">
+                    <div class="star-rating" aria-label="Оценка 4 из 5">★★★★☆</div>
+                    <p class="testimonial-card__text">Долго ждала ответа на первичную заявку, но дальше всё чётко.</p>
+                    <a class="testimonial-card__more" href="#testimonial-6">Читать целиком →</a>
+                    <p class="testimonial-card__author"><strong>Татьяна С.</strong> <span class="muted">· 22.11.2025 · Яндекс.Карты</span></p>
+                </article>
+                </div>
+            </section>
+
+            <section class="about-section about-section--achievements">
+                <h2 class="section-title">Награды и достижения</h2>
+                <div class="achievements__grid">
+                <article class="achievement-card">
+                    <div class="achievement-card__cover">🏆</div>
+                    <div class="achievement-card__body">
+                        <h3 class="achievement-card__title">Лидер рынка ОАЭ 2025</h3>
+                        <p class="achievement-card__year">2025</p>
+                    </div>
+                </article>
+                <article class="achievement-card">
+                    <div class="achievement-card__cover">🥇</div>
+                    <div class="achievement-card__body">
+                        <h3 class="achievement-card__title">ТОП-10 застройщиков СНГ</h3>
+                        <p class="achievement-card__year">2024</p>
+                    </div>
+                </article>
+                <article class="achievement-card">
+                    <div class="achievement-card__cover">⭐</div>
+                    <div class="achievement-card__body">
+                        <h3 class="achievement-card__title">Премия «Брокер года»</h3>
+                        <p class="achievement-card__year">2024</p>
+                    </div>
+                </article>
+                <article class="achievement-card">
+                    <div class="achievement-card__cover">🎖</div>
+                    <div class="achievement-card__body">
+                        <h3 class="achievement-card__title">Награда Emaar Best Partner</h3>
+                        <p class="achievement-card__year">2023</p>
+                    </div>
+                </article>
+                </div>
+            </section>
+
+            <section class="about-section about-section--licenses">
+                <h2 class="section-title">Лицензии и сертификаты</h2>
+                <div class="licenses__grid">
+                <article class="license-card">
+                    <div class="license-card__doc">📄 PDF · RERA</div>
+                    <h3 class="license-card__title">Лицензия RERA (Дубай)</h3>
+                    <p class="muted" style="margin:0;font-size:.85rem">Real Estate Regulatory Agency · действует до 2027</p>
+                    <a href="#" class="btn btn--ghost btn--sm" style="align-self:flex-start">Скачать</a>
+                </article>
+                <article class="license-card">
+                    <div class="license-card__doc">📄 PDF · DLD</div>
+                    <h3 class="license-card__title">Сертификат Dubai Land Department</h3>
+                    <p class="muted" style="margin:0;font-size:.85rem">Brokerage Office Permit · ORN 28341</p>
+                    <a href="#" class="btn btn--ghost btn--sm" style="align-self:flex-start">Скачать</a>
+                </article>
+                <article class="license-card">
+                    <div class="license-card__doc">📄 PDF · ФНС</div>
+                    <h3 class="license-card__title">Лицензия брокера, Россия</h3>
+                    <p class="muted" style="margin:0;font-size:.85rem">ОГРН 1234567890123 · с 2018 года</p>
+                    <a href="#" class="btn btn--ghost btn--sm" style="align-self:flex-start">Скачать</a>
+                </article>
+                </div>
+            </section>
+
+            <section class="about-section about-section--partners">
+                <h2 class="section-title">Наши партнёры</h2>
+                <p class="muted">Работаем напрямую с ведущими застройщиками региона.</p>
+                <div class="partners__row">
+                <a class="partner-logo" href="#" target="_blank" rel="noopener">EMAAR</a>
+                <a class="partner-logo" href="#" target="_blank" rel="noopener">MARK INVEST</a>
+                <a class="partner-logo" href="#" target="_blank" rel="noopener">NAKHEEL</a>
+                <a class="partner-logo" href="#" target="_blank" rel="noopener">ALDAR</a>
+                <a class="partner-logo" href="#" target="_blank" rel="noopener">DAMAC</a>
+                <a class="partner-logo" href="#" target="_blank" rel="noopener">DAR GLOBAL</a>
+                <a class="partner-logo" href="#" target="_blank" rel="noopener">RAK PROPERTIES</a>
+                <a class="partner-logo" href="#" target="_blank" rel="noopener">DOMUS</a>
+                </div>
+            </section>
+
+            <section class="about-section about-section--become-partner">
+                <h2 class="section-title">Стать партнёром</h2>
+                <p>Вы застройщик, агентство или сервис в сфере недвижимости? Заполните заявку — обсудим сотрудничество.</p>
+                <a href="#partner-form" class="btn btn--accent btn--lg">Стать партнёром</a>
+
+                <section class="modal-inline" id="partner-form" aria-label="Заявка на партнёрство" style="max-width:640px">
+                    <h3 class="modal-inline__title">Заявка на партнёрство</h3>
+                    <p class="modal-inline__hint">Расскажите о компании — менеджер по партнёрам свяжется в течение 2 рабочих дней.</p>
+                    <form onsubmit="event.preventDefault()">
+                        <div class="form-row">
+                            <label for="p-company">Название компании *</label>
+                            <input type="text" id="p-company" name="companyName" value="OOO «Пример Девелопмент»" required>
+                        </div>
+                        <div class="form-row">
+                            <label for="p-contact">Контактное лицо *</label>
+                            <input type="text" id="p-contact" name="contactName" value="Иван Иванов" required>
+                        </div>
+                        <div class="form-row">
+                            <label for="p-email">Email *</label>
+                            <input type="email" id="p-email" name="email" value="partner@example.com" required>
+                        </div>
+                        <div class="form-row">
+                            <label for="p-phone">Телефон</label>
+                            <input type="tel" id="p-phone" name="phone" value="+7 (999) 123-45-67">
+                        </div>
+                        <div class="form-row">
+                            <label for="p-message">Сообщение</label>
+                            <textarea id="p-message" name="message" rows="4">Хотим обсудить размещение наших ЖК на платформе INVESTROOM.</textarea>
+                        </div>
+                        <div class="form-row">
+                            <label class="form-check">
+                                <input type="checkbox" name="consent" checked>
+                                <span>Я согласен на обработку персональных данных в соответствии с <a href="#">политикой конфиденциальности</a> (152-ФЗ).</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn--accent">Отправить заявку</button>
+                    </form>
+                </section>
+            </section>
+        </article>
+    </main>
+    <footer class="site-footer">
+    <div class="container site-footer__grid">
+        <div class="site-footer__col">
+            <div class="logo logo--light">INVESTROOM</div>
+            <p class="site-footer__tagline">Инвестиции в недвижимость — просто и прозрачно</p>
+            <div class="socials" aria-label="Соцсети"><a href="#">TG</a><a href="#">VK</a><a href="#">YT</a></div>
+        </div>
+        <nav class="site-footer__col" aria-label="Меню в подвале">
+            <h4 class="site-footer__title">Разделы</h4>
+            <a href="objects.html">Объекты инвестиций</a>
+            <a href="../phase2/about.html">Инвесторам</a>
+            <a href="../phase2/media.html">Медиа</a>
+            <a href="../phase2/faq.html">Частые вопросы</a>
+            <a href="../phase2/contacts.html">Контакты</a>
+        </nav>
+        <div class="site-footer__col">
+            <h4 class="site-footer__title">Контакты</h4>
+            <a class="site-footer__contact" href="#">+7 (XXX) XXX-XX-XX</a>
+            <a class="site-footer__contact" href="#">info@investroom.example</a>
+            <a class="btn btn--accent btn--sm" href="../phase2/contacts.html">Связаться с нами</a>
+        </div>
+    </div>
+    <div class="site-footer__legal container">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Пользовательское соглашение</a>
+        <span class="site-footer__copyright">© 2026 ООО «MARK Invest Group». Все права защищены.</span>
+    </div>
+</footer>
+</body>
+</html>

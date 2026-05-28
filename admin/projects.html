@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проекты (ЖК) — INVESTROOM админка</title>
+    <link rel="icon" href="data:,">
+    <style>
+    :root{--navy:#1f3a5f;--ice:#f4f7fb;--line:#c9d2dc;--muted:#6b7785;--accent:#2f6df0;}
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#1c2733;background:var(--ice);}
+    a{color:var(--navy);}
+    .note{background:#0f1633;color:#cdd6f0;text-align:center;font-size:.82rem;padding:7px 12px;}
+    .note b{color:#fff;} .note a{color:#9ec1ff;}
+    .admin-bar{background:var(--navy);color:#fff;padding:.85rem 1.4rem;display:flex;align-items:center;justify-content:space-between;}
+    .admin-bar a.brand{color:#fff;text-decoration:none;font-weight:700;letter-spacing:.03em;}
+    .admin-bar .user{font-size:.85rem;color:#cdd6f0;} .admin-bar .user a{color:#fff;}
+    .admin-shell{display:flex;align-items:flex-start;}
+    .admin-sidebar{flex:0 0 240px;background:#fff;border-right:1px solid var(--line);min-height:calc(100vh - 90px);padding:1rem 0;}
+    .admin-sidebar nav{display:flex;flex-direction:column;}
+    .admin-sidebar .sec{padding:.9rem 1.4rem .35rem;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);}
+    .admin-sidebar a{display:flex;gap:.6rem;align-items:center;padding:.55rem 1.4rem;color:#1c2733;text-decoration:none;border-left:3px solid transparent;}
+    .admin-sidebar a:hover{background:var(--ice);}
+    .admin-sidebar a.active{border-left-color:var(--navy);background:var(--ice);font-weight:600;color:var(--navy);}
+    .admin-content{flex:1 1 auto;min-width:0;}
+    .admin-main{max-width:980px;margin:0 auto;padding:1.6rem 1.5rem 3rem;}
+    .admin-main h1{font-size:1.5rem;margin:0 0 1.3rem;}
+    .crumb{color:var(--muted);font-size:.85rem;margin:0 0 1rem;}
+    .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;gap:1rem;flex-wrap:wrap;}
+    .btn{display:inline-block;padding:.55rem 1.1rem;border:0;border-radius:6px;color:#fff;background:var(--navy);font:inherit;font-weight:600;text-decoration:none;cursor:pointer;}
+    .btn:hover{background:#16293f;} .btn--accent{background:var(--accent);} .btn--sm{padding:.35rem .7rem;font-size:.85rem;}
+    .btn--danger{background:#c0392b;} .btn--danger:hover{background:#a93226;}
+    .btn--ghost{background:transparent;color:var(--navy);border:1px solid var(--line);}
+    table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+    th,td{text-align:left;padding:.7rem .85rem;border-bottom:1px solid #eef1f5;font-size:.92rem;vertical-align:middle;}
+    th{background:#f7f9fc;color:var(--muted);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.03em;}
+    tr:last-child td{border-bottom:0;} tr:hover td{background:#fafbfe;}
+    .badge{display:inline-block;padding:.15rem .55rem;border-radius:99px;font-size:.78rem;font-weight:600;}
+    .badge--ok{background:#e6f5ea;color:#1e6b3a;} .badge--draft{background:#fdf0e3;color:#9a5b13;}
+    .badge--role{background:#eef2fb;color:#2f4d8a;margin-right:.25rem;}
+    .badge--new{background:#e7eefc;color:#234aa0;} .badge--progress{background:#fdf0e3;color:#9a5b13;}
+    .badge--contacted{background:#e6f0fb;color:#1e4e85;} .badge--converted{background:#e6f5ea;color:#1e6b3a;}
+    .badge--rejected{background:#fbe6e6;color:#8c2a2a;} .badge--archived{background:#eceef2;color:#5a6573;}
+    .badge--info{background:#eef2fb;color:#2f4d8a;}
+    .stars{color:#e0a82e;letter-spacing:.05em;font-size:.95rem;}
+    .indicator{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.5rem;vertical-align:middle;}
+    .indicator--ok{background:#1e9d4d;} .indicator--warn{background:#e0a82e;} .indicator--fail{background:#c0392b;}
+    .health-card{display:flex;align-items:center;gap:.9rem;padding:.85rem 1rem;border:1px solid var(--line);border-radius:10px;background:#fff;margin-bottom:.6rem;}
+    .health-card .name{font-weight:600;min-width:170px;} .health-card .detail{color:var(--muted);font-size:.92rem;}
+    .health-card .right{margin-left:auto;color:var(--muted);font-size:.85rem;}
+    .thumb-sm{display:inline-block;width:48px;height:32px;background:linear-gradient(135deg,#e9eef5,#dfe6ef);border-radius:4px;text-align:center;line-height:32px;color:#9fb0c4;font-size:1rem;vertical-align:middle;margin-right:.5rem;}
+    .logo-sm{display:inline-block;width:64px;height:28px;background:#f7f9fc;border:1px solid var(--line);border-radius:4px;text-align:center;line-height:28px;color:var(--muted);font-size:.8rem;font-weight:600;vertical-align:middle;margin-right:.5rem;}
+    .pdf-pill{display:inline-block;padding:.1rem .4rem;background:#fbe6e6;color:#8c2a2a;border-radius:4px;font-size:.7rem;font-weight:700;margin-right:.4rem;letter-spacing:.05em;}
+    .toggle{display:inline-flex;align-items:center;gap:.55rem;background:#f7f9fc;border:1px solid var(--line);border-radius:99px;padding:.25rem .55rem;font-size:.85rem;}
+    .toggle .sw{width:34px;height:18px;background:#cfd8e3;border-radius:99px;position:relative;}
+    .toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;background:#fff;border-radius:50%;}
+    .toggle--on .sw{background:#1e9d4d;} .toggle--on .sw::after{left:18px;}
+    .filter-bar{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1rem;background:#fff;border:1px solid var(--line);border-radius:10px;padding:.7rem .85rem;}
+    .filter-bar input,.filter-bar select{padding:.4rem .55rem;border:1px solid var(--line);border-radius:6px;font:inherit;font-size:.9rem;}
+    .pager{margin-top:1rem;display:flex;gap:.3rem;flex-wrap:wrap;}
+    .pager a{padding:.3rem .6rem;border:1px solid var(--line);border-radius:6px;color:var(--navy);text-decoration:none;font-size:.88rem;background:#fff;}
+    .pager a.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+    .success-flash{background:#e6f5ea;border:1px solid #b5dec0;color:#1e6b3a;padding:.75rem 1rem;border-radius:8px;margin-bottom:1.1rem;max-width:680px;}
+    .row-actions{white-space:nowrap;text-align:right;}
+    .row-actions a{font-size:.85rem;margin-left:.6rem;text-decoration:none;}
+    .row-actions a.del{color:#c0392b;}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
+    .card{padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:#fff;}
+    .card h3{margin:0 0 .6rem;font-size:1.02rem;} .card p{margin:.3rem 0;}
+    .card .big{font-size:1.9rem;font-weight:700;color:var(--navy);}
+    .card ul{margin:.3rem 0 0;padding-left:1.05rem;color:#33414f;font-size:.92rem;} .card li{margin:.2rem 0;}
+    .muted{color:var(--muted);}
+    .form-grid{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.4rem 1.5rem;max-width:680px;}
+    .form-grid .fld{margin-bottom:1.05rem;}
+    .form-grid label{display:block;font-weight:600;margin-bottom:.35rem;}
+    .form-grid input[type=text],.form-grid input[type=email],.form-grid input[type=number],
+    .form-grid select,.form-grid textarea,.form-grid input[type=file]{width:100%;padding:.55rem .65rem;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff;}
+    .form-grid textarea{resize:vertical;} .form-grid .hint{display:block;color:var(--muted);font-size:.84rem;margin-top:.25rem;}
+    .form-grid .two{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .back{display:inline-block;margin-top:1.1rem;}
+    .confirm{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.4rem 1.5rem;max-width:560px;}
+    .uploader{background:#fff;border:1px dashed var(--line);border-radius:12px;padding:1.3rem 1.5rem;margin-bottom:1.4rem;}
+    .uploader .drop{border:2px dashed #cfd8e3;border-radius:10px;padding:1.6rem;text-align:center;color:var(--muted);background:#fafbfe;}
+    .uploader .drop b{color:var(--navy);}
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;}
+    .gphoto{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
+    .gphoto .thumb{aspect-ratio:3/2;background:linear-gradient(135deg,#e9eef5,#dfe6ef);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#9fb0c4;position:relative;}
+    .gphoto .handle{position:absolute;top:.5rem;left:.5rem;background:rgba(255,255,255,.85);border-radius:6px;padding:.1rem .4rem;font-size:.9rem;color:var(--muted);cursor:grab;}
+    .gphoto .body{padding:.8rem .85rem;display:flex;flex-direction:column;gap:.55rem;}
+    .gphoto label{font-size:.78rem;color:var(--muted);font-weight:600;}
+    .gphoto input{width:100%;padding:.4rem .55rem;border:1px solid var(--line);border-radius:6px;font:inherit;}
+    .gphoto .row{display:flex;gap:.5rem;align-items:flex-end;}
+    .gphoto .row .ord{flex:0 0 64px;} .gphoto .row .del{margin-left:auto;}
+    .editor{border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+    .editor .tb{display:flex;gap:.2rem;flex-wrap:wrap;padding:.4rem .5rem;background:#f7f9fc;border-bottom:1px solid var(--line);}
+    .editor .tb button{border:1px solid var(--line);background:#fff;border-radius:5px;padding:.25rem .55rem;font:inherit;font-size:.9rem;cursor:pointer;}
+    .editor .tb button:hover{background:var(--ice);}
+    .editor .area{padding:.7rem .75rem;min-height:150px;background:#fff;}
+    .editor .area p{margin:0 0 .7rem;} .editor .area figure{margin:.7rem 0;text-align:center;}
+    .editor .area .embed{display:inline-flex;align-items:center;justify-content:center;width:100%;max-width:360px;aspect-ratio:3/2;background:linear-gradient(135deg,#e9eef5,#dfe6ef);border-radius:8px;color:#9fb0c4;font-size:1.6rem;}
+    .editor .area figcaption{font-size:.82rem;color:var(--muted);margin-top:.3rem;}
+    .cover{display:flex;gap:1rem;align-items:center;}
+    .cover .prev{flex:0 0 140px;aspect-ratio:3/2;background:linear-gradient(135deg,#e9eef5,#dfe6ef);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#9fb0c4;font-size:1.6rem;}
+    .notice{background:#fdf6e3;border:1px solid #f0e0b0;color:#7a5c12;border-radius:10px;padding:.8rem 1rem;margin-bottom:1.2rem;font-size:.9rem;max-width:680px;}
+    .roles{display:flex;flex-wrap:wrap;gap:.5rem .9rem;}
+    .roles label{display:inline-flex;align-items:center;gap:.4rem;font-weight:400;margin:0;}
+    @media(max-width:760px){.admin-shell{flex-direction:column;}.admin-sidebar{flex-basis:auto;width:100%;min-height:0;border-right:0;border-bottom:1px solid var(--line);}.form-grid .two{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+    <div class="note">Превью <b>админ-панели</b> INVESTROOM — макет дизайна, бэкенда нет.
+        Фаза 3: проекты (ЖК), коммерция, менеджеры, заявки, отзывы, награды, лицензии, партнёры,
+        рассылка, журнал аудита, состояние системы. ·
+        <a href="../phase3/index.html">← к витрине сайта</a></div>
+    <header class="admin-bar">
+        <a class="brand" href="index.html">INVESTROOM · админка</a>
+        <span class="user">superadmin@investroom.local · <a href="#">Выйти</a></span>
+    </header>
+    <div class="admin-shell">
+        <aside class="admin-sidebar"><nav>
+            <a href="index.html"><span>📊</span>Дашборд</a>
+            <span class="sec">Контент</span>
+            <a href="projects.html" class="active"><span>🏗️</span>Проекты (ЖК)</a>
+            <a href="objects.html"><span>🏢</span>Объекты каталога</a>
+            <a href="commercial.html"><span>🏪</span>Коммерция</a>
+            <a href="pages.html"><span>📄</span>Страницы</a>
+            <a href="faq.html"><span>❓</span>Частые вопросы</a>
+            <a href="media.html"><span>🖼️</span>Медиа</a>
+            <a href="testimonials.html"><span>💬</span>Отзывы</a>
+            <a href="achievements.html"><span>🏆</span>Награды</a>
+            <a href="legal-documents.html"><span>📜</span>Лицензии</a>
+            <a href="partners.html"><span>🤝</span>Партнёры</a>
+            <span class="sec">Управление</span>
+            <a href="requests.html"><span>📥</span>Заявки</a>
+            <a href="partner-applications.html"><span>📨</span>Заявки партнёров</a>
+            <a href="managers.html"><span>👔</span>Менеджеры</a>
+            <a href="users.html"><span>👥</span>Пользователи</a>
+            <a href="settings.html"><span>⚙️</span>Настройки сайта</a>
+            <a href="broadcast.html"><span>📣</span>Рассылка</a>
+            <span class="sec">Система</span>
+            <a href="audit-log.html"><span>🧾</span>Журнал аудита</a>
+            <a href="system-health.html"><span>❤️</span>Состояние системы</a>
+            <a href="open-questions.html"><span>📋</span>Открытые вопросы</a>
+        </nav></aside>
+        <div class="admin-content"><main class="admin-main">
+            
+            <h1>Проекты (ЖК)</h1>
+            <div class="toolbar">
+                <span class="muted">Всего записей: 4</span>
+                <a class="btn btn--accent" href="project-form.html">+ Создать проект</a>
+            </div>
+<table>
+<thead><tr><th>Название</th><th>Застройщик</th><th>Город</th><th>Срок сдачи</th><th>Сумма</th><th>Статус</th><th class="row-actions">Действия</th></tr></thead>
+<tbody>
+<tr><td><span class="thumb-sm">🏗️</span>ЖК «Морская Резиденция»</td><td>ЮгСтрой</td><td>Сочи</td><td>IV кв. 2026</td><td>45 000 000 ₽</td><td><span class="badge badge--ok">Опубликован</span></td><td class="row-actions"><a href="project-form.html">Изменить</a><a class="del" href="project-delete.html">Удалить</a></td></tr>
+<tr><td><span class="thumb-sm">🏗️</span>ЖК «Сити Парк»</td><td>СтолицаДевелопмент</td><td>Москва</td><td>II кв. 2027</td><td>120 000 000 ₽</td><td><span class="badge badge--ok">Опубликован</span></td><td class="row-actions"><a href="project-form.html">Изменить</a><a class="del" href="project-delete.html">Удалить</a></td></tr>
+<tr><td><span class="thumb-sm">🏗️</span>Marina Heights</td><td>Emaar Properties</td><td>Дубай</td><td>I кв. 2028</td><td>9 000 000 AED</td><td><span class="badge badge--ok">Опубликован</span></td><td class="row-actions"><a href="project-form.html">Изменить</a><a class="del" href="project-delete.html">Удалить</a></td></tr>
+<tr><td><span class="thumb-sm">🏗️</span>ЖК «Лесной квартал»</td><td>АльфаСтрой</td><td>Казань</td><td>III кв. 2027</td><td>—</td><td><span class="badge badge--draft">Черновик</span></td><td class="row-actions"><a href="project-form.html">Изменить</a><a class="del" href="project-delete.html">Удалить</a></td></tr>
+</tbody>
+</table>
+        </main></div>
+    </div>
+</body>
+</html>

@@ -8,17 +8,31 @@ import os
 
 OUT = os.path.dirname(os.path.abspath(__file__))
 
-# Пункты бокового меню — зеркалят DashboardController::configureMenuItems.
+# Пункты бокового меню — зеркалят DashboardController::configureMenuItems
+# (см. /root/investroom/src/Controller/Admin/DashboardController.php).
 MENU = [
     dict(kind="link", icon="📊", label="Дашборд", href="index.html", key="dashboard"),
     dict(kind="section", label="Контент"),
+    dict(kind="link", icon="🏗️", label="Проекты (ЖК)", href="projects.html", key="projects"),
     dict(kind="link", icon="🏢", label="Объекты каталога", href="objects.html", key="objects"),
+    dict(kind="link", icon="🏪", label="Коммерция", href="commercial.html", key="commercial"),
     dict(kind="link", icon="📄", label="Страницы", href="pages.html", key="pages"),
     dict(kind="link", icon="❓", label="Частые вопросы", href="faq.html", key="faq"),
     dict(kind="link", icon="🖼️", label="Медиа", href="media.html", key="media"),
+    dict(kind="link", icon="💬", label="Отзывы", href="testimonials.html", key="testimonials"),
+    dict(kind="link", icon="🏆", label="Награды", href="achievements.html", key="achievements"),
+    dict(kind="link", icon="📜", label="Лицензии", href="legal-documents.html", key="legal"),
+    dict(kind="link", icon="🤝", label="Партнёры", href="partners.html", key="partners"),
     dict(kind="section", label="Управление"),
+    dict(kind="link", icon="📥", label="Заявки", href="requests.html", key="requests"),
+    dict(kind="link", icon="📨", label="Заявки партнёров", href="partner-applications.html", key="partner-apps"),
+    dict(kind="link", icon="👔", label="Менеджеры", href="managers.html", key="managers"),
     dict(kind="link", icon="👥", label="Пользователи", href="users.html", key="users"),
     dict(kind="link", icon="⚙️", label="Настройки сайта", href="settings.html", key="settings"),
+    dict(kind="link", icon="📣", label="Рассылка", href="broadcast.html", key="broadcast"),
+    dict(kind="section", label="Система"),
+    dict(kind="link", icon="🧾", label="Журнал аудита", href="audit-log.html", key="audit"),
+    dict(kind="link", icon="❤️", label="Состояние системы", href="system-health.html", key="health"),
     dict(kind="link", icon="📋", label="Открытые вопросы", href="open-questions.html", key="oq"),
 ]
 
@@ -55,6 +69,29 @@ CSS = """
     .badge{display:inline-block;padding:.15rem .55rem;border-radius:99px;font-size:.78rem;font-weight:600;}
     .badge--ok{background:#e6f5ea;color:#1e6b3a;} .badge--draft{background:#fdf0e3;color:#9a5b13;}
     .badge--role{background:#eef2fb;color:#2f4d8a;margin-right:.25rem;}
+    .badge--new{background:#e7eefc;color:#234aa0;} .badge--progress{background:#fdf0e3;color:#9a5b13;}
+    .badge--contacted{background:#e6f0fb;color:#1e4e85;} .badge--converted{background:#e6f5ea;color:#1e6b3a;}
+    .badge--rejected{background:#fbe6e6;color:#8c2a2a;} .badge--archived{background:#eceef2;color:#5a6573;}
+    .badge--info{background:#eef2fb;color:#2f4d8a;}
+    .stars{color:#e0a82e;letter-spacing:.05em;font-size:.95rem;}
+    .indicator{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.5rem;vertical-align:middle;}
+    .indicator--ok{background:#1e9d4d;} .indicator--warn{background:#e0a82e;} .indicator--fail{background:#c0392b;}
+    .health-card{display:flex;align-items:center;gap:.9rem;padding:.85rem 1rem;border:1px solid var(--line);border-radius:10px;background:#fff;margin-bottom:.6rem;}
+    .health-card .name{font-weight:600;min-width:170px;} .health-card .detail{color:var(--muted);font-size:.92rem;}
+    .health-card .right{margin-left:auto;color:var(--muted);font-size:.85rem;}
+    .thumb-sm{display:inline-block;width:48px;height:32px;background:linear-gradient(135deg,#e9eef5,#dfe6ef);border-radius:4px;text-align:center;line-height:32px;color:#9fb0c4;font-size:1rem;vertical-align:middle;margin-right:.5rem;}
+    .logo-sm{display:inline-block;width:64px;height:28px;background:#f7f9fc;border:1px solid var(--line);border-radius:4px;text-align:center;line-height:28px;color:var(--muted);font-size:.8rem;font-weight:600;vertical-align:middle;margin-right:.5rem;}
+    .pdf-pill{display:inline-block;padding:.1rem .4rem;background:#fbe6e6;color:#8c2a2a;border-radius:4px;font-size:.7rem;font-weight:700;margin-right:.4rem;letter-spacing:.05em;}
+    .toggle{display:inline-flex;align-items:center;gap:.55rem;background:#f7f9fc;border:1px solid var(--line);border-radius:99px;padding:.25rem .55rem;font-size:.85rem;}
+    .toggle .sw{width:34px;height:18px;background:#cfd8e3;border-radius:99px;position:relative;}
+    .toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;background:#fff;border-radius:50%;}
+    .toggle--on .sw{background:#1e9d4d;} .toggle--on .sw::after{left:18px;}
+    .filter-bar{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1rem;background:#fff;border:1px solid var(--line);border-radius:10px;padding:.7rem .85rem;}
+    .filter-bar input,.filter-bar select{padding:.4rem .55rem;border:1px solid var(--line);border-radius:6px;font:inherit;font-size:.9rem;}
+    .pager{margin-top:1rem;display:flex;gap:.3rem;flex-wrap:wrap;}
+    .pager a{padding:.3rem .6rem;border:1px solid var(--line);border-radius:6px;color:var(--navy);text-decoration:none;font-size:.88rem;background:#fff;}
+    .pager a.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+    .success-flash{background:#e6f5ea;border:1px solid #b5dec0;color:#1e6b3a;padding:.75rem 1rem;border-radius:8px;margin-bottom:1.1rem;max-width:680px;}
     .row-actions{white-space:nowrap;text-align:right;}
     .row-actions a{font-size:.85rem;margin-left:.6rem;text-decoration:none;}
     .row-actions a.del{color:#c0392b;}
@@ -125,7 +162,9 @@ def page(title, active, body, crumb=""):
     <style>{CSS}</style>
 </head>
 <body>
-    <div class="note">Превью <b>админ-панели</b> INVESTROOM — макет дизайна, бэкенда нет. ·
+    <div class="note">Превью <b>админ-панели</b> INVESTROOM — макет дизайна, бэкенда нет.
+        Фаза 3: проекты (ЖК), коммерция, менеджеры, заявки, отзывы, награды, лицензии, партнёры,
+        рассылка, журнал аудита, состояние системы. ·
         <a href="../phase3/index.html">← к витрине сайта</a></div>
     <header class="admin-bar">
         <a class="brand" href="index.html">INVESTROOM · админка</a>
@@ -193,6 +232,102 @@ SETTINGS = [
     ("Телефон поддержки", "support.phone", "Телефон", "+971 50 000 00 00", "Контакты"),
     ("Адрес офиса", "contacts.address", "Текст", "Дубай, Business Bay", "Контакты"),
     ("Текст cookie-баннера", "cookie.text", "Текст", "Мы используем файлы cookie…", "Прочее"),
+    ("Режим обслуживания", "system.maintenance_mode", "Флаг", "off", "Система"),
+]
+
+# ---- демо-данные для Фазы 3 ----
+MANAGERS = [
+    ("Анна Самоделкина", "anna.s@investroom.local", "Менеджер по жилой недвижимости", "RU, EN", 1, True),
+    ("Игорь Соколов", "igor.s@investroom.local", "Менеджер по коммерческой недвижимости", "RU", 2, True),
+    ("Дарья Петрова", "daria.p@investroom.local", "Менеджер по зарубежной недвижимости", "RU, EN", 3, True),
+    ("Сергей Кравцов", "sergey.k@investroom.local", "Менеджер по земельным участкам", "RU", 4, True),
+]
+
+PROJECTS = [
+    ("ЖК «Морская Резиденция»", "ЮгСтрой", "Сочи", "Опубликован", "morskaya-rezidenciya-sochi", "IV кв. 2026", "45 000 000 ₽", "RUB"),
+    ("ЖК «Сити Парк»", "СтолицаДевелопмент", "Москва", "Опубликован", "city-park-moscow", "II кв. 2027", "120 000 000 ₽", "RUB"),
+    ("Marina Heights", "Emaar Properties", "Дубай", "Опубликован", "marina-heights-dubai", "I кв. 2028", "9 000 000 AED", "AED"),
+    ("ЖК «Лесной квартал»", "АльфаСтрой", "Казань", "Черновик", "lesnoy-kvartal-kazan", "III кв. 2027", "—", "RUB"),
+]
+
+COMMERCIAL = [
+    ("Офис в Business Bay", "Офис", "Дубай", "180.00", "3 200 000 AED", "AED", "Опубликован", True),
+    ("Торговое помещение в JVC", "Торговое помещение", "Дубай", "95.50", "1 400 000 AED", "AED", "Опубликован", False),
+    ("Склад в Muscat", "Склад", "Маскат", "1 200.00", "900 000 OMR", "OMR", "Опубликован", True),
+    ("Ресторан на Crescent Road", "Ресторан / кафе", "Дубай", "260.00", "5 500 000 AED", "AED", "Черновик", False),
+]
+
+REQUESTS = [
+    ("Инвестировать", "Апартаменты в Marina Heights", "Алексей Иванов", "+7 900 111-11-11", "new", "24.05.2026"),
+    ("Забронировать", "Вилла на Palm Jumeirah", "Мария Сергеева", "+7 911 222-22-22", "new", "24.05.2026"),
+    ("Инвестировать", "Офис в Business Bay", "Дмитрий Соловьёв", "+971 50 555 11 22", "in_progress", "23.05.2026"),
+    ("Забронировать", "Таунхаус на Yas Island", "Елена Кошкина", "+7 925 333-33-33", "contacted", "22.05.2026"),
+    ("Инвестировать", "Гостиничные апартаменты, Al Marjan", "Игорь Петров", "+7 916 444-44-44", "converted", "20.05.2026"),
+    ("Забронировать", "Склад в Muscat", "Олег Сидоров", "+968 9000 5555", "rejected", "18.05.2026"),
+]
+
+REQUEST_STATUS_LABELS = {
+    "new": ("Новая", "badge--new"),
+    "in_progress": ("В работе", "badge--progress"),
+    "contacted": ("Связались", "badge--contacted"),
+    "converted": ("В сделку", "badge--converted"),
+    "rejected": ("Отклонена", "badge--rejected"),
+}
+
+TESTIMONIALS = [
+    ("Анна К., инвестор", 5, "Сделка по Marina Heights прошла прозрачно — все этапы в личном кабинете.", "Яндекс", "20.04.2026"),
+    ("Михаил П., инвестор", 5, "Менеджеры всегда на связи, документы оформили быстро.", "Прямой отзыв", "08.04.2026"),
+    ("Елена С., предприниматель", 4, "Помогли подобрать офис под мою компанию в Business Bay.", "Google", "22.03.2026"),
+    ("Дмитрий Р., инвестор", 5, "Купил апартаменты в Сочи — теперь сдаю в аренду, рекомендую.", "Прямой отзыв", "15.03.2026"),
+    ("Ольга Л., инвестор", 5, "Подобрали ЖК под бюджет, рассрочка от застройщика — удобно.", "Яндекс", "02.03.2026"),
+    ("Сергей Н., инвестор", 4, "Хороший сервис, ждём ввод нового проекта в Маскате.", "Google", "18.02.2026"),
+]
+
+ACHIEVEMENTS = [
+    ("Лучший брокер недвижимости ОАЭ", 2025, True, 1),
+    ("Премия Real Estate Excellence Award", 2024, True, 2),
+    ("ТОП-10 партнёров Emaar Properties", 2024, True, 3),
+    ("Сертификат качества ISO 9001", 2023, True, 4),
+]
+
+LEGAL_DOCS = [
+    ("Брокерская лицензия RERA №12345", "Лицензия", True, 1),
+    ("Сертификат Dubai Land Department", "Сертификат", True, 2),
+    ("Свидетельство о государственной регистрации", "Документ", True, 3),
+]
+
+PARTNERS = [
+    ("Emaar Properties", "https://emaar.com", True, 1),
+    ("DAMAC Properties", "https://damacproperties.com", True, 2),
+    ("Nakheel", "https://nakheel.com", True, 3),
+    ("Sobha Realty", "https://sobharealty.com", True, 4),
+    ("Aldar", "https://aldar.com", True, 5),
+    ("Meraas", "https://meraas.com", True, 6),
+    ("ЮгСтрой", "https://yugstroy.example", True, 7),
+    ("СтолицаДевелопмент", "https://stolica-dev.example", True, 8),
+]
+
+PARTNER_APPS = [
+    ("ООО «КапиталИнвест»", "Алексей Морозов", "morozov@capital-invest.example", "+7 495 100-10-10",
+     "Хотим стать партнёром по продаже наших ЖК в Подмосковье на платформе INVESTROOM…", "25.05.2026", None),
+    ("Sky Properties LLC", "James Whittaker", "j.whittaker@skyprop.example", "+971 4 555 7777",
+     "Looking for cross-promotion of Dubai off-plan portfolio. Available to discuss commercials.",
+     "23.05.2026", "24.05.2026 / superadmin@investroom.local"),
+    ("ИП Кравченко О.А.", "Ольга Кравченко", "kravchenko@example.com", "+7 905 200-20-20",
+     "Помогу с подбором клиентов на проекты в Сочи и Краснодарском крае.", "20.05.2026", None),
+]
+
+AUDIT_LOG = [
+    ("25.05.2026 13:40:11", "superadmin@investroom.local", "project.create", "Project", "0193a1b2…"),
+    ("25.05.2026 13:38:02", "superadmin@investroom.local", "project.update", "Project", "0193a1a0…"),
+    ("25.05.2026 12:10:33", "anna.s@investroom.local", "request.status_change", "InvestmentRequest", "0193a18f…"),
+    ("25.05.2026 11:50:08", "anna.s@investroom.local", "user.login", "User", "0192fa44…"),
+    ("24.05.2026 18:02:45", "superadmin@investroom.local", "setting.update", "Setting", "0192e120…"),
+    ("24.05.2026 17:55:21", "igor.s@investroom.local", "user.login", "User", "0192e0fa…"),
+    ("24.05.2026 17:30:07", "superadmin@investroom.local", "broadcast.send", "Notification", "—"),
+    ("24.05.2026 16:18:55", "superadmin@investroom.local", "testimonial.create", "Testimonial", "0192e08b…"),
+    ("24.05.2026 09:31:12", "—", "cookie.accept", "AuditLog", "—"),
+    ("23.05.2026 20:04:39", "superadmin@investroom.local", "commercial.create", "CommercialProperty", "0192cd71…"),
 ]
 
 
@@ -225,6 +360,36 @@ def list_page(title, active, new_label, headers, rows, new_href="#", edit_href="
 def build_dashboard():
     body = """            <div class="cards">
                 <div class="card">
+                    <h3>Новых заявок</h3>
+                    <p class="big">2</p>
+                    <p class="muted">Всего в работе: <strong>6</strong></p>
+                    <p style="margin-top:.6rem"><a href="requests.html">Открыть список →</a></p>
+                </div>
+                <div class="card">
+                    <h3>Заявок партнёров</h3>
+                    <p class="big">2</p>
+                    <p class="muted">Необработанных из 3</p>
+                    <p style="margin-top:.6rem"><a href="partner-applications.html">Открыть список →</a></p>
+                </div>
+                <div class="card">
+                    <h3>Уведомлений (рассылка)</h3>
+                    <p class="big">5</p>
+                    <p class="muted">Непрочитанных у получателей</p>
+                    <p style="margin-top:.6rem"><a href="broadcast.html">Новая рассылка →</a></p>
+                </div>
+                <div class="card">
+                    <h3>Опубликованных объектов</h3>
+                    <p class="big">7</p>
+                    <p class="muted">Каталог жилья</p>
+                    <p style="margin-top:.6rem"><a href="objects.html">Открыть →</a></p>
+                </div>
+                <div class="card">
+                    <h3>Опубликованных проектов</h3>
+                    <p class="big">3</p>
+                    <p class="muted">ЖК (черновиков: 1)</p>
+                    <p style="margin-top:.6rem"><a href="projects.html">Открыть →</a></p>
+                </div>
+                <div class="card">
                     <h3>Открытые вопросы заказчика</h3>
                     <p>🔴 Открыто: <strong>10</strong></p>
                     <p>🟡 Допущения: <strong>8</strong></p>
@@ -252,14 +417,27 @@ def build_dashboard():
                     </ul>
                 </div>
                 <div class="card">
+                    <h3>Режим обслуживания</h3>
+                    <p>Setting <code>system.maintenance_mode</code></p>
+                    <p style="margin-top:.6rem">
+                        <span class="toggle" title="Кликабельно в админке">
+                            <span class="sw"></span>выключен
+                        </span>
+                    </p>
+                    <p class="muted" style="margin-top:.6rem;font-size:.85rem">
+                        Включение скрывает витрину и показывает заглушку.
+                    </p>
+                </div>
+                <div class="card">
                     <h3>Последние действия</h3>
                     <ul>
-                        <li><span class="muted">25.05 13:40</span> — object.create <span class="muted">(InvestmentObject)</span></li>
-                        <li><span class="muted">25.05 12:10</span> — page.update <span class="muted">(Page)</span></li>
+                        <li><span class="muted">25.05 13:40</span> — project.create <span class="muted">(Project)</span></li>
+                        <li><span class="muted">25.05 12:10</span> — request.status_change <span class="muted">(InvestmentRequest)</span></li>
                         <li><span class="muted">24.05 18:02</span> — setting.update <span class="muted">(Setting)</span></li>
-                        <li><span class="muted">24.05 17:55</span> — user.login <span class="muted">(User)</span></li>
+                        <li><span class="muted">24.05 17:30</span> — broadcast.send <span class="muted">(Notification)</span></li>
                         <li><span class="muted">24.05 09:31</span> — cookie.accept <span class="muted">(AuditLog)</span></li>
                     </ul>
+                    <p style="margin-top:.6rem"><a href="audit-log.html">Полный журнал →</a></p>
                 </div>
             </div>"""
     return page("Панель управления", "dashboard", body)
@@ -616,6 +794,762 @@ def build_open_questions():
     return page("Открытые вопросы заказчика", "oq", body)
 
 
+def request_badge(code):
+    label, cls = REQUEST_STATUS_LABELS[code]
+    return f'<span class="badge {cls}">{label}</span>'
+
+
+# ---- Менеджеры (ManagerProfile) ----
+def build_manager_form():
+    body = """            <form class="form-grid" onsubmit="return false">
+                <div class="fld">
+                    <label>Пользователь</label>
+                    <select>
+                        <option selected>Анна Самоделкина (anna.s@investroom.local)</option>
+                        <option>Игорь Соколов (igor.s@investroom.local)</option>
+                        <option>Дарья Петрова (daria.p@investroom.local)</option>
+                        <option>Сергей Кравцов (sergey.k@investroom.local)</option>
+                    </select>
+                    <span class="hint">Пользователь должен иметь роль MANAGER. <a href="users.html">Открыть карточку</a> (read-only).</span>
+                </div>
+                <div class="fld"><label>Должность</label><input type="text" value="Менеджер по жилой недвижимости"></div>
+                <div class="fld">
+                    <label>Фото</label>
+                    <div class="uploader" style="margin-bottom:0">
+                        <div class="drop">
+                            <p><b>Перетащите файл</b> или <a href="#">Выбрать</a></p>
+                            <p style="margin:.4rem 0 0;font-size:.85rem">JPG/PNG, до 5 МБ. Mapping: <code>user_avatar</code>, фильтр <code>avatar_lg</code>.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fld">
+                    <label>О менеджере</label>
+                    <div class="editor">
+                        <div class="tb">
+                            <button type="button"><b>Ж</b></button>
+                            <button type="button"><i>К</i></button>
+                            <button type="button">• Список</button>
+                            <button type="button">🔗 Ссылка</button>
+                        </div>
+                        <div class="area">
+                            <p>10 лет опыта в подборе жилой недвижимости в ОАЭ и Сочи. Помогает клиентам с выбором проектов под бюджет и цели инвестирования.</p>
+                        </div>
+                    </div>
+                    <span class="hint">HTML — будет очищен (санитайзинг) перед сохранением.</span>
+                </div>
+                <div class="two">
+                    <div class="fld"><label>Телефон</label><input type="text" value="+971 50 100 20 30"></div>
+                    <div class="fld"><label>E-mail</label><input type="email" value="anna.s@investroom.local"></div>
+                </div>
+                <div class="fld"><label>Telegram</label><input type="text" value="@anna_investroom"></div>
+                <div class="fld">
+                    <label>Языки общения</label>
+                    <div class="roles">
+                        <label><input type="checkbox" checked> RU</label>
+                        <label><input type="checkbox" checked> EN</label>
+                        <label><input type="checkbox"> AR</label>
+                        <label><input type="checkbox"> ZH</label>
+                    </div>
+                    <span class="hint">Через запятую сохраняется как JSON, напр.: <code>["RU","EN"]</code>.</span>
+                </div>
+                <div class="two">
+                    <div class="fld"><label>Показывать на /team</label><select><option selected>Да</option><option>Нет</option></select></div>
+                    <div class="fld"><label>Порядок сортировки</label><input type="number" value="1"></div>
+                </div>
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="managers.html">Отмена</a>
+            </form>
+            <a class="back" href="managers.html">← Назад к списку</a>"""
+    return page("Изменить — менеджер", "managers", body,
+                crumb='<a href="managers.html">Менеджеры</a> / Изменить')
+
+
+def build_manager_delete():
+    body = """            <div class="confirm">
+                <p>Удалить профиль менеджера <strong>«Анна Самоделкина»</strong>? Действие необратимо.</p>
+                <p class="muted">Связанный пользователь не удаляется — только его публичный профиль.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="managers.html">Отмена</a>
+                </form>
+            </div>"""
+    return page("Удалить — менеджер", "managers", body,
+                crumb='<a href="managers.html">Менеджеры</a> / Удалить')
+
+
+# ---- Проекты (Project) ----
+def build_project_form():
+    body = """            <form class="form-grid" onsubmit="return false">
+                <div class="fld"><label>Название</label><input type="text" value="Marina Heights"></div>
+                <div class="fld"><label>Адрес (URL)</label><input type="text" value="marina-heights-dubai"><span class="hint">Часть ссылки после <code>/projects/</code>. Пусто — сгенерируется из названия.</span></div>
+                <div class="two">
+                    <div class="fld"><label>Статус</label><select><option selected>Опубликован</option><option>Черновик</option><option>В архиве</option></select></div>
+                    <div class="fld"><label>Застройщик</label><input type="text" value="Emaar Properties"></div>
+                </div>
+                <div class="fld"><label>Краткое описание (для карточек)</label><textarea rows="3" maxlength="500">Башня премиум-класса в Dubai Marina с рассрочкой от застройщика.</textarea></div>
+                <div class="fld">
+                    <label>Полное описание</label>
+                    <div class="editor">
+                        <div class="tb">
+                            <button type="button"><b>Ж</b></button>
+                            <button type="button"><i>К</i></button>
+                            <button type="button">• Список</button>
+                            <button type="button">🔗 Ссылка</button>
+                            <button type="button">🖼️ Изображение</button>
+                        </div>
+                        <div class="area">
+                            <p>Башня класса премиум на первой линии Dubai Marina. Архитектура от международного бюро, инфраструктура: бассейн на крыше, фитнес-зал, концьерж.</p>
+                            <p>Рассрочка 60/40 от застройщика, передача ключей — I кв. 2028.</p>
+                        </div>
+                    </div>
+                    <span class="hint">HTML — будет очищен (санитайзинг) перед сохранением.</span>
+                </div>
+                <div class="two">
+                    <div class="fld"><label>Страна</label><input type="text" value="ОАЭ"></div>
+                    <div class="fld"><label>Город</label><input type="text" value="Дубай"></div>
+                </div>
+                <div class="fld"><label>Адрес</label><input type="text" value="Dubai Marina"></div>
+                <div class="two">
+                    <div class="fld"><label>Широта (lat)</label><input type="text" value="25.0805"></div>
+                    <div class="fld"><label>Долгота (lng)</label><input type="text" value="55.1403"></div>
+                </div>
+                <div class="fld"><label>Срок сдачи</label><input type="text" value="I кв. 2028"><span class="hint">Свободный текст.</span></div>
+                <div class="two">
+                    <div class="fld"><label>Сумма проекта (в копейках)</label><input type="text" value="900000000"><span class="hint">Минимальные единицы валюты, напр.: 900000000 = 9 000 000 AED.</span></div>
+                    <div class="fld"><label>Валюта</label><select><option>RUB</option><option selected>AED</option><option>OMR</option><option>USD</option></select></div>
+                </div>
+                <div class="fld">
+                    <label>Обложка</label>
+                    <div class="uploader" style="margin-bottom:0">
+                        <div class="drop"><p><b>Перетащите файл</b> или <a href="#">Выбрать</a></p>
+                            <p style="margin:.4rem 0 0;font-size:.85rem">JPG/PNG/WebP, до 5 МБ. Mapping: <code>object_cover</code>.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fld"><label>Порядок сортировки</label><input type="number" value="3"></div>
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="projects.html">Отмена</a>
+                <a class="btn btn--ghost" href="project-gallery.html">🖼️ Управление галереей</a>
+            </form>
+            <a class="back" href="projects.html">← Назад к списку</a>"""
+    return page("Изменить — проект (ЖК)", "projects", body,
+                crumb='<a href="projects.html">Проекты (ЖК)</a> / Изменить')
+
+
+def build_project_delete():
+    body = """            <div class="confirm">
+                <p>Удалить проект <strong>«Marina Heights»</strong>? Действие необратимо.</p>
+                <p class="muted">Связанные с проектом объекты каталога останутся, но потеряют связь с проектом.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="projects.html">Отмена</a>
+                </form>
+            </div>"""
+    return page("Удалить — проект (ЖК)", "projects", body,
+                crumb='<a href="projects.html">Проекты (ЖК)</a> / Удалить')
+
+
+def build_project_gallery():
+    body = gallery_body(
+        "Проект: <strong>Marina Heights</strong>.",
+        ["Башня на закате", "Холл при входе", "Бассейн на крыше",
+         "Вид на Dubai Marina", "Планировка типового этажа", "Зона ресепшн"],
+        "project-form.html", "Назад к проекту")
+    return page("Галерея проекта", "projects", body,
+                crumb='<a href="projects.html">Проекты (ЖК)</a> / '
+                      '<a href="project-form.html">Изменить</a> / Галерея')
+
+
+# ---- Коммерция (CommercialProperty) ----
+def build_commercial_form():
+    body = """            <form class="form-grid" onsubmit="return false">
+                <div class="fld"><label>Название</label><input type="text" value="Офис в Business Bay"></div>
+                <div class="fld"><label>Адрес (URL)</label><input type="text" value="office-business-bay-dubai"><span class="hint">Часть ссылки после <code>/commercial/</code>.</span></div>
+                <div class="two">
+                    <div class="fld">
+                        <label>Вид</label>
+                        <select>
+                            <option selected>Офис</option><option>Торговое помещение</option>
+                            <option>Склад</option><option>Отель</option>
+                            <option>Ресторан / кафе</option><option>Здание целиком</option>
+                            <option>Другое</option>
+                        </select>
+                    </div>
+                    <div class="fld"><label>Статус</label><select><option selected>Опубликован</option><option>Черновик</option><option>В архиве</option></select></div>
+                </div>
+                <div class="fld"><label>Краткое описание (для карточек)</label><textarea rows="3" maxlength="500">Готовый офис класса А в деловом центре Дубая, с арендатором.</textarea></div>
+                <div class="fld">
+                    <label>Полное описание</label>
+                    <div class="editor">
+                        <div class="tb">
+                            <button type="button"><b>Ж</b></button>
+                            <button type="button"><i>К</i></button>
+                            <button type="button">• Список</button>
+                            <button type="button">🔗 Ссылка</button>
+                            <button type="button">🖼️ Изображение</button>
+                        </div>
+                        <div class="area">
+                            <p>Премиум-офис в Business Bay, готов к въезду. На этаже — приёмная, переговорная, опен-спейс на 12 рабочих мест.</p>
+                            <p>Сдан в долгосрочную аренду крупному арендатору. Срок текущего контракта — до 2027.</p>
+                        </div>
+                    </div>
+                    <span class="hint">HTML — будет очищен (санитайзинг) перед сохранением.</span>
+                </div>
+                <div class="two">
+                    <div class="fld"><label>Страна</label><input type="text" value="ОАЭ"></div>
+                    <div class="fld"><label>Город</label><input type="text" value="Дубай"></div>
+                </div>
+                <div class="fld"><label>Адрес</label><input type="text" value="Business Bay, Dubai"></div>
+                <div class="two">
+                    <div class="fld"><label>Широта (lat)</label><input type="text" value="25.1857"></div>
+                    <div class="fld"><label>Долгота (lng)</label><input type="text" value="55.2769"></div>
+                </div>
+                <div class="two">
+                    <div class="fld"><label>Площадь, м²</label><input type="text" value="180.00"><span class="hint">Число, напр. 180.00 — до 2 знаков после точки.</span></div>
+                    <div class="fld"><label>Сдан в аренду</label><select><option selected>Да</option><option>Нет</option></select></div>
+                </div>
+                <div class="two">
+                    <div class="fld"><label>Цена (в копейках)</label><input type="text" value="320000000"><span class="hint">Напр.: 320000000 = 3 200 000 AED.</span></div>
+                    <div class="fld"><label>Валюта</label><select><option>RUB</option><option selected>AED</option><option>OMR</option><option>USD</option></select></div>
+                </div>
+                <div class="fld">
+                    <label>Обложка</label>
+                    <div class="uploader" style="margin-bottom:0">
+                        <div class="drop"><p><b>Перетащите файл</b> или <a href="#">Выбрать</a></p>
+                            <p style="margin:.4rem 0 0;font-size:.85rem">JPG/PNG/WebP, до 5 МБ. Mapping: <code>object_cover</code>.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fld"><label>Порядок сортировки</label><input type="number" value="1"></div>
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="commercial.html">Отмена</a>
+                <a class="btn btn--ghost" href="commercial-gallery.html">🖼️ Управление галереей</a>
+            </form>
+            <a class="back" href="commercial.html">← Назад к списку</a>"""
+    return page("Изменить — коммерческий объект", "commercial", body,
+                crumb='<a href="commercial.html">Коммерция</a> / Изменить')
+
+
+def build_commercial_delete():
+    body = """            <div class="confirm">
+                <p>Удалить коммерческий объект <strong>«Офис в Business Bay»</strong>? Действие необратимо.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="commercial.html">Отмена</a>
+                </form>
+            </div>"""
+    return page("Удалить — коммерческий объект", "commercial", body,
+                crumb='<a href="commercial.html">Коммерция</a> / Удалить')
+
+
+def build_commercial_gallery():
+    body = gallery_body(
+        "Коммерческий объект: <strong>Офис в Business Bay</strong>.",
+        ["Главный вход", "Опен-спейс", "Переговорная",
+         "Кухня для сотрудников", "Вид из окна", "Парковка"],
+        "commercial-form.html", "Назад к объекту")
+    return page("Галерея коммерческого объекта", "commercial", body,
+                crumb='<a href="commercial.html">Коммерция</a> / '
+                      '<a href="commercial-form.html">Изменить</a> / Галерея')
+
+
+# ---- Заявки (InvestmentRequest) — read-only список + смена статуса ----
+def build_requests_list():
+    rows_html = []
+    for typ, obj, name, phone, status, created in REQUESTS:
+        rows_html.append(
+            "<tr>"
+            f"<td>{typ}</td><td>{obj}</td><td>{name}</td><td><span class='muted'>{phone}</span></td>"
+            f"<td>{request_badge(status)}</td><td>{created}</td>"
+            f"<td class='row-actions'><a href='request-edit.html'>Изменить статус</a></td>"
+            "</tr>"
+        )
+    body = f"""            <div class="notice">Заявки создаются только с публичного сайта. Здесь — смена статуса
+                и назначение менеджера; полей контактов не редактируем (read-only содержимое).</div>
+            <div class="filter-bar">
+                <input type="text" placeholder="Поиск по имени / телефону / e-mail">
+                <select><option>Все типы</option><option>Инвестировать</option><option>Забронировать</option></select>
+                <select><option>Все статусы</option><option>Новая</option><option>В работе</option>
+                    <option>Связались</option><option>В сделку</option><option>Отклонена</option></select>
+                <button class="btn btn--ghost btn--sm" type="button">Применить</button>
+            </div>
+            <div class="toolbar"><span class="muted">Всего записей: {len(REQUESTS)}</span><span></span></div>
+            <table>
+                <thead><tr><th>Тип</th><th>Объект</th><th>Контакт</th><th>Телефон</th><th>Статус</th><th>Создано</th><th class="row-actions">Действия</th></tr></thead>
+                <tbody>
+{chr(10).join(rows_html)}
+                </tbody>
+            </table>"""
+    return page("Заявки", "requests", body)
+
+
+def build_request_edit():
+    body = """            <div class="notice">⚠️ Контактные данные заявки <strong>read-only</strong> (создаются с сайта).
+                В админке доступно только: смена статуса и назначение ответственного менеджера.</div>
+            <div class="form-grid" style="background:#f7f9fc">
+                <div class="two">
+                    <div class="fld"><label>Тип</label><input type="text" value="Инвестировать" disabled></div>
+                    <div class="fld"><label>Объект</label><input type="text" value="Апартаменты в Marina Heights" disabled></div>
+                </div>
+                <div class="two">
+                    <div class="fld"><label>Имя</label><input type="text" value="Алексей Иванов" disabled></div>
+                    <div class="fld"><label>Телефон</label><input type="text" value="+7 900 111-11-11" disabled></div>
+                </div>
+                <div class="fld"><label>E-mail</label><input type="email" value="a.ivanov@example.com" disabled></div>
+                <div class="fld"><label>Комментарий</label><textarea rows="2" disabled>Готов обсудить условия рассрочки, удобное время — после 18:00 МСК.</textarea></div>
+            </div>
+            <form class="form-grid" onsubmit="return false" style="margin-top:1.2rem">
+                <div class="fld">
+                    <label>Статус</label>
+                    <select>
+                        <option>Новая</option>
+                        <option selected>В работе</option>
+                        <option>Связались</option>
+                        <option>В сделку</option>
+                        <option>Отклонена</option>
+                    </select>
+                </div>
+                <div class="fld">
+                    <label>Ответственный менеджер</label>
+                    <select>
+                        <option>— не назначен —</option>
+                        <option selected>Анна Самоделкина (anna.s@investroom.local)</option>
+                        <option>Игорь Соколов</option>
+                        <option>Дарья Петрова</option>
+                        <option>Сергей Кравцов</option>
+                    </select>
+                </div>
+                <p class="muted" style="margin:0 0 .8rem">После сохранения автору заявки (если он зарегистрированный пользователь) уйдёт уведомление «Статус заявки обновлён».</p>
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="requests.html">Отмена</a>
+            </form>
+            <a class="back" href="requests.html">← Назад к списку</a>"""
+    return page("Изменить статус заявки", "requests", body,
+                crumb='<a href="requests.html">Заявки</a> / Изменить статус')
+
+
+# ---- Отзывы (Testimonial) ----
+def build_testimonials_list():
+    rows_html = []
+    for author, rating, text, src, date in TESTIMONIALS:
+        stars = "★" * rating + "☆" * (5 - rating)
+        rows_html.append(
+            "<tr>"
+            f"<td>{author}</td>"
+            f"<td><span class='stars'>{stars}</span></td>"
+            f"<td>{text}</td>"
+            f"<td><span class='muted'>{src}</span></td>"
+            f"<td>{date}</td>"
+            f"<td><span class='badge badge--ok'>Опубликован</span></td>"
+            "<td class='row-actions'>"
+            "<a href='testimonial-form.html'>Изменить</a>"
+            "<a class='del' href='testimonial-delete.html'>Удалить</a>"
+            "</td></tr>"
+        )
+    body = f"""            <div class="toolbar">
+                <span class="muted">Всего записей: {len(TESTIMONIALS)}</span>
+                <a class="btn btn--accent" href="testimonial-form.html">+ Добавить отзыв</a>
+            </div>
+            <table>
+                <thead><tr><th>Автор</th><th>Оценка</th><th>Короткий текст</th><th>Источник</th><th>Дата</th><th>Статус</th><th class="row-actions">Действия</th></tr></thead>
+                <tbody>
+{chr(10).join(rows_html)}
+                </tbody>
+            </table>"""
+    return page("Отзывы", "testimonials", body)
+
+
+def build_testimonial_form():
+    body = """            <form class="form-grid" onsubmit="return false">
+                <div class="fld"><label>Автор</label><input type="text" value="Анна К., инвестор"></div>
+                <div class="two">
+                    <div class="fld"><label>Оценка (1–5)</label><input type="number" min="1" max="5" value="5"></div>
+                    <div class="fld"><label>Дата отзыва</label><input type="text" value="20.04.2026"></div>
+                </div>
+                <div class="fld"><label>Короткий текст (≤300, для карточки)</label><textarea rows="2" maxlength="300">Сделка по Marina Heights прошла прозрачно — все этапы в личном кабинете.</textarea></div>
+                <div class="fld">
+                    <label>Полный текст</label>
+                    <div class="editor">
+                        <div class="tb">
+                            <button type="button"><b>Ж</b></button>
+                            <button type="button"><i>К</i></button>
+                            <button type="button">• Список</button>
+                            <button type="button">🔗 Ссылка</button>
+                        </div>
+                        <div class="area">
+                            <p>Покупал апартаменты у воды в Marina Heights с рассрочкой. Менеджер Анна на связи в любое время, документы оформили онлайн.</p>
+                            <p>Отдельно — личный кабинет: понятный статус сделки, скан-копии договоров под рукой.</p>
+                        </div>
+                    </div>
+                    <span class="hint">HTML — будет очищен (санитайзинг) перед сохранением.</span>
+                </div>
+                <div class="two">
+                    <div class="fld"><label>Источник</label><input type="text" value="Яндекс"><span class="hint">Напр.: «Яндекс», «Google», «Прямой отзыв».</span></div>
+                    <div class="fld"><label>Ссылка на источник</label><input type="text" value="https://yandex.ru/maps/..."></div>
+                </div>
+                <div class="two">
+                    <div class="fld"><label>Опубликован</label><select><option selected>Да</option><option>Нет</option></select></div>
+                    <div class="fld"><label>Порядок сортировки</label><input type="number" value="1"></div>
+                </div>
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="testimonials.html">Отмена</a>
+            </form>
+            <a class="back" href="testimonials.html">← Назад к списку</a>"""
+    return page("Изменить — отзыв", "testimonials", body,
+                crumb='<a href="testimonials.html">Отзывы</a> / Изменить')
+
+
+def build_testimonial_delete():
+    body = """            <div class="confirm">
+                <p>Удалить отзыв <strong>«Анна К., инвестор»</strong>? Действие необратимо.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="testimonials.html">Отмена</a>
+                </form>
+            </div>"""
+    return page("Удалить — отзыв", "testimonials", body,
+                crumb='<a href="testimonials.html">Отзывы</a> / Удалить')
+
+
+# ---- Награды (Achievement) ----
+def build_achievements_list():
+    rows_html = []
+    for title, year, pub, order in ACHIEVEMENTS:
+        rows_html.append(
+            "<tr>"
+            f"<td><span class='thumb-sm'>🏆</span>{title}</td>"
+            f"<td>{year}</td>"
+            f"<td>{order}</td>"
+            f"<td>{status_badge(pub, 'Опубликовано', 'Черновик')}</td>"
+            "<td class='row-actions'>"
+            "<a href='achievement-form.html'>Изменить</a>"
+            "<a class='del' href='achievement-delete.html'>Удалить</a>"
+            "</td></tr>"
+        )
+    body = f"""            <div class="toolbar">
+                <span class="muted">Всего записей: {len(ACHIEVEMENTS)}</span>
+                <a class="btn btn--accent" href="achievement-form.html">+ Добавить награду</a>
+            </div>
+            <table>
+                <thead><tr><th>Название</th><th>Год</th><th>Порядок</th><th>Статус</th><th class="row-actions">Действия</th></tr></thead>
+                <tbody>
+{chr(10).join(rows_html)}
+                </tbody>
+            </table>"""
+    return page("Награды", "achievements", body)
+
+
+def build_achievement_form():
+    body = """            <form class="form-grid" onsubmit="return false">
+                <div class="fld"><label>Название</label><input type="text" value="Лучший брокер недвижимости ОАЭ"></div>
+                <div class="fld">
+                    <label>Изображение</label>
+                    <div class="uploader" style="margin-bottom:0">
+                        <div class="drop"><p><b>Перетащите файл</b> или <a href="#">Выбрать</a></p>
+                            <p style="margin:.4rem 0 0;font-size:.85rem">JPG/PNG, до 5 МБ. Mapping: <code>generic</code>.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fld"><label>Описание</label><textarea rows="4">Награда вручена на ежегодной церемонии Real Estate Awards в Дубае.</textarea><span class="hint">HTML — будет очищен (санитайзинг).</span></div>
+                <div class="two">
+                    <div class="fld"><label>Год</label><input type="number" value="2025"></div>
+                    <div class="fld"><label>Порядок сортировки</label><input type="number" value="1"></div>
+                </div>
+                <div class="fld"><label>Опубликовано</label><select><option selected>Да</option><option>Нет</option></select></div>
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="achievements.html">Отмена</a>
+            </form>
+            <a class="back" href="achievements.html">← Назад к списку</a>"""
+    return page("Изменить — награда", "achievements", body,
+                crumb='<a href="achievements.html">Награды</a> / Изменить')
+
+
+def build_achievement_delete():
+    body = """            <div class="confirm">
+                <p>Удалить награду <strong>«Лучший брокер недвижимости ОАЭ»</strong>? Действие необратимо.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="achievements.html">Отмена</a>
+                </form>
+            </div>"""
+    return page("Удалить — награда", "achievements", body,
+                crumb='<a href="achievements.html">Награды</a> / Удалить')
+
+
+# ---- Лицензии (LegalDocument) ----
+def build_legal_list():
+    rows_html = []
+    for title, category, pub, order in LEGAL_DOCS:
+        rows_html.append(
+            "<tr>"
+            f"<td><span class='pdf-pill'>PDF</span>{title}</td>"
+            f"<td><span class='badge badge--info'>{category}</span></td>"
+            f"<td>{order}</td>"
+            f"<td>{status_badge(pub, 'Опубликован', 'Черновик')}</td>"
+            "<td class='row-actions'>"
+            "<a href='legal-document-form.html'>Изменить</a>"
+            "<a class='del' href='legal-document-delete.html'>Удалить</a>"
+            "</td></tr>"
+        )
+    body = f"""            <div class="toolbar">
+                <span class="muted">Всего записей: {len(LEGAL_DOCS)}</span>
+                <a class="btn btn--accent" href="legal-document-form.html">+ Добавить документ</a>
+            </div>
+            <table>
+                <thead><tr><th>Название</th><th>Категория</th><th>Порядок</th><th>Статус</th><th class="row-actions">Действия</th></tr></thead>
+                <tbody>
+{chr(10).join(rows_html)}
+                </tbody>
+            </table>"""
+    return page("Лицензии / документы", "legal", body)
+
+
+def build_legal_form():
+    body = """            <form class="form-grid" onsubmit="return false">
+                <div class="fld"><label>Название</label><input type="text" value="Брокерская лицензия RERA №12345"></div>
+                <div class="fld">
+                    <label>Категория</label>
+                    <select><option selected>Лицензия</option><option>Сертификат</option><option>Документ</option></select>
+                </div>
+                <div class="fld">
+                    <label>Файл (PDF)</label>
+                    <div class="uploader" style="margin-bottom:0">
+                        <div class="drop"><p><b>Перетащите PDF</b> или <a href="#">Выбрать</a></p>
+                            <p style="margin:.4rem 0 0;font-size:.85rem">Только PDF, до 10 МБ. Mapping: <code>generic</code>.</p>
+                            <p style="margin:.5rem 0 0"><span class="pdf-pill">PDF</span> license-rera-12345.pdf · 240 КБ · <a href="#">скачать</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fld">
+                    <label>Превью (картинка)</label>
+                    <div class="uploader" style="margin-bottom:0">
+                        <div class="drop"><p><b>Перетащите файл</b> или <a href="#">Выбрать</a></p>
+                            <p style="margin:.4rem 0 0;font-size:.85rem">JPG/PNG, до 5 МБ. Покажется на /p/about.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="two">
+                    <div class="fld"><label>Опубликован</label><select><option selected>Да</option><option>Нет</option></select></div>
+                    <div class="fld"><label>Порядок сортировки</label><input type="number" value="1"></div>
+                </div>
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="legal-documents.html">Отмена</a>
+            </form>
+            <a class="back" href="legal-documents.html">← Назад к списку</a>"""
+    return page("Изменить — документ", "legal", body,
+                crumb='<a href="legal-documents.html">Лицензии</a> / Изменить')
+
+
+def build_legal_delete():
+    body = """            <div class="confirm">
+                <p>Удалить документ <strong>«Брокерская лицензия RERA №12345»</strong>? Действие необратимо.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="legal-documents.html">Отмена</a>
+                </form>
+            </div>"""
+    return page("Удалить — документ", "legal", body,
+                crumb='<a href="legal-documents.html">Лицензии</a> / Удалить')
+
+
+# ---- Партнёры (Partner) ----
+def build_partners_list():
+    rows_html = []
+    for name, url, pub, order in PARTNERS:
+        host = url.replace("https://", "").replace("http://", "")
+        rows_html.append(
+            "<tr>"
+            f"<td><span class='logo-sm'>{name[:6]}</span>{name}</td>"
+            f"<td><a href='#' class='muted'>{host}</a></td>"
+            f"<td>{order}</td>"
+            f"<td>{status_badge(pub, 'Опубликован', 'Черновик')}</td>"
+            "<td class='row-actions'>"
+            "<a href='partner-form.html'>Изменить</a>"
+            "<a class='del' href='partner-delete.html'>Удалить</a>"
+            "</td></tr>"
+        )
+    body = f"""            <div class="toolbar">
+                <span class="muted">Всего записей: {len(PARTNERS)}</span>
+                <a class="btn btn--accent" href="partner-form.html">+ Добавить партнёра</a>
+            </div>
+            <table>
+                <thead><tr><th>Название</th><th>Сайт</th><th>Порядок</th><th>Статус</th><th class="row-actions">Действия</th></tr></thead>
+                <tbody>
+{chr(10).join(rows_html)}
+                </tbody>
+            </table>"""
+    return page("Партнёры", "partners", body)
+
+
+def build_partner_form():
+    body = """            <form class="form-grid" onsubmit="return false">
+                <div class="fld"><label>Название</label><input type="text" value="Emaar Properties"></div>
+                <div class="fld">
+                    <label>Логотип</label>
+                    <div class="uploader" style="margin-bottom:0">
+                        <div class="drop"><p><b>Перетащите файл</b> или <a href="#">Выбрать</a></p>
+                            <p style="margin:.4rem 0 0;font-size:.85rem">SVG/PNG (прозрачный фон), до 2 МБ. Mapping: <code>generic</code>.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fld"><label>Сайт</label><input type="text" value="https://emaar.com"></div>
+                <div class="two">
+                    <div class="fld"><label>Опубликован</label><select><option selected>Да</option><option>Нет</option></select></div>
+                    <div class="fld"><label>Порядок сортировки</label><input type="number" value="1"></div>
+                </div>
+                <button class="btn" type="submit">Сохранить</button>
+                <a class="btn btn--ghost" href="partners.html">Отмена</a>
+            </form>
+            <a class="back" href="partners.html">← Назад к списку</a>"""
+    return page("Изменить — партнёр", "partners", body,
+                crumb='<a href="partners.html">Партнёры</a> / Изменить')
+
+
+def build_partner_delete():
+    body = """            <div class="confirm">
+                <p>Удалить партнёра <strong>«Emaar Properties»</strong>? Действие необратимо.</p>
+                <form onsubmit="return false">
+                    <button class="btn btn--danger" type="submit">Удалить</button>
+                    <a class="btn btn--ghost" href="partners.html">Отмена</a>
+                </form>
+            </div>"""
+    return page("Удалить — партнёр", "partners", body,
+                crumb='<a href="partners.html">Партнёры</a> / Удалить')
+
+
+# ---- Заявки партнёров (PartnerApplication) — read-only ----
+def build_partner_apps_list():
+    rows_html = []
+    for company, contact, email, phone, msg, created, processed in PARTNER_APPS:
+        msg_short = (msg[:80] + "…") if len(msg) > 80 else msg
+        proc_cell = (f"<span class='muted'>{processed}</span>"
+                     if processed else "<span class='badge badge--new'>не обработана</span>")
+        rows_html.append(
+            "<tr>"
+            f"<td>{company}</td>"
+            f"<td>{contact}</td>"
+            f"<td><span class='muted'>{email}</span></td>"
+            f"<td><span class='muted'>{phone}</span></td>"
+            f"<td>{msg_short}</td>"
+            f"<td>{created}</td>"
+            f"<td>{proc_cell}</td>"
+            "</tr>"
+        )
+    body = f"""            <div class="notice">Заявки партнёров принимаются с /p/about. В админке —
+                только просмотр; пометка «обработана» проставляется автоматически при открытии заявки.</div>
+            <div class="toolbar"><span class="muted">Всего записей: {len(PARTNER_APPS)}</span><span></span></div>
+            <table>
+                <thead><tr><th>Компания</th><th>Контакт</th><th>E-mail</th><th>Телефон</th><th>Сообщение</th><th>Создано</th><th>Обработано</th></tr></thead>
+                <tbody>
+{chr(10).join(rows_html)}
+                </tbody>
+            </table>"""
+    return page("Заявки партнёров", "partner-apps", body)
+
+
+# ---- Рассылка (admin_broadcast) ----
+def build_broadcast():
+    body = """            <p class="muted">Отправить уведомление (in-app + e-mail по настройкам получателей)
+                всем пользователям с выбранной ролью. Используется тип <code>ADMIN_BROADCAST</code>.</p>
+
+            <div class="success-flash">
+                ✓ <strong>Уведомление отправлено: 12 получателям.</strong> (пример — после успешной отправки в админке)
+            </div>
+
+            <form class="form-grid" onsubmit="return false">
+                <div class="fld">
+                    <label>Получатели (роль)</label>
+                    <select>
+                        <option>Инвестор (ROLE_USER)</option>
+                        <option selected>Менеджер (ROLE_MANAGER)</option>
+                        <option>Администратор (ROLE_ADMIN)</option>
+                    </select>
+                    <span class="hint">Список ролей — из enum <code>App\\Enum\\Role</code>.</span>
+                </div>
+                <div class="fld"><label>Заголовок</label><input type="text" value="Новый ЖК Marina Heights — старт продаж" maxlength="180"></div>
+                <div class="fld">
+                    <label>Текст</label>
+                    <textarea rows="6">Сегодня открыли продажи в новом проекте Marina Heights в Dubai Marina. Рассрочка 60/40, обзорная экскурсия для клиентов — 31 мая.</textarea>
+                </div>
+                <button class="btn btn--accent" type="submit">Отправить</button>
+                <a class="btn btn--ghost" href="index.html">Отмена</a>
+            </form>
+            <p class="muted" style="margin-top:1rem">CSRF-токен генерируется при отправке формы (<code>admin_broadcast</code>). Без него запрос отклоняется.</p>"""
+    return page("Рассылка уведомлений", "broadcast", body)
+
+
+# ---- Журнал аудита (audit_log) ----
+def build_audit_log():
+    rows_html = []
+    for created, actor, action, etype, eid in AUDIT_LOG:
+        rows_html.append(
+            "<tr>"
+            f"<td><span class='muted'>{created}</span></td>"
+            f"<td>{actor}</td>"
+            f"<td><code>{action}</code></td>"
+            f"<td>{etype}</td>"
+            f"<td><span class='muted'>{eid}</span></td>"
+            "</tr>"
+        )
+    body = f"""            <p class="muted">Append-only журнал действий (для 152-ФЗ, см. ADR-004).
+                Записи не редактируются и не удаляются. По 50 на страницу.</p>
+
+            <form class="filter-bar" onsubmit="return false">
+                <input type="text" placeholder="Действие (напр. create)">
+                <input type="text" placeholder="Тип сущности (напр. Project)">
+                <input type="text" placeholder="Actor (e-mail)">
+                <input type="text" placeholder="Дата с"><input type="text" placeholder="Дата по">
+                <button class="btn btn--ghost btn--sm" type="submit">Фильтр</button>
+            </form>
+
+            <p class="muted">Всего записей: 1 247.</p>
+
+            <table>
+                <thead><tr><th>Дата</th><th>Actor</th><th>Действие</th><th>Сущность</th><th>ID сущности</th></tr></thead>
+                <tbody>
+{chr(10).join(rows_html)}
+                </tbody>
+            </table>
+
+            <nav class="pager">
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">…</a>
+                <a href="#">25</a>
+                <a href="#">→</a>
+            </nav>"""
+    return page("Журнал аудита", "audit", body)
+
+
+# ---- Состояние системы (system_health) ----
+def build_system_health():
+    items = [
+        ("PostgreSQL 16", "ok", "OK", "12 мс"),
+        ("Redis (кэш)", "ok", "OK", "2 мс"),
+        ("Mailpit :8025", "ok", "OK", "5 мс"),
+        ("Свободно на диске <code>/var/uploads</code>", "warn", "82% свободно (18% занято)", "—"),
+        ("PHP", "ok", "8.3.14", "—"),
+        ("Symfony", "ok", "6.4.18", "—"),
+    ]
+    cards = []
+    for name, state, detail, ms in items:
+        cards.append(
+            f"<div class='health-card'>"
+            f"<span class='indicator indicator--{state}'></span>"
+            f"<span class='name'>{name}</span>"
+            f"<span class='detail'>{detail}</span>"
+            f"<span class='right'>{ms}</span>"
+            f"</div>"
+        )
+    body = f"""            <p class="muted">Проверки выполняются на лету при открытии страницы:
+                БД, Redis, Mailpit, диск, версии PHP/Symfony (см. <code>SystemHealthController</code>).</p>
+{chr(10).join(cards)}
+            <p class="muted" style="margin-top:1rem">🟢 — OK · 🟡 — внимание · 🔴 — ошибка.
+                При красном статусе хотя бы одной проверки на дашборде появится баннер.</p>"""
+    return page("Состояние системы", "health", body)
+
+
 def write(name, html):
     with open(os.path.join(OUT, name), "w", encoding="utf-8") as f:
         f.write(html)
@@ -676,6 +1610,86 @@ write("media-delete.html", build_media_delete())
 write("faq-delete.html", build_faq_delete())
 write("settings-form.html", build_settings_form())
 write("settings-delete.html", build_settings_delete())
+
+# ============================================================
+# Фаза 3 — новые разделы
+# ============================================================
+
+# Менеджеры
+write("managers.html", list_page(
+    "Менеджеры", "managers", "Создать менеджера",
+    ["Имя", "Должность", "Языки", "Порядок", "Публичен"],
+    [(m[0], m[2], f'<span class="badge badge--info">{m[3]}</span>', str(m[4]),
+      status_badge(m[5], "Да", "Нет")) for m in MANAGERS],
+    new_href="manager-form.html", edit_href="manager-form.html", del_href="manager-delete.html"))
+write("manager-form.html", build_manager_form())
+write("manager-delete.html", build_manager_delete())
+
+# Проекты (ЖК)
+PROJECT_STATUS_BADGE = {
+    "Опубликован": '<span class="badge badge--ok">Опубликован</span>',
+    "Черновик": '<span class="badge badge--draft">Черновик</span>',
+    "В архиве": '<span class="badge badge--archived">В архиве</span>',
+}
+write("projects.html", list_page(
+    "Проекты (ЖК)", "projects", "Создать проект",
+    ["Название", "Застройщик", "Город", "Срок сдачи", "Сумма", "Статус"],
+    [(f'<span class="thumb-sm">🏗️</span>{p[0]}',
+      p[1], p[2], p[5], p[6], PROJECT_STATUS_BADGE[p[3]])
+     for p in PROJECTS],
+    new_href="project-form.html", edit_href="project-form.html", del_href="project-delete.html"))
+write("project-form.html", build_project_form())
+write("project-delete.html", build_project_delete())
+write("project-gallery.html", build_project_gallery())
+
+# Коммерция
+write("commercial.html", list_page(
+    "Коммерция", "commercial", "Создать коммерческий объект",
+    ["Название", "Вид", "Город", "Площадь, м²", "Цена от", "В аренде", "Статус"],
+    [(f'<span class="thumb-sm">🏪</span>{c[0]}', c[1], c[2], c[3], c[4],
+      status_badge(c[7], "Да", "Нет"),
+      PROJECT_STATUS_BADGE[c[6]])
+     for c in COMMERCIAL],
+    new_href="commercial-form.html", edit_href="commercial-form.html", del_href="commercial-delete.html"))
+write("commercial-form.html", build_commercial_form())
+write("commercial-delete.html", build_commercial_delete())
+write("commercial-gallery.html", build_commercial_gallery())
+
+# Заявки (read-only смена статуса)
+write("requests.html", build_requests_list())
+write("request-edit.html", build_request_edit())
+
+# Отзывы
+write("testimonials.html", build_testimonials_list())
+write("testimonial-form.html", build_testimonial_form())
+write("testimonial-delete.html", build_testimonial_delete())
+
+# Награды
+write("achievements.html", build_achievements_list())
+write("achievement-form.html", build_achievement_form())
+write("achievement-delete.html", build_achievement_delete())
+
+# Лицензии
+write("legal-documents.html", build_legal_list())
+write("legal-document-form.html", build_legal_form())
+write("legal-document-delete.html", build_legal_delete())
+
+# Партнёры
+write("partners.html", build_partners_list())
+write("partner-form.html", build_partner_form())
+write("partner-delete.html", build_partner_delete())
+
+# Заявки партнёров (read-only)
+write("partner-applications.html", build_partner_apps_list())
+
+# Рассылка
+write("broadcast.html", build_broadcast())
+
+# Журнал аудита
+write("audit-log.html", build_audit_log())
+
+# Состояние системы
+write("system-health.html", build_system_health())
 
 # открытые вопросы
 write("open-questions.html", build_open_questions())
